@@ -2364,6 +2364,8 @@ static int init_nvram(void)
 			nvram_set("wait_time", "10");	// failsafe for default R1D CFE
 			nvram_set("uart_en", "1");	// failsafe for default R1D CFE
 			nvram_set("router_name", "X-R1D");
+			nvram_set("lan_hostname", "MiWiFi");
+			nvram_set("wan_hostname", "MiWiFi");
 
 			nvram_set("vlan1hwname", "et0");
 			nvram_set("vlan2hwname", "et0");
@@ -2377,6 +2379,16 @@ static int init_nvram(void)
 			nvram_set("wl_ifname", "eth2");
 			nvram_set("wl0_ifname", "eth2");
 			nvram_set("wl1_ifname", "eth1");
+
+			// force timezone settings
+			nvram_set("tm_dst", "1");
+			nvram_set("tm_sel", "UTC-8");
+			nvram_set("tm_tz", "UTC-8");
+			nvram_set("ntp_kiss", "");
+			nvram_set("ntp_kiss_ignore", ""); 
+			nvram_set("ntp_server", "0.asia.pool.ntp.org 1.asia.pool.ntp.org 2.asia.pool.ntp.org"); 
+			nvram_set("ntp_tdod", "0"); 
+			nvram_set("ntp_updates", "1"); 
 
 			// fix WL mac`s
 			strcpy(s, nvram_safe_get("et0macaddr"));

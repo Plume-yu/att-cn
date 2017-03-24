@@ -975,6 +975,9 @@ o:
 z:
 	@$(MAKE) bin OPENVPN=y NTFS=y BBEXTRAS=y USBEXTRAS=y EBTABLES=y MEDIASRV=y IPV6SUPP=y MULTIWAN=y B=E BUILD_DESC="AIO" CTF=y GRO=y USB="USB" NOCAT=y BTCLIENT=y TR_EXTRAS=y DNSCRYPT=y UPS=y PPTPD=y DNSSEC=y TINC=y SNMP=y RAID=y NFS=y NANO=y TOR=y NGINX=y
 
+zz:
+	@$(MAKE) bin OPENVPN=y HFS=y NTFS=y BBEXTRAS=y USBEXTRAS=y EBTABLES=y MEDIASRV=y IPV6SUPP=y MULTIWAN=y B=E BUILD_DESC="LasxMod" CTF=y GRO=y USB="USB" NOCAT=y BTCLIENT=y TR_EXTRAS=y DNSCRYPT=y UPS=n PPTPD=y DNSSEC=y TINC=y RAID=y NFS=y NANO=y TOR=y
+
 ac68e:
 	@$(MAKE) e ARM=y NVRAM_64K=y NAND=y BCMSMP=y ASUS_TRX="ASUS" TUXERA=y
 
@@ -1031,6 +1034,9 @@ ea6700e:
 
 ea6700z:
 	@$(MAKE) z ARM=y NVRAM_64K=y NAND=y BCMSMP=y ASUS_TRX="LINKSYS" FAILSAFE_UPGRADE=n
+
+r1dz:
+	@$(MAKE) zz ARM=y NVRAM_64K=y BCMSMP=y XIAOMI_TRX="R1D" TUXERA=y TUXERA_HFS=y SATA=y NO_JFFS=y FANCTRL=y
 
 r1do:
 	@$(MAKE) o ARM=y NVRAM_64K=y BCMSMP=y XIAOMI_TRX="R1D" SATA=y NO_JFFS=y FANCTRL=y
@@ -1106,6 +1112,7 @@ ifeq ($(CONFIG_LINUX26),y)
 	@echo "r6300v2init   R6300v2 init build"
 	@echo "r6400init     R6400 init build"
 	@echo "Xiaomi ARM Builds"
+	@echo "r1dz          R1D extended build"
 	@echo "r1do          R1D custom build"
 	@echo "HUAWEI ARM Builds"
 	@echo "ws880e        WS880 build VPN"
