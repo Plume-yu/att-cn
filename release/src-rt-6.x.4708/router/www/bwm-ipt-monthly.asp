@@ -9,7 +9,7 @@ http://code.google.com/p/tomato-sdhc-vlan/
 
 For use with Tomato Firmware only.
 No part of this file may be used without permission.
---><title>IP Traffic: Monthly History</title>
+--><title>IP 流量监控: 每月流量</title>
 <content>
 	<style type="text/css">
 		#monthly-grid .co3,
@@ -22,7 +22,7 @@ No part of this file may be used without permission.
 	<script type="text/javascript" src="js/bwm-common.js"></script>
 	<script type="text/javascript" src="js/interfaces.js"></script>
 	<script type="text/javascript">
-		//	<% nvram("wan_ifname,lan_ifname,wl_ifname,wan_proto,wan_iface,web_svg,cstats_enable,cstats_colors,dhcpd_static,lan_ipaddr,lan_netmask,lan1_ipaddr,lan1_netmask,lan2_ipaddr,lan2_netmask,lan3_ipaddr,lan3_netmask"); %>
+		//	<% nvram("at_update,tomatoanon_answer,wan_ifname,lan_ifname,wl_ifname,wan_proto,wan_iface,web_svg,cstats_enable,cstats_colors,dhcpd_static,lan_ipaddr,lan_netmask,lan1_ipaddr,lan1_netmask,lan2_ipaddr,lan2_netmask,lan3_ipaddr,lan3_netmask"); %>
 		//	<% devlist(); %>
 
 		try {
@@ -69,7 +69,7 @@ No part of this file may be used without permission.
 
 		dg.setup = function() {
 			this.init('monthly-grid', 'sort');
-			this.headerSet(['Date', 'Host', 'Download', 'Upload', 'Total']);
+			this.headerSet(['日期', '主机', '下行', '上行', '总计']);
 		}
 
 		function redraw() {
@@ -163,10 +163,10 @@ No part of this file may be used without permission.
 					}
 					if (E('_f_shortcuts').checked) {
 						h = h + '<br><small>';
-						h = h + '<a href="javascript:viewQosDetail(' + i + ')" title="View QoS Details">[qosdetails]</a>';
-						h = h + '<a href="javascript:viewQosCTrates(' + i + ')" title="View transfer rates per connection">[qosrates]</a>';
-						h = h + '<a href="javascript:viewIptDetail(' + i + ')" title="View real-time IP Traffic for this address">[iptraf]</a>';
-						h = h + '<a href="javascript:addExcludeList(' + i + ')" title="Filter out this address">[hide]</a>';
+						h = h + '<a href="javascript:viewQosDetail(' + i + ')" title="查看QoS详细信息">[Qos详细信息]</a>';
+						h = h + '<a href="javascript:viewQosCTrates(' + i + ')" title="查看每个连接的传输速率">[Qos速率]</a>';
+						h = h + '<a href="javascript:viewIptDetail(' + i + ')" title="查看该IP的实时流量">[IP速率]</a>';
+						h = h + '<a href="javascript:addExcludeList(' + i + ')" title="隐藏此IP地址">[隐藏]</a>';
 						h = h + '</small>';
 					}
 					var ymd = getYMD(b[0]);
@@ -180,9 +180,9 @@ No part of this file may be used without permission.
 					'Total',
 					('<small><i>(' +
 						(((hostslisted.length > 0) || (subnetslisted.length > 0)) ?
-							((hostslisted.length > 0) ? (hostslisted.length + ' hosts') : '') +
+							((hostslisted.length > 0) ? (hostslisted.length + ' 个主机') : '') +
 							(((hostslisted.length > 0) && (subnetslisted.length > 0)) ? ', ' : '') +
-							((subnetslisted.length > 0) ? (subnetslisted.length + ' subnets') : '')
+							((subnetslisted.length > 0) ? (subnetslisted.length + ' 个子网') : '')
 							: 'no data') +
 						')</i></small>'),
 					rescale(rx),
@@ -285,7 +285,7 @@ No part of this file may be used without permission.
 		function init() {
 
 			if (nvram.cstats_enable != '1') {
-				$('.cstats').before('<div class="alert alert-info">IP Traffic monitoring disabled.</b> <a href="/#admin-iptraffic.asp">Enable &raquo;</a>');
+				$('.cstats').before('<div class="alert alert-info">IP流量监控已禁用。</b> <a href="/#admin-iptraffic.asp">启用 &raquo;</a>');
 				return;
 			}
 
@@ -424,38 +424,38 @@ No part of this file may be used without permission.
 	</script>
 
 	<ul class="nav-tabs">
-		<li><a class="ajaxload" href="bwm-ipt-realtime.asp"><i class="icon-hourglass"></i> Real-Time</a></li>
-		<li><a class="ajaxload" href="bwm-ipt-24.asp"><i class="icon-clock"></i> Last 24 Hours</a></li>
-		<li><a class="ajaxload" href="bwm-ipt-graphs.asp"><i class="icon-graphs"></i> View Graphs</a></li>
-		<li><a class="ajaxload" href="bwm-ipt-details.asp"><i class="icon-globe"></i> Transfer Rates</a></li>
-		<li><a class="ajaxload" href="bwm-ipt-daily.asp"><i class="icon-clock"></i> Daily</a></li>
-		<li><a class="active"><i class="icon-month"></i> Monthly</a></li>
+		<li><a class="ajaxload" href="bwm-ipt-realtime.asp"><i class="icon-hourglass"></i> 实时</a></li>
+		<li><a class="ajaxload" href="bwm-ipt-24.asp"><i class="icon-clock"></i> 最近24小时</a></li>
+		<li><a class="ajaxload" href="bwm-ipt-graphs.asp"><i class="icon-graphs"></i> 查看图表</a></li>
+		<li><a class="ajaxload" href="bwm-ipt-details.asp"><i class="icon-globe"></i> 传输速率</a></li>
+		<li><a class="ajaxload" href="bwm-ipt-daily.asp"><i class="icon-clock"></i> 每日</a></li>
+		<li><a class="active"><i class="icon-month"></i> 每月</a></li>
 	</ul>
 
 	<div id="cstats" class="box">
-		<div class="heading">Monthly IP Traffic <a class="pull-right" href="#" data-toggle="tooltip" title="Reload Information" onclick="reloadPage(); return false;"><i class="icon-refresh"></i></a></div>
+		<div class="heading">每月IP流量 <a class="pull-right" href="#" data-toggle="tooltip" title="重新加载信息" onclick="reloadPage(); return false;"><i class="icon-refresh"></i></a></div>
 		<div class="content">
 			<table id="monthly-grid" class="line-table"></table><br />
 
-			<h4><a href="javascript:toggleVisibility('options');">Options <span id="sesdivoptionsshowhide"><i class="icon-chevron-up"></i></span></a></h4>
+			<h4><a href="javascript:toggleVisibility('options');">选项 <span id="sesdivoptionsshowhide"><i class="icon-chevron-up"></i></span></a></h4>
 			<div class="section" id="sesdivoptions" style="display:none"></div>
 		</div>
 	</div>
 
-	<a href="javascript:genData()" class="btn btn-primary">Data <i class="icon-drive"></i></a>
-	<a href="admin-iptraffic.asp" class="btn btn-danger ajaxload">Configure <i class="icon-tools"></i></a>
+	<a href="javascript:genData()" class="btn btn-primary">数据 <i class="icon-drive"></i></a>
+	<a href="admin-iptraffic.asp" class="btn btn-danger ajaxload">配置 <i class="icon-tools"></i></a>
 	<script type="text/javascript">
 		var c;
 		c = [];
-		c.push({ title: 'List only these IPs', name: 'f_filter_ip', size: 50, maxlen: 255, type: 'text', suffix: ' <small>(Comma separated list)</small>' });
-		c.push({ title: 'Exclude these IPs', name: 'f_filter_ipe', size: 50, maxlen: 255, type: 'text', suffix: ' <small>(Comma separated list)</small>' });
-		c.push({ title: 'Date Range', multi: [ { name: 'f_begin_date', type: 'select', options: [['0', 'Any']], suffix: ' - ' }, { name: 'f_end_date', type: 'select', options: [['0', 'Any']] } ] } );
-		c.push({ title: 'Date Format', name: 'f_dafm', type: 'select', options: [['0', 'yyyy-mm'], ['1', 'mm-yyyy'], ['2', 'mmm, yyyy'], ['3', 'mm.yyyy']] });
-		c.push({ title: 'Scale', name: 'f_scale', type: 'select', options: [['0', 'KB'], ['1', 'MB'], ['2', 'GB']] });
-		c.push({ title: 'Show subnet totals', name: 'f_subnet', type: 'checkbox', suffix: ' <small>(Not considered when calculating total traffic on the last line)</small>' });
-		c.push({ title: 'Hide IPs without traffic', name: 'f_ignorezeroes', type: 'checkbox' });
-		c.push({ title: 'Show known hostnames', name: 'f_hostnames', type: 'checkbox' });
-		c.push({ title: 'Show shortcuts', name: 'f_shortcuts', type: 'checkbox' });
+		c.push({ title: '仅列出这些IP', name: 'f_filter_ip', size: 50, maxlen: 255, type: 'text', suffix: ' <small>(逗号分隔列表)</small>' });
+		c.push({ title: '排除这些IP', name: 'f_filter_ipe', size: 50, maxlen: 255, type: 'text', suffix: ' <small>(逗号分隔列表)</small>' });
+		c.push({ title: '日期范围', multi: [ { name: 'f_begin_date', type: 'select', options: [['0', '所有']], suffix: ' - ' }, { name: 'f_end_date', type: 'select', options: [['0', '所有']] } ] } );
+		c.push({ title: '日期格式', name: 'f_dafm', type: 'select', options: [['0', 'yyyy-mm'], ['1', 'mm-yyyy'], ['2', 'mmm, yyyy'], ['3', 'mm.yyyy']] });
+		c.push({ title: '单位', name: 'f_scale', type: 'select', options: [['0', 'KB'], ['1', 'MB'], ['2', 'GB']] });
+		c.push({ title: '显示子网总计', name: 'f_subnet', type: 'checkbox', suffix: ' <small>(在计算最后一行的总流量时不会考虑)</small>' });
+		c.push({ title: '隐藏没有流量的IP', name: 'f_ignorezeroes', type: 'checkbox' });
+		c.push({ title: '显示已知的主机名', name: 'f_hostnames', type: 'checkbox' });
+		c.push({ title: '显示快捷键', name: 'f_shortcuts', type: 'checkbox' });
 		$('#sesdivoptions').forms(c);
 	</script>
 

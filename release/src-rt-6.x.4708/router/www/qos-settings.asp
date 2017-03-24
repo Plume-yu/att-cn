@@ -5,7 +5,7 @@ http://www.polarcloud.com/tomato/
 
 For use with Tomato Firmware only.
 No part of this file may be used without permission.
---><title>Basic Settings</title>
+--><title>Qos基本设置</title>
 <content>
 	<script type="text/javascript">
 
@@ -16,10 +16,10 @@ No part of this file may be used without permission.
 
 		var classNames = nvram.qos_classnames.split(' ');		// Toastman - configurable class names
 
-		pctListin = [[0, 'No Limit']];
+		pctListin = [[0, '无限制']];
 		for (i = 1; i <= 100; ++i) pctListin.push([i, i + '%']);
 
-		pctListout = [[0, 'No Limit']];
+		pctListout = [[0, '无限制']];
 		for (i = 1; i <= 100; ++i) pctListout.push([i, i + '%']);
 
 		function scale(bandwidth, rate, ceil)
@@ -54,7 +54,7 @@ No part of this file may be used without permission.
 			{
 				elem.setInnerHTML(
 					resultsFieldName,
-					'Ceiling must be greater than or equal to rate.');
+					'上限值必须大于等于速率值。');
 
 				return 0;
 			}
@@ -178,7 +178,7 @@ No part of this file may be used without permission.
 		<input type="hidden" name="ne_vegas">
 
 		<div class="box" data-box="qos-basic-set">
-			<div class="heading">Basic QoS Settings</div>
+			<div class="heading">基本Qos设置</div>
 			<div class="content qos-settings"></div>
 			<script type="text/javascript">
 
@@ -188,31 +188,31 @@ No part of this file may be used without permission.
 				}
 
 				$('.qos-settings').forms([
-					{ title: 'Enable QoS', name: 'f_qos_enable', type: 'checkbox', value: nvram.qos_enable == '1' },
-					{ title: 'Prioritize small packets with these control flags', multi: [
+					{ title: '启用 QoS', name: 'f_qos_enable', type: 'checkbox', value: nvram.qos_enable == '1' },
+					{ title: '小包优先', multi: [
 						{ suffix: ' ACK &nbsp;', name: 'f_qos_ack', type: 'checkbox', value: nvram.qos_ack == '1' },
 						{ suffix: ' SYN &nbsp;', name: 'f_qos_syn', type: 'checkbox', value: nvram.qos_syn == '1' },
 						{ suffix: ' FIN &nbsp;', name: 'f_qos_fin', type: 'checkbox', value: nvram.qos_fin == '1' },
 						{ suffix: ' RST &nbsp;', name: 'f_qos_rst', type: 'checkbox', value: nvram.qos_rst == '1' }
 					] },
-					{ title: 'Prioritize ICMP', name: 'f_qos_icmp', type: 'checkbox', value: nvram.qos_icmp == '1' },
-					{ title: 'No Ingress QoS for UDP', name: 'f_qos_udp', type: 'checkbox', value: nvram.qos_udp == '1' },
-					{ title: 'Reset class when changing settings', name: 'f_qos_reset', type: 'checkbox', value: nvram.qos_reset == '1' },
-					{ title: 'Default class', name: 'qos_default', type: 'select', options: classList, value: nvram.qos_default },
+					{ title: '优先ICMP', name: 'f_qos_icmp', type: 'checkbox', value: nvram.qos_icmp == '1' },
+					{ title: '入站UDP不受Qos限制', name: 'f_qos_udp', type: 'checkbox', value: nvram.qos_udp == '1' },
+					{ title: '设置变更后重新分类', name: 'f_qos_reset', type: 'checkbox', value: nvram.qos_reset == '1' },
+					{ title: '默认分类', name: 'qos_default', type: 'select', options: classList, value: nvram.qos_default },
 					/* REMOVE-BEGIN
 					!!TB - added qos_pfifo
 					REMOVE-END */
-					{ title: 'Qdisc Scheduler', name: 'qos_pfifo', type: 'select', options: [['0','sfq'],['1','pfifo'],['2','codel'],['3','fq_codel']], value: nvram.qos_pfifo }
+					{ title: 'Qdisc调度程序', name: 'qos_pfifo', type: 'select', options: [['0','sfq'],['1','pfifo'],['2','codel'],['3','fq_codel']], value: nvram.qos_pfifo }
 				]);
 			</script>
 		</div>
 
 		<div class="box" data-box="qos-dsl-set">
-			<div class="heading">Settings for DSL only</div>
+			<div class="heading">仅适用于DSL的设置</div>
 			<div class="content qos-dsl"></div>
 			<script type="text/javascript">
 				$('.qos-dsl').forms([
-					{ title: 'DSL Overhead Value - ATM Encapsulation Type', multi:[
+					{ title: 'DSL局端 - ATM封包类型', multi:[
 						{name: 'atm_overhead', type: 'select', options: [['0','None'],['32','32-PPPoE VC-Mux'],['40','40-PPPoE LLC/Snap'],
 							['10','10-PPPoA VC-Mux'],['14','14-PPPoA LLC/Snap'],
 							['8','8-RFC2684/RFC1483 Routed VC-Mux'],['16','16-RFC2684/RFC1483 Routed LLC/Snap'],
@@ -224,7 +224,7 @@ No part of this file may be used without permission.
 		</div>
 
 		<div class="box" data-box="qos-out-limits">
-			<div class="heading">Outbound Rates / Limits</div>
+			<div class="heading">上传速率 / 限制</div>
 			<div class="content out-limit"></div>
 			<script type="text/javascript">
 				cc = nvram.qos_orates.split(/[,-]/);
@@ -251,7 +251,7 @@ No part of this file may be used without permission.
 		</div>
 
 		<div class="box" data-box="qos-in-limits">
-			<div class="heading">Inbound Rates / Limits</div>
+			<div class="heading">下载速率 / 限制</div>
 			<div class="content in-limit"></div>
 			<script type="text/javascript">
 				allRates = nvram.qos_irates.split(',');
@@ -259,7 +259,7 @@ No part of this file may be used without permission.
 
 				for (var uidx = 1; uidx <= nvram.mwan_num; ++uidx){
 					var u = (uidx >1) ? uidx : '';
-					f.push({ title: 'WAN '+uidx+'<br>Max Bandwidth Limit', name: 'wan'+u+'_qos_ibw', type: 'text', maxlen: 6, size: 8, suffix: ' <small>kbit/s </small>', value: nvram['wan'+u+'_qos_ibw'] });
+					f.push({ title: 'WAN '+uidx+'<br>最大宽带限制', name: 'wan'+u+'_qos_ibw', type: 'text', maxlen: 6, size: 8, suffix: ' <small>kbit/s </small>', value: nvram['wan'+u+'_qos_ibw'] });
 				}
 
 				for (i = 0; i < 10; ++i)
@@ -281,15 +281,15 @@ No part of this file may be used without permission.
 		</div>
 
 		<div class="box" data-box="qos-class-n">
-			<div class="heading">QoS Class Names</div>
+			<div class="heading">QOS分类名称</div>
 			<div class="content classnames" style="display:none"></div>
 			<script type="text/javascript">
 
 				if ((v = nvram.qos_classnames.match(/^(.+)\s+(.+)\s+(.+)\s+(.+)\s+(.+)\s+(.+)\s+(.+)\s+(.+)\s+(.+)\s+(.+)$/)) == null) {
-					v = ["-","Highest","High","Medium","Low","Lowest","A","B","C","D","E"];
+					v = ["-","最高","高","中","低","最低","A","B","C","D","E"];
 				}
-				titles = ['-','Priority Class 1', 'Priority Class 2', 'Priority Class 3', 'Priority Class 4', 'Priority Class 5', 'Priority Class 6', 'Priority Class 7', 'Priority Class 8', 'Priority Class 9', 'Priority Class 10'];
-				f = [{ title: ' ', text: '<small>(Maximum 10 characters, no spaces)</small>' }];
+				titles = ['-','优先级 1', '优先级 2', '优先级 3', '优先级 4', '优先级 5', '优先级 6', '优先级 7', '优先级 8', '优先级 9', '优先级 10'];
+				f = [{ title: ' ', text: '<small>(最多10个字符，不能含中文和空格)</small>' }];
 				for (i = 1; i < 11; ++i) {
 					f.push({ title: titles[i], name: ('f_qos_' + (i - 1)),
 						type: 'text', maxlen: 10, size: 15, value: v[i],
@@ -300,12 +300,12 @@ No part of this file may be used without permission.
 		</div>
 
 		<div class="box" data-box="qos-tcp-vegas">
-			<div class="heading">TCP Vegas <small>(Network Congestion Control)</small></div>
+			<div class="heading">TCP Vegas <small>(网络拥塞控制)</small></div>
 			<div class="content tcp-vegas"></div>
 			<script type="text/javascript">
 				/* move me? */
 				$('.tcp-vegas').forms([
-					{ title: 'Enable TCP Vegas', name: 'f_ne_vegas', type: 'checkbox', value: nvram.ne_vegas == '1' },
+					{ title: '启用 TCP Vegas', name: 'f_ne_vegas', type: 'checkbox', value: nvram.ne_vegas == '1' },
 					{ title: 'Alpha', name: 'ne_valpha', type: 'text', maxlen: 6, size: 8, value: nvram.ne_valpha },
 					{ title: 'Beta', name: 'ne_vbeta', type: 'text', maxlen: 6, size: 8, value: nvram.ne_vbeta },
 					{ title: 'Gamma', name: 'ne_vgamma', type: 'text', maxlen: 6, size: 8, value: nvram.ne_vgamma }
@@ -313,8 +313,8 @@ No part of this file may be used without permission.
 			</script>
 		</div>
 
-		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">Save <i class="icon-check"></i></button>
-		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">Cancel <i class="icon-cancel"></i></button>
+		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">保存 <i class="icon-check"></i></button>
+		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">取消 <i class="icon-cancel"></i></button>
 		<span id="footer-msg" class="alert alert-warning" style="visibility: hidden;"></span>
 
 	</form>

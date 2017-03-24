@@ -5,7 +5,7 @@ http://www.polarcloud.com/tomato/
 
 For use with Tomato Firmware only.
 No part of this file may be used without permission.
---><title>Classification Rules</title>
+--><title>分类规则</title>
 <content>
 
 	<style>
@@ -41,31 +41,31 @@ No part of this file may be used without permission.
 	</style>
 	<script type="text/javascript" src="js/protocols.js"></script>
 	<script type="text/javascript">
-		//    <% nvram("qos_classnames,qos_enable,qos_orules"); %>
+		//    <% nvram("at_update,tomatoanon_answer,qos_classnames,qos_enable,qos_orules"); %>
 
 		var abc = nvram.qos_classnames.split(' '); // Toastman - configurable class names
 
 
 		var ipp2p = [
-			[0,'IPP2P (disabled)'],[0xFFF,'All IPP2P filters'],[1,'AppleJuice'],[2,'Ares'],[4,'BitTorrent'],[8,'Direct Connect'],
+			[0,'IPP2P (禁用)'],[0xFFF,'All IPP2P filters'],[1,'AppleJuice'],[2,'Ares'],[4,'BitTorrent'],[8,'Direct Connect'],
 			[16,'eDonkey'],[32,'Gnutella'],[64,'Kazaa'],[128,'Mute'],[256,'SoulSeek'],[512,'Waste'],[1024,'WinMX'],[2048,'XDCC']];
 
 		var dscp = [
-			['','DSCP (any)'],['0x00','BE'],
+			['','DSCP (所有)'],['0x00','BE'],
 			['0x08','CS1'],['0x10','CS2'],['0x18','CS3'],['0x20','CS4'],['0x28','CS5'],['0x30','CS6'],['0x38','CS7'],
 			['0x0a','AF11'],['0x0c','AF12'],['0x0e','AF13'],['0x12','AF21'],['0x14','AF22'],['0x16','AF23'],
 			['0x1a','AF31'],['0x1c','AF32'],['0x1e','AF33'],['0x22','AF41'],['0x24','AF42'],['0x26','AF43'],
 			['0x2e','EF'],['*','DSCP value']];
 		for (i = 1; i < dscp.length - 1; ++i)
-			dscp[i][1] = 'DSCP Class ' + dscp[i][1];
+			dscp[i][1] = 'DSCP 类 ' + dscp[i][1];
 
 		// <% layer7(); %>
 		layer7.sort();
 		for (i = 0; i < layer7.length; ++i)
 			layer7[i] = [layer7[i],layer7[i]];
-		layer7.unshift(['', 'Layer 7 (disabled)']);
+		layer7.unshift(['', 'Layer 7 (禁用)']);
 
-		var class1 = [[-1,'Disabled']];
+		var class1 = [[-1,'禁用']];
 		for (i = 0; i < 10; ++i) class1.push([i, abc[i]]);
 		var class2 = class1.slice(1);
 		var ruleCounter = 0;
@@ -92,16 +92,16 @@ No part of this file may be used without permission.
 			var s, i;
 
 			if (data[0] != 0) {
-				b.push(((data[0] == 1) ? 'To ' : 'From ') + data[1]);
+				b.push(((data[0] == 1) ? '到 ' : '从 ') + data[1]);
 			}
 			if (data[2] >= -1) {
 				if (data[2] == -1) b.push('TCP/UDP');
 				else if (data[2] >= 0) b.push(protocols[data[2]] || data[2]);
 				if (data[3] != 'a') {
-					if (data[3] == 'd') s = 'Dst ';
-					else if (data[3] == 's') s = 'Src ';
+					if (data[3] == 'd') s = '目标 ';
+					else if (data[3] == 's') s = '源 ';
 						else s = '';
-					b.push(s + 'Port: ' + data[4].replace(/:/g, '-'));
+					b.push(s + '端口: ' + data[4].replace(/:/g, '-'));
 				}
 			}
 			if (data[5] != 0) {
@@ -119,11 +119,11 @@ No part of this file may be used without permission.
 			if (data[9] != '') {
 				s = dscpClass(data[9]);
 				if (s != '') b.push(s);
-				else b.push('DSCP Value: ' + data[9]);
+				else b.push('DSCP 值: ' + data[9]);
 			}
 
 			if (data[7] != '') {
-				b.push('Transferred: ' + data[7] + ((data[8] == '') ? '<small>KB+</small>' : (' - ' + data[8] + '<small>KB</small>')));
+				b.push('传输字节: ' + data[7] + ((data[8] == '') ? '<small>KB+</small>' : (' - ' + data[8] + '<small>KB</small>')));
 			}
 
 			/* var buttons = '<div class="btn-group">' +
@@ -206,7 +206,7 @@ No part of this file may be used without permission.
 			if ((e = E(e)) == null) return 0;
 			var v = e.value;
 			if ((!v.match(/^ *(0x)?[0-9A-Fa-f]+ *$/)) || (v < 0) || (v > 63)) {
-				ferror.set(e, 'Invalid DSCP value. Valid range: 0x00-0x3F', quiet);
+				ferror.set(e, 'DSCP值无效。 有效范围：0x00-0x3F', quiet);
 				return 0;
 			}
 			e.value = '0x' + (v * 1).hex(2);
@@ -284,7 +284,7 @@ No part of this file may be used without permission.
 			}
 
 			if ((b != '') && (a >= b)) {
-				ferror.set(f[9], 'Invalid range', quiet);
+				ferror.set(f[9], '无效的范围', quiet);
 				return 0;
 			}
 
@@ -293,13 +293,13 @@ No part of this file may be used without permission.
 			}
 			else f[8].value = f[7].value;
 
-			if (!v_nodelim(f[12], quiet, 'Description', 1)) return 0;
+			if (!v_nodelim(f[12], quiet, '描述', 1)) return 0;
 			return v_length(f[12], quiet);
 		}
 
 		qosg.setup = function() {
 			var i, a, b;
-			a = [[-2, 'Any Protocol'],[-1,'TCP/UDP'],[6,'TCP'],[17,'UDP']];
+			a = [[-2, '所有协议'],[-1,'TCP/UDP'],[6,'TCP'],[17,'UDP']];
 			for (i = 0; i < 256; ++i) {
 				if ((i != 6) && (i != 17)) a.push([i, protocols[i] || i]);
 			}
@@ -307,12 +307,12 @@ No part of this file may be used without permission.
 			// what a mess...
 			this.init('qg', 'move', 80, [
 				{ multi: [
-					{ type: 'select', options: [[0,'Any Address'],[1,'Dst IP'],[2,'Src IP'],[3,'Src MAC']], prefix: '<div class="erow y1"><div class="xa">', suffix: '</div>' },
+					{ type: 'select', options: [[0,'任何地址'],[1,'目标IP'],[2,'源IP'],[3,'源MAC地址']], prefix: '<div class="erow y1"><div class="xa">', suffix: '</div>' },
 					{ type: 'text', prefix: '<div class="xb">', suffix: '</div></div>' },
 
 					{ type: 'select', prefix: '<div class="erow y2"><div class="xa">', suffix: '</div>', options: a },
 					{ type: 'select', prefix: '<div class="xb">', suffix: '</div>',
-						options: [['a','Any Port'],['d','Dst Port'],['s','Src Port'],['x','Src or Dst']] },
+						options: [['a','任何端口'],['d','目标端口'],['s','源端口'],['x','源或目标']] },
 					{ type: 'text', prefix: '<div class="xc">', suffix: '</div></div>' }, 
 
 					{ type: 'select', prefix: '<div class="erow y3"><div class="xa">', suffix: '</div>', options: ipp2p },
@@ -321,7 +321,7 @@ No part of this file may be used without permission.
 					{ type: 'select', prefix: '<div class="erow y4"><div class="xa">', suffix: '</div>', options: dscp },
 					{ type: 'text', prefix: '<div class="xb">', suffix: '</div></div>' },
 
-					{ type: 'text', prefix: '<div class="erow y5"><div class="xa">KB Transferred</div><div class="xb">', suffix: '</div>' },
+					{ type: 'text', prefix: '<div class="erow y5"><div class="xa">KB 传输字节</div><div class="xb">', suffix: '</div>' },
 					{ type: 'text', prefix: '<div class="xc">-</div><div class="xd">', suffix: '</div></div>' }
 				] },
 				{ type: 'select', options: class1, vtop: 1 },
@@ -329,7 +329,7 @@ No part of this file may be used without permission.
 				{ type: 'custom', custom:'<span></span>', vtop: 1 }
 			]);
 
-			this.headerSet(['Match Rule', 'Class', 'Description', '#']);
+			this.headerSet(['匹配规则', '类型', '描述', '#']);
 			/* Added for sorting, little hacky, when canSort is setup in the init function an error occurs. */
 			this.canSort = 1;
 
@@ -397,7 +397,7 @@ No part of this file may be used without permission.
 
 	<script type="text/javascript">
 		if (nvram.qos_enable != '1') {
-			$('.container .ajaxwrap').prepend('<div class="alert alert-info"><b>QoS is disabled.</b>&nbsp; <a class="ajaxload" href="qos-settings.asp">Enable &raquo;</a> <a class="close"><i class="icon-cancel"></i></a></div>');
+			$('.container .ajaxwrap').prepend('<div class="alert alert-info"><b>QoS已禁用。</b>&nbsp; <a class="ajaxload" href="qos-settings.asp">开启 &raquo;</a> <a class="close"><i class="icon-cancel"></i></a></div>');
 		}
 	</script>
 
@@ -407,7 +407,7 @@ No part of this file may be used without permission.
 		<input type="hidden" name="qos_orules">
 
 		<div class="box">
-			<div class="heading">QoS Classification Rules</div>
+			<div class="heading">QOS分类规则</div>
 			<div class="content">
 				<table class="line-table" id="qg"></table>
 			</div>
@@ -419,8 +419,8 @@ No part of this file may be used without permission.
 			}
 		</script>
 
-		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">Save <i class="icon-check"></i></button>
-		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">Cancel <i class="icon-cancel"></i></button>
+		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">保存 <i class="icon-check"></i></button>
+		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">取消 <i class="icon-cancel"></i></button>
 		<span id="footer-msg" class="alert alert-warning" style="visibility: hidden;"></span>
 
 	</form>

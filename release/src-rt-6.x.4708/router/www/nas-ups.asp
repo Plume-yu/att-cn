@@ -2,10 +2,10 @@
 Tomato GUI
 For use with Tomato Firmware only.
 No part of this file may be used without permission.
---><title>UPS Monitor</title>
+--><title>UPS 监视器</title>
 <content>
 	<script type="text/javascript">
-		//      <% nvram(""); %>
+		//      <% nvram("at_update,tomatoanon_answer"); %>
 
 		function init() {
 			clientSideInclude('ups-status', '/ext/cgi-bin/tomatoups.cgi');
@@ -36,10 +36,10 @@ No part of this file may be used without permission.
 
 			var element = document.getElementById(id);
 			if (!element) {
-				alert("Bad id " + id +
-					"passed to clientSideInclude." +
-					"You need a div or span element " +
-					"with this id in your page.");
+				alert("错误的ID " + id +
+					"传递给客户端。" +
+					"你需要一个div或span元素 " +
+					"在您的网页中使用此ID。");
 				return;
 			}
 			if (req) {
@@ -50,25 +50,25 @@ No part of this file may be used without permission.
 				$('.tomato-grid').addClass('line-table');
 			} else {
 				element.innerHTML =
-				"Sorry, your browser does not support " +
-				"XMLHTTPRequest objects. This page requires " +
-				"Internet Explorer 5 or better for Windows, " +
-				"or Firefox for any system, or Safari. Other " +
-				"compatible browsers may also exist.";
+				"对不起你的浏览器不支持 " +
+				"XMLHTTPRequest对象。此页面需要 " +
+				"Internet Explorer 5 或更高版本, " +
+				"或使用Firefox， Safari，或者其他 " +
+				"兼容的浏览器。";
 			}
 		}
 	</script>
 
 	<input type="hidden" name="_nextpage" value="/#nas-ups.asp">
 	<div class="box">
-		<div class="heading">APC UPS Status</div>
+		<div class="heading">APC UPS状态</div>
 		<div class="content">
 			<span id="ups-status"></span>
 		</div>
 	</div>
 
 	<div class="box">
-		<div class="heading">UPS Response</div>
+		<div class="heading">UPS响应</div>
 		<div class="content">
 			<span id="ups-data"></span>
 		</div>

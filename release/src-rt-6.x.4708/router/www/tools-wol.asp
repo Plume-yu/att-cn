@@ -6,16 +6,16 @@ http://www.polarcloud.com/tomato/
 
 For use with Tomato Firmware only.
 No part of this file may be used without permission.
---><title>Wake On Lan</title>
+--><title>WOL网络唤醒</title>
 <content>
 	<script type="text/javascript">
 		//	<% arplist(); %>
-		//	<% nvram('dhcpd_static,lan_ifname'); %>
+		//	<% nvram('at_update,tomatoanon_answer,dhcpd_static,lan_ifname'); %>
 
 		var wg = new TomatoGrid();
 		wg.setup = function() {
 			this.init('wol-grid', 'sort');
-			this.headerSet(['MAC Address', 'IP Address', 'Status', 'Name']);
+			this.headerSet(['MAC地址', 'IP地址', '状态', '名称']);
 			this.sort(3);
 		}
 		wg.sortCompare = function(a, b) {
@@ -53,7 +53,7 @@ No part of this file may be used without permission.
 				var active = '-';
 				for (j = 0; j < arplist.length; ++j) {
 					if ((arplist[j][2] == nvram.lan_ifname) && (t[0] == arplist[j][1])) {
-						active = 'Active (In ARP)';
+						active = '活动（在ARP中）';
 						arplist[j][1] = '!';
 						break;
 					}
@@ -61,16 +61,16 @@ No part of this file may be used without permission.
 				if (t.length == 3) {
 					r = this.insertData(-1, [t[0], (t[1].indexOf('.') != -1) ? t[1] : ('<% lipp(); %>.' + t[1]), active, t[2]]);
 					for (j = 0; j < 4; ++j)
-						r.cells[j].title = 'Click to wake up';
+						r.cells[j].title = '点击唤醒';
 				}
 			}
 
 			// show anything else in ARP that is awake
 			for (i = 0; i < arplist.length; ++i) {
 				if ((arplist[i][2] != nvram.lan_ifname) || (arplist[i][1].length != 17)) continue;
-				r = this.insertData(-1, [arplist[i][1], arplist[i][0], 'Active (In ARP)', '']);
+				r = this.insertData(-1, [arplist[i][1], arplist[i][0], '活动（在ARP中）', '']);
 				for (j = 0; j < 4; ++j)
-					r.cells[j].title = 'Click to wake up';
+					r.cells[j].title = '点击唤醒';
 			}
 
 			this.resort(2);
@@ -134,7 +134,7 @@ No part of this file may be used without permission.
 		function refreshClick()
 		{
 			running ^= 1;
-			E('refreshb').value = running ? 'Stop' : 'Refresh';
+			E('refreshb').value = running ? '停止' : '刷新';
 			E('spin').style.visibility = running ? 'visible' : 'hidden';
 			if (running) refresh();
 		}
@@ -153,9 +153,9 @@ No part of this file may be used without permission.
 	<ul class="nav-tabs">
 		<li><a class="ajaxload" href="tools-ping.asp"><i class="icon-ping"></i> Ping</a></li>
 		<li><a class="ajaxload" href="tools-trace.asp"><i class="icon-gauge"></i> Trace</a></li>
-		<li><a class="ajaxload" href="tools-shell.asp"><i class="icon-cmd"></i> System Commands</a></li>
-		<li><a class="ajaxload" href="tools-survey.asp"><i class="icon-signal"></i> Wireless Survey</a></li>
-		<li><a class="active"><i class="icon-wake"></i> WOL</a></li>
+		<li><a class="ajaxload" href="tools-shell.asp"><i class="icon-cmd"></i> 系统命令</a></li>
+		<li><a class="ajaxload" href="tools-survey.asp"><i class="icon-signal"></i> 无线测量</a></li>
+		<li><a class="active"><i class="icon-wake"></i> WOL网络唤醒</a></li>
 	</ul>
 
 	<form id="_fom" action="wakeup.cgi" method="post">
@@ -165,7 +165,7 @@ No part of this file may be used without permission.
 		<input type="hidden" name="mac" value="" id="_mac">
 
 		<div class="box">
-			<div class="heading">Wake on Lan</div>
+			<div class="heading">WOL网络唤醒</div>
 			<div class="content">
 
 				<table id="wol-grid" class="line-table"></table><br />
@@ -173,16 +173,16 @@ No part of this file may be used without permission.
 
 				<div class="pull-right">
 					<div id="spin" class="spinner" style="vertical-align:middle;visibility:hidden"></div> &nbsp;
-					<button type="button" value="Refresh" onclick="refreshClick()" id="refreshb" class="btn">Refresh <i class="icon-refresh"></i></button>
+					<button type="button" value="Refresh" onclick="refreshClick()" id="refreshb" class="btn">刷新 <i class="icon-refresh"></i></button>
 				</div>
 
-				<button type="button" value="Wake Up" onclick="wake(null)" id="save-button" class="btn">Wake Up <i class="icon-chevron-up"></i></button>
+				<button type="button" value="Wake Up" onclick="wake(null)" id="save-button" class="btn">唤醒 <i class="icon-chevron-up"></i></button>
 			</div>
 		</div>
 
 		<script type="text/javascript">
 			$('.sectionmacs').forms([
-				{ title: 'MAC Address List', name: 'f_mac', type: 'textarea', value: cookie.get('wakemac') || '', style: 'width: 100%; height: 60px;' },
+				{ title: 'MAC地址列表', name: 'f_mac', type: 'textarea', value: cookie.get('wakemac') || '', style: 'width: 100%; height: 60px;' },
 				]);
 		</script>
 

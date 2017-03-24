@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="content-type" content="text/html; charset=utf-8">
 		<meta name="robots" content="noindex,nofollow">
-		<title>[<% ident(); %>]: Home</title>
+		<title>[<% ident(); %>]: 主页</title>
 
 		<!-- Interface Design -->
 		<link href="css/interface.css" rel="stylesheet">
@@ -24,7 +24,7 @@
 
 			var wl_ifaces = {};
 			var routerName = '[<% ident(); %>] ';
-			//<% nvram("at_nav,at_nav_action,at_nav_state"); %>
+			//<% nvram("at_nav,at_nav_action,at_nav_state,at_update,tomatoanon_answer"); %>
 			//<% anonupdate(); %>
 
 			// AdvancedTomato related object
@@ -50,7 +50,7 @@
 				// Check matches
 				if ( match_regex == null || match_regex[ 1 ] == null ) {
 
-					gui.version = 'More Info'
+					gui.version = '更多信息'
 
 				} else {
 
@@ -73,21 +73,11 @@
 
 				<a href="/">
 					<div class="logo">
-						<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-							width="26px" height="26px" viewBox="0 0 32 32" xml:space="preserve">
-							<path fill-rule="evenodd" clip-rule="evenodd" fill="#fff" d="M19.4,10.5C19.4,10.5,19.4,10.5,19.4,10.5c0-0.1,0-0.1,0-0.2
-								C19.4,10.2,19.4,10.5,19.4,10.5z M25.2,5.3c-0.4,0.5-1,0.9-1.7,1.4c1.2,0.9,1.8,2,3.2,1.7c0,0-0.3,1.9-2.5,2.7
-								c-1.7,0.6-3.3,0.4-4.7-0.6c0,1.5-0.5,4.4-0.4,5.8c-0.1,0-4.9-1.4-5.3-5.7c-1.7,1.1-3.4,1.6-6.1,0.8c-1.3-0.4-2.5-2.1-2.4-2.7
-								C7.4,8.8,7.3,8.4,9.4,6c0,0,0.2-0.2,0.2-0.3C9.3,5.6,9,5.4,8.7,5.2c-0.3,0-0.6,0-0.9,0C2.4,5.2,0,10.4,0,16s1.9,16,16,16
-								c14.1,0,16-10.5,16-16C32,10.8,29.3,6,25.2,5.3z M14.1,5.4c-0.7,0.7-2,0.2-2.5,0.6C9.5,8.1,9.2,9.4,7.5,9.4c0,0.4,2,0.9,2.6,0.9
-								c2.4,0,4.9-2.4,4.9-3.8c0,0,0.1,1.4,0.1,2.8c0,3.2,2.5,4.6,2.6,4.6c0-1,0.3-2.8,0.3-3.7c0-2.9-1-2.7-1-3.8c0.7,0,2.8,3.5,5.4,3.5
-								c1.6,0,2.3-0.8,2.3-0.8C23,9.1,21.3,6,19.9,6c2,0,4.4-1.4,4.4-2.6c-0.1,0-0.4,0.3-2.5,0.3c-4.2,0-4,0.9-4.6,0.9
-								c0-2.5,1.1-3.9,1.6-4.2c0.6-0.3,0.2-0.5-0.4-0.4c-1.4,0.3-3.3,3.7-3.3,4.7c-0.2-1.4-2.9-2.1-4-2.1c-1.6,0-2.1-0.7-2.6-1.2
-								C8.6,1.6,7.9,5,14.1,5.4z"/>
-						</svg>
-
-						<h1 class="nav-collapse-hide">Advanced<span>Tomato</span></h1>
-						<h2 class="currentpage nav-collapse-hide">Loading...</h2>
+						 <svg version="1.1" id="logo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="26px" height="26px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
+						 <path id="mi" fill="#fff" d="M24.5,7.8h3.9v16.4h-3.9V7.8z M10.5,14.1h4v9.9h-4V14.1z M3.6,7.8l3.9,0h9.8c2.5,0,4.2,2.2,4.2,4.6c0,3.7,0,11.7,0,11.7l-3.8,0l-0.1-10.5c0-1.5-1-2.4-2.4-2.4c-1.8,0-6.5,0-7.7,0v12.9H3.6V7.8z"/>
+						 </svg>
+						<h1 class="nav-collapse-hide">Xiaomi<span>MiWiFi</span></h1>
+						<h2 class="currentpage nav-collapse-hide">载入中...</h2>
 						
 					</div>
 				</a>
@@ -98,19 +88,19 @@
 
 				<div class="pull-right links">
 					<ul>
-						<li><a title="Tools" href="#tools-ping.asp">Tools <i class="icon-tools"></i></a></li>
-						<li><a title="Bandwidth" href="#bwm-realtime.asp">Bandwidth <i class="icon-graphs"></i></a></li>
-						<li><a title="IP Traffic" href="#bwm-ipt-realtime.asp">IP Traffic <i class="icon-traffic"></i></a></li>
-						<li><a title="System" id="system-ui" href="#system">System <i class="icon-system"></i></a></li>
+						<li><a title="Tools" href="#tools-ping.asp">工具 <i class="icon-tools"></i></a></li>
+						<li><a title="Bandwidth" href="#bwm-realtime.asp">带宽监控 <i class="icon-graphs"></i></a></li>
+						<li><a title="IP Traffic" href="#bwm-ipt-realtime.asp">流量监控 <i class="icon-traffic"></i></a></li>
+						<li><a title="System" id="system-ui" href="#system">系统 <i class="icon-system"></i></a></li>
 					</ul>
 					<div class="system-ui">
 
 						<div class="datasystem align center"></div>
 
 						<div class="router-control">
-							<a href="#" class="btn btn-primary" onclick="reboot();">Reboot <i class="icon-reboot"></i></a>
-							<a href="#" class="btn btn-danger" onclick="shutdown();">Shutdown <i class="icon-power"></i></a>
-							<a href="#" onclick="logout();" class="btn">Logout <i class="icon-logout"></i></a>
+							<a href="#" class="btn btn-primary" onclick="reboot();">重启 <i class="icon-reboot"></i></a>
+							<a href="#" class="btn btn-danger" onclick="shutdown();">关机 <i class="icon-power"></i></a>
+							<a href="#" onclick="logout();" class="btn">注销 <i class="icon-logout"></i></a>
 						</div>
 					</div>
 				</div>
@@ -128,7 +118,7 @@
 
 					<div class="container-center">
 						<div class="spinner spinner-large"></div><br><br>
-						Loading interface, please wait...
+						正在载入界面，请稍候...
 					</div>
 
 				</div>

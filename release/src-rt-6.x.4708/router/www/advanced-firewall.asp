@@ -9,7 +9,7 @@ http://code.google.com/p/tomato-sdhc-vlan/
 
 For use with Tomato Firmware only.
 No part of this file may be used without permission.
---><title>Firewall</title>
+--><title>防火墙</title>
 <content>
 	<script type="text/javascript">
 		//	<% nvram("block_wan,block_wan_limit,block_wan_limit_icmp,block_wan_limit_tr,nf_loopback,ne_syncookies,DSCP_fix_enable,ipv6_ipsec,multicast_pass,multicast_lan,multicast_lan1,multicast_lan2,multicast_lan3,lan_ifname,lan1_ifname,lan2_ifname,lan3_ifname,udpxy_enable,udpxy_stats,udpxy_clients,udpxy_port,ne_snat"); %>
@@ -36,7 +36,7 @@ No part of this file may be used without permission.
 			if(nvram.lan3_ifname.length < 1)
 				E('_f_multicast_lan3').checked = false;
 			if ((enable_mcast) && (!E('_f_multicast_lan').checked) && (!E('_f_multicast_lan1').checked) && (!E('_f_multicast_lan2').checked) && (!E('_f_multicast_lan3').checked)) {
-				ferror.set('_f_multicast', 'IGMPproxy must be enabled in least one LAN bridge', quiet);
+				ferror.set('_f_multicast', '开启IGMPproxy必须选择至少一个LAN口', quiet);
 				return 0;
 			} else {
 				ferror.clear('_f_multicast');
@@ -102,17 +102,17 @@ No part of this file may be used without permission.
 		<input type="hidden" name="udpxy_port">
 
 		<div class="box" data-box="firewal-set">
-			<div class="heading">Firewall Settings</div>
+			<div class="heading">防火墙设置</div>
 			<div class="section firewall content"></div>
 			<script type="text/javascript">
 				$('.section.firewall').forms([
-					{ title: 'Respond to ICMP ping', name: 'f_icmp', type: 'checkbox', value: nvram.block_wan == '0' },
-					{ title: 'Limit PPS', indent: 2, name: 'f_icmp_limit', type: 'checkbox', value: nvram.block_wan_limit != '0' },
-					{ title: 'ICMP', indent: 3, name: 'f_icmp_limit_icmp', type: 'text', maxlen: 3, size: 3, suffix: ' <small> request per second</small>', value: fixInt(nvram.block_wan_limit_icmp || 1, 1, 300, 5) },
-					{ title: 'Traceroute', indent: 3, name: 'f_icmp_limit_traceroute', type: 'text', maxlen: 3, size: 3, suffix: ' <small> request per second</small>', value: fixInt(nvram.block_wan_limit_tr || 5, 1, 300, 5) },
-					{ title: 'Enable SYN cookies', name: 'f_syncookies', type: 'checkbox', value: nvram.ne_syncookies != '0' },
-					{ title: 'Enable DSCP Fix', name: 'f_DSCP_fix_enable', type: 'checkbox', value: nvram.DSCP_fix_enable != '0', suffix: ' <small>Fixes Comcast incorrect DSCP</small>' },
-					{ title: 'IPv6 IPSec Passthrough', name: 'f_ipv6_ipsec', type: 'checkbox', value: nvram.ipv6_ipsec != '0' }
+					{ title: '响应ICMP ping', name: 'f_icmp', type: 'checkbox', value: nvram.block_wan == '0' },
+					{ title: '每秒限制', indent: 2, name: 'f_icmp_limit', type: 'checkbox', value: nvram.block_wan_limit != '0' },
+					{ title: 'ICMP', indent: 3, name: 'f_icmp_limit_icmp', type: 'text', maxlen: 3, size: 3, suffix: ' <small> 每秒请求次数</small>', value: fixInt(nvram.block_wan_limit_icmp || 1, 1, 300, 5) },
+					{ title: '追踪路由', indent: 3, name: 'f_icmp_limit_traceroute', type: 'text', maxlen: 3, size: 3, suffix: ' <small> 每秒请求次数</small>', value: fixInt(nvram.block_wan_limit_tr || 5, 1, 300, 5) },
+					{ title: '启用SYN Cookie', name: 'f_syncookies', type: 'checkbox', value: nvram.ne_syncookies != '0' },
+					{ title: '启用DSCP修复', name: 'f_DSCP_fix_enable', type: 'checkbox', value: nvram.DSCP_fix_enable != '0', suffix: ' <small>修复功能不正常的DSCP</small>' },
+					{ title: 'IPv6 IPSec 通道', name: 'f_ipv6_ipsec', type: 'checkbox', value: nvram.ipv6_ipsec != '0' }
 				]);
 			</script>
 		</div>
@@ -122,34 +122,34 @@ No part of this file may be used without permission.
 			<div class="section natfirewall content"></div>
 			<script type="text/javascript">
 				$('.section.natfirewall').forms([
-					{ title: 'NAT loopback', name: 'nf_loopback', type: 'select', options: [[0,'All'],[1,'Forwarded Only'],[2,'Disabled']], value: fixInt(nvram.nf_loopback, 0, 2, 1) },
-					{ title: 'NAT target', name: 'ne_snat', type: 'select', options: [[0,'MASQUERADE'],[1,'SNAT']], value: nvram.ne_snat }
+					{ title: 'NAT回环', name: 'nf_loopback', type: 'select', options: [[0,'全部'],[1,'仅转发'],[2,'禁用']], value: fixInt(nvram.nf_loopback, 0, 2, 1) },
+					{ title: 'NAT目标', name: 'ne_snat', type: 'select', options: [[0,'伪装'],[1,'源地址转换']], value: nvram.ne_snat }
 				]);
 			</script>
 		</div>
 
 		<div class="box" data-box="firewall-multicast">
-			<div class="heading">Multicast</div>
+			<div class="heading">多播协议</div>
 			<div class="section multicast content"></div>
 			<script type="text/javascript">
 				$('.section.multicast').forms([
-					{ title: 'Enable IGMPproxy', name: 'f_multicast', type: 'checkbox', value: nvram.multicast_pass == '1' },
+					{ title: '启用 IGMPproxy', name: 'f_multicast', type: 'checkbox', value: nvram.multicast_pass == '1' },
 					/* VLAN-BEGIN */
 					{ title: 'LAN', indent: 2, name: 'f_multicast_lan', type: 'checkbox', value: (nvram.multicast_lan == '1') },
 					{ title: 'LAN1', indent: 2, name: 'f_multicast_lan1', type: 'checkbox', value: (nvram.multicast_lan1 == '1') },
 					{ title: 'LAN2', indent: 2, name: 'f_multicast_lan2', type: 'checkbox', value: (nvram.multicast_lan2 == '1') },
 					{ title: 'LAN3', indent: 2, name: 'f_multicast_lan3', type: 'checkbox', value: (nvram.multicast_lan3 == '1') },
 					/* VLAN-END */
-					{ title: 'Enable Udpxy', name: 'f_udpxy_enable', type: 'checkbox', value: (nvram.udpxy_enable == '1') },
-					{ title: 'Enable client statistics', indent: 2, name: 'f_udpxy_stats', type: 'checkbox', value: (nvram.udpxy_stats == '1') },
-					{ title: 'Max clients', indent: 2, name: 'f_udpxy_clients', type: 'text', maxlen: 4, size: 6, value: fixInt(nvram.udpxy_clients || 3, 1, 5000, 3) },
-					{ title: 'Udpxy port', indent: 2, name: 'f_udpxy_port', type: 'text', maxlen: 5, size: 7, value: fixPort(nvram.udpxy_port, 4022) }
+					{ title: '启用 Udpxy', name: 'f_udpxy_enable', type: 'checkbox', value: (nvram.udpxy_enable == '1') },
+					{ title: '启用客户端统计', indent: 2, name: 'f_udpxy_stats', type: 'checkbox', value: (nvram.udpxy_stats == '1') },
+					{ title: '最大客户端', indent: 2, name: 'f_udpxy_clients', type: 'text', maxlen: 4, size: 6, value: fixInt(nvram.udpxy_clients || 3, 1, 5000, 3) },
+					{ title: 'Udpxy 端口', indent: 2, name: 'f_udpxy_port', type: 'text', maxlen: 5, size: 7, value: fixPort(nvram.udpxy_port, 4022) }
 				]);
 			</script>
 		</div>
 
-		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">Save <i class="icon-check"></i></button>
-		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">Cancel <i class="icon-cancel"></i></button>
+		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">保存 <i class="icon-check"></i></button>
+		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">取消 <i class="icon-cancel"></i></button>
 		<span id="footer-msg" class="alert alert-warning" style="visibility: hidden;"></span>
 
 	</form>

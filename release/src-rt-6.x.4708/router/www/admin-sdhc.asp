@@ -138,38 +138,38 @@
 				// <% mmcid(); %>
 				mmcon = (nvram.mmc_on == 1);
 				$('.content.form-sect').forms([
-					{ title: 'Enable', name: 'f_mmc_on', type: 'checkbox', value: mmcon },
+					{ title: '启用', name: 'f_mmc_on', type: 'checkbox', value: mmcon },
 					{ text: 'GPIO pins configuration' },
-					{ title: 'Router model', name: 'f_mmc_model', type: 'select', options: [[1,'custom'],[2,'WRT54G up to v3.1'],[3,'WRT54G v4.0 and later'],[4,'WRT54GL']], value: 1 },
-					{ title: 'Chip select (CS)', indent: 2, name: 'f_mmc_cs', type: 'select', options: [[1,1],[2,2],[3,3],[4,4],[5,5],[6,6],[7,7]], value: nvram.mmc_cs },
-					{ title: 'Clock (CLK)', indent: 2, name: 'f_mmc_clk', type: 'select', options: [[1,1],[2,2],[3,3],[4,4],[5,5],[6,6],[7,7]], value: nvram.mmc_clk },
-					{ title: 'Data in (DI)', indent: 2, name: 'f_mmc_din', type: 'select', options: [[1,1],[2,2],[3,3],[4,4],[5,5],[6,6],[7,7]], value: nvram.mmc_din },
-					{ title: 'Data out (DO)', indent: 2, name: 'f_mmc_dout', type: 'select', options: [[1,1],[2,2],[3,3],[4,4],[5,5],[6,6],[7,7]], value: nvram.mmc_dout },
+					{ title: '路由型号', name: 'f_mmc_model', type: 'select', options: [[1,'custom'],[2,'WRT54G up to v3.1'],[3,'WRT54G v4.0 and later'],[4,'WRT54GL']], value: 1 },
+					{ title: '芯片选择(CS)', indent: 2, name: 'f_mmc_cs', type: 'select', options: [[1,1],[2,2],[3,3],[4,4],[5,5],[6,6],[7,7]], value: nvram.mmc_cs },
+					{ title: '时钟 (CLK)', indent: 2, name: 'f_mmc_clk', type: 'select', options: [[1,1],[2,2],[3,3],[4,4],[5,5],[6,6],[7,7]], value: nvram.mmc_clk },
+					{ title: '数据写入 (DI)', indent: 2, name: 'f_mmc_din', type: 'select', options: [[1,1],[2,2],[3,3],[4,4],[5,5],[6,6],[7,7]], value: nvram.mmc_din },
+					{ title: '数据读取 (DO)', indent: 2, name: 'f_mmc_dout', type: 'select', options: [[1,1],[2,2],[3,3],[4,4],[5,5],[6,6],[7,7]], value: nvram.mmc_dout },
 					null,
-					{ text: 'Partition mounting' },
-					{ title: 'Partition number', indent: 2, name: 'f_mmc_fs_partition', type: 'select', options: [[1,1],[2,2],[3,3],[4,4]], value: nvram.mmc_fs_partition },
-					{ title: 'Filesystem', indent: 2, name: 'f_mmc_fs_type', type: 'select', options: [['ext2','ext2'],['ext3','ext3'],['vfat','vfat']], value: nvram.mmc_fs_type },
-					{ title: 'Execute after mount', indent: 2, name: 'f_mmc_exec_mount', type: 'text', maxlen: 64, size: 34, value: nvram.mmc_exec_mount },
-					{ title: 'Execute before umount', indent: 2, name: 'f_mmc_exec_umount', type: 'text', maxlen: 64, size: 34, value: nvram.mmc_exec_umount },
-					{ title: 'Total / Free Size', indent: 2, text: (scaleSize(mmc.size) + ' / ' + scaleSize(mmc.free) + ' <small>(' + (mmc.free/mmc.size*100).toFixed(2) + '%)</small>'), hidden: !mmc.size },
+					{ text: '分区挂载' },
+					{ title: '分区编号', indent: 2, name: 'f_mmc_fs_partition', type: 'select', options: [[1,1],[2,2],[3,3],[4,4]], value: nvram.mmc_fs_partition },
+					{ title: '文件系统', indent: 2, name: 'f_mmc_fs_type', type: 'select', options: [['ext2','ext2'],['ext3','ext3'],['vfat','vfat']], value: nvram.mmc_fs_type },
+					{ title: '挂载后执行', indent: 2, name: 'f_mmc_exec_mount', type: 'text', maxlen: 64, size: 34, value: nvram.mmc_exec_mount },
+					{ title: '卸载前执行', indent: 2, name: 'f_mmc_exec_umount', type: 'text', maxlen: 64, size: 34, value: nvram.mmc_exec_umount },
+					{ title: '全部 / 可用空间', indent: 2, text: (scaleSize(mmc.size) + ' / ' + scaleSize(mmc.free) + ' <small>(' + (mmc.free/mmc.size*100).toFixed(2) + '%)</small>'), hidden: !mmc.size },
 					null,
-					{ title: 'Card Identification', name: 'f_show_info', type: 'checkbox', value: 0, hidden: !mmcid.type },
-					{ title: 'Card type', indent: 2, rid: 'i1', text: mmcid.type },
+					{ title: '卡名称', name: 'f_show_info', type: 'checkbox', value: 0, hidden: !mmcid.type },
+					{ title: '卡型号', indent: 2, rid: 'i1', text: mmcid.type },
 					{ title: 'Specification version', indent: 2, rid: 'i2', text: mmcid.spec },
-					{ title: 'Card size', indent: 2, rid: 'i3', text: (scaleSize(mmcid.size)) },
-					{ title: 'Voltage range', indent: 2, rid: 'i4', text: mmcid.volt },
-					{ title: 'Manufacture ID', indent: 2, rid: 'i5', text: mmcid.manuf },
-					{ title: 'Application ID', indent: 2, rid: 'i6', text: mmcid.appl },
-					{ title: 'Product name', indent: 2, rid: 'i7', text: mmcid.prod },
-					{ title: 'Revision', indent: 2, rid: 'i8', text: mmcid.rev },
-					{ title: 'Serial number', indent: 2, rid: 'i9', text: mmcid.serial },
-					{ title: 'Manufacture date', indent: 2, rid: 'i10', text: mmcid.date }
+					{ title: '容量', indent: 2, rid: 'i3', text: (scaleSize(mmcid.size)) },
+					{ title: '电压范围', indent: 2, rid: 'i4', text: mmcid.volt },
+					{ title: '制造商ID', indent: 2, rid: 'i5', text: mmcid.manuf },
+					{ title: '程序ID', indent: 2, rid: 'i6', text: mmcid.appl },
+					{ title: '产品名称', indent: 2, rid: 'i7', text: mmcid.prod },
+					{ title: '版本号', indent: 2, rid: 'i8', text: mmcid.rev },
+					{ title: '序列号', indent: 2, rid: 'i9', text: mmcid.serial },
+					{ title: '出厂日期', indent: 2, rid: 'i10', text: mmcid.date }
 				]);
 			</script>
 		</div>
 
-		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">Save <i class="icon-check"></i></button>
-		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">Cancel <i class="icon-cancel"></i></button>
+		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">保存 <i class="icon-check"></i></button>
+		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">取消 <i class="icon-cancel"></i></button>
 		<span id="footer-msg" class="alert alert-warning" style="visibility: hidden;"></span>
 
 		<script type="text/javascript">show_notice1('<% notice("mmc"); %>');</script>

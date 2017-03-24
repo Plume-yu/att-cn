@@ -4,7 +4,7 @@ USB Support - !!TB
 
 For use with Tomato Firmware only.
 No part of this file may be used without permission.
---><title>USB Support</title>
+--><title>USB 支持</title>
 <content>
 	<style>textarea { width: 100%; }</style>
 	<script type="text/javascript">
@@ -38,13 +38,13 @@ No part of this file may be used without permission.
 			}
 
 			a           = E( a );
-			a.innerHTML = 'Please wait...';
+			a.innerHTML = '请稍候...';
 
 			xob.onCompleted = function( text, xml ) {
 				eval( text );
 				if ( usb.length == 1 ) {
 					if ( usb[ 0 ] != 0 )
-						ferror.set( a, 'The device is busy. Please make sure no applications are using it, and try again.', 0 );
+						ferror.set( a, '设备正忙。请确保没有应用程序正在使用它，然后重试。', 0 );
 				}
 				xob = null;
 				_forceRefresh();
@@ -67,13 +67,13 @@ No part of this file may be used without permission.
 			}
 
 			a           = E( a );
-			a.innerHTML = 'Please wait...';
+			a.innerHTML = '请稍候...';
 
 			xob.onCompleted = function( text, xml ) {
 				eval( text );
 				if ( usb.length == 1 ) {
 					if ( usb[ 0 ] == 0 )
-						ferror.set( a, 'Failed to mount. Verify the device is plugged in, and try again.', 0 );
+						ferror.set( a, '无法挂载。验证设备是否已插入，然后重试。', 0 );
 				}
 				xob = null;
 				_forceRefresh();
@@ -158,11 +158,11 @@ No part of this file may be used without permission.
 					s = '&nbsp<br><small>&nbsp</small>';
 				else {
 					if ( xob )
-						s = ((e.is_mounted == 0) ? 'No' : 'Yes') + '<br><small>Please wait...</small>';
+						s = ((e.is_mounted == 0) ? '未挂载' : '已挂载') + '<br><small>请稍候...</small>';
 					else if ( e.is_mounted == 0 )
-						s = 'No<br><small><a href="javascript:mountHost(\'L' + i + '\',\'' + e.host + '\')" title="Mount all Partitions of Storage Device" id="L' + i + '">[ Mount ]</a></small>';
+						s = '未挂载<br><small><a href="javascript:mountHost(\'L' + i + '\',\'' + e.host + '\')" title="挂载USB存储设备" id="L' + i + '">[ 挂载 ]</a></small>';
 					else
-						s = 'Yes<br><small><a href="javascript:umountHost(\'L' + i + '\',\'' + e.host + '\')" title="Safely Remove Storage Device" id="L' + i + '">[ Unmount ]</a></small>';
+						s = '已挂载<br><small><a href="javascript:umountHost(\'L' + i + '\',\'' + e.host + '\')" title="安全删除存储设备" id="L' + i + '">[ 卸载 ]</a></small>';
 				}
 				desc = (e.vendor + ' ' + e.product).trim() + '<small>'; // + (e.serial == '' ? '' : '<br>Serial No: ' + e.serial);
 				if ( e.discs ) {
@@ -172,12 +172,12 @@ No part of this file may be used without permission.
 						for ( k = 0; k <= parts.length - 1; ++k ) {
 							p = parts[ k ];
 							if ( p ) {
-								desc = desc + '<br>Partition \'' + p[ 0 ] + '\'' + (p[ 3 ] != '' ? ' ' + p[ 3 ] : '') +
+								desc = desc + '<br>分区 \'' + p[ 0 ] + '\'' + (p[ 3 ] != '' ? ' ' + p[ 3 ] : '') +
 								       ((p[ 5 ] != 0) ? ' (' + doScaleSize( (p[ 5 ] - p[ 6 ]), 0 ) +
-								       ((p[ 1 ] == 1) ? ' / ' + doScaleSize( p[ 5 ], 0 ) + ' used' : '') +
-								       ')' : '') + ' is ' +
-								       ((p[ 1 ] != 0) ? '' : 'not ') + ((p[ 3 ] == 'swap') ? 'active' : 'mounted') +
-								       ((p[ 2 ] != '') ? ' on ' + p[ 2 ] : '');
+								       ((p[ 1 ] == 1) ? ' / ' + doScaleSize( p[ 5 ], 0 ) + ' |已使用/总空间' : '') +
+								       ')' : '') + '' +
+								       ((p[ 1 ] != 0) ? '' : '没有 ') + ((p[ 3 ] == 'swap') ? '激活' : '挂载') +
+								       ((p[ 2 ] != '') ? '于 ' + p[ 2 ] : '');
 							}
 						}
 					}
@@ -191,7 +191,7 @@ No part of this file may be used without permission.
 
 		dg.setup = function() {
 			this.init( 'dev-grid', 'sort' );
-			this.headerSet( [ 'Type', 'Host', 'Description', 'Mounted?' ] );
+			this.headerSet( [ '类型', '主机', '描述', '挂载状态' ] );
 			this.populate();
 			this.sort( 1 );
 		}
@@ -327,25 +327,25 @@ No part of this file may be used without permission.
 		/* LINUX26-END */
 
 		<div class="box" data-box="usb-supp">
-			<div class="heading">USB Support</div>
+			<div class="heading">USB 支持</div>
 			<div class="content">
 				<div id="usbfields"></div>
 				<script type="text/javascript">
 
 					$('#usbfields').forms([
-		                  { title: 'Core USB Support', name: 'f_usb', type: 'checkbox', value: nvram.usb_enable == 1 },
-		                  { title: 'USB 3.0 Support', indent: 2, name: 'f_usb3', type: 'checkbox', value: nvram.usb_usb3 == 1 },
-		                  { title: 'USB 2.0 Support', indent: 2, name: 'f_usb2', type: 'checkbox', value: nvram.usb_usb2 == 1 },
-		                  { title: 'USB 1.1 Support', indent: 2, multi: [
+		                  { title: 'USB支持', name: 'f_usb', type: 'checkbox', value: nvram.usb_enable == 1 },
+		                  { title: 'USB 3.0 支持', indent: 2, name: 'f_usb3', type: 'checkbox', value: nvram.usb_usb3 == 1 },
+		                  { title: 'USB 2.0 支持', indent: 2, name: 'f_usb2', type: 'checkbox', value: nvram.usb_usb2 == 1 },
+		                  { title: 'USB 1.1 支持', indent: 2, multi: [
 		                      { suffix: '&nbsp; OHCI &nbsp;&nbsp;&nbsp;', name: 'f_ohci', type: 'checkbox', value: nvram.usb_ohci == 1 },
 		                      { suffix: '&nbsp; UHCI &nbsp;',	name: 'f_uhci', type: 'checkbox', value: nvram.usb_uhci == 1 }
 		                  ] },
 		                  null,
-		                  { title: 'USB Printer Support', name: 'f_print', type: 'checkbox', value: nvram.usb_printer == 1 },
-		                  { title: 'Bidirectional copying', indent: 2, name: 'f_bprint', type: 'checkbox', value: nvram.usb_printer_bidirect == 1 },
+		                  { title: 'USB 打印支持', name: 'f_print', type: 'checkbox', value: nvram.usb_printer == 1 },
+		                  { title: '双向复制', indent: 2, name: 'f_bprint', type: 'checkbox', value: nvram.usb_printer_bidirect == 1 },
 		                  null,
-		                  { title: 'USB Storage Support', name: 'f_storage', type: 'checkbox', value: nvram.usb_storage == 1 },
-		                  { title: 'File Systems Support', indent: 2, multi: [
+		                  { title: 'USB存储支持', name: 'f_storage', type: 'checkbox', value: nvram.usb_storage == 1 },
+		                  { title: '文件系统支持', indent: 2, multi: [
 		                      { suffix: '&nbsp; Ext2 / Ext3 / Ext4 &nbsp;&nbsp;&nbsp;', name: 'f_ext4', type: 'checkbox', value: nvram.usb_fs_ext4 == 1 },
 		                      /* NTFS-BEGIN */
 		                      { suffix: '&nbsp; NTFS &nbsp;&nbsp;&nbsp;', name: 'f_ntfs', type: 'checkbox', value: nvram.usb_fs_ntfs == 1 },
@@ -357,51 +357,51 @@ No part of this file may be used without permission.
 		                      /* HFS-END */
 		                  ] },
 		                  /* NTFS-BEGIN */
-		                  { title: 'NTFS Driver', indent: 2, name: 'usb_ntfs_driver', type: 'select', options: [
-		                      ['ntfs3g','Open NTFS-3G driver'],
+		                  { title: 'NTFS 驱动', indent: 2, name: 'usb_ntfs_driver', type: 'select', options: [
+		                      ['ntfs3g','Open NTFS-3G 驱动'],
 		                      /* TUXERA-BEGIN */
-		                      ['tuxera','Tuxera driver'],
+		                      ['tuxera','Tuxera 驱动'],
 		                      /* TUXERA-END */
 		                      /* PARAGON-BEGIN */
-		                      ['paragon','Paragon driver'],
+		                      ['paragon','Paragon 驱动'],
 		                      /* PARAGON-END */
 		                  ], value: nvram.usb_ntfs_driver },
 		                  /* NTFS-END */
 		                  /* LINUX26-BEGIN */
 		                  /* MICROSD-BEGIN */
-		                  { title: 'SD/MMC Card Support', indent: 2, name: 'f_mmc', type: 'checkbox', value: nvram.usb_mmc == 1 },
+		                  { title: 'SD/MMC支持', indent: 2, name: 'f_mmc', type: 'checkbox', value: nvram.usb_mmc == 1 },
 		                  /* MICROSD-END */
 		                  /* LINUX26-END */
-		                  { title: 'Automount', indent: 2, name: 'f_automount', type: 'checkbox',
-		                      suffix: ' <small>Automatically mount all partitions to sub-directories in <i>/mnt</i>.</small>', value: nvram.usb_automount == 1 },
-		                  { title: 'Run after mounting', indent: 2, name: 'script_usbmount', type: 'textarea', value: nvram.script_usbmount },
-		                  { title: 'Run before unmounting', indent: 2, name: 'script_usbumount', type: 'textarea', value: nvram.script_usbumount },
+		                  { title: '自动挂载', indent: 2, name: 'f_automount', type: 'checkbox',
+		                      suffix: ' <small>自动将所有分区挂载到<i>/mnt</i>。</small>', value: nvram.usb_automount == 1 },
+		                  { title: '挂载后执行', indent: 2, name: 'script_usbmount', type: 'textarea', value: nvram.script_usbmount },
+		                  { title: '卸载前执行', indent: 2, name: 'script_usbumount', type: 'textarea', value: nvram.script_usbumount },
 		                  null,
 		                  /* LINUX26-BEGIN */
-		                  { title: 'HDD Spindown', name: 'f_idle_enable', type: 'checkbox',
-		                      suffix: ' <small>Spin down each HDD when idle. No need to use with flash drive.</small>', value: nvram.idle_enable == 1 },
+		                  { title: 'HDD 休眠', name: 'f_idle_enable', type: 'checkbox',
+		                      suffix: ' <small>HDD硬盘空闲时休眠，U盘固态硬盘无需启用此选项</small>', value: nvram.idle_enable == 1 },
 		                  null,
-		                  { title: 'USB 3G Modem support', name: 'f_usb_3g', type: 'checkbox',
-		                      suffix: ' <small>Before disconnecting 3G Modem from USB port, remember to uncheck box. If modem used usbserial module, you have to reboot router before unplugging modem.</small>', value: nvram.usb_3g == 1 },
+		                  { title: 'USB 3G调制解调器支持', name: 'f_usb_3g', type: 'checkbox',
+		                      suffix: ' <small>从USB端口断开3G调制解调器之前，请记住取消选中复选框。 如果调制解调器使用usbserial模块，您必须先重新启动，才能拔下调制解调器。</small>', value: nvram.usb_3g == 1 },
 		                  null,
 		                  /* LINUX26-END */
-		                  { title: 'Hotplug script<br><small>(called when any USB device is attached or removed)</small>', name: 'script_usbhotplug', type: 'textarea', value: nvram.script_usbhotplug },
+		                  { title: '热插拔脚本<br><small>(连接或删除任何USB设备时调用)</small>', name: 'script_usbhotplug', type: 'textarea', value: nvram.script_usbhotplug },
 		                  null,
-		                  { text: '<small>Some of the changes will take effect only after a restart.</small>' }
+		                  { text: '<small>某些更改将在重新启动后生效。</small>' }
 		              ]);
 				</script>
 			</div>
 		</div>
 
 		<div class="box" id="last-box" data-box="attached-devices">
-			<div class="heading">Attached Devices</div>
+			<div class="heading">已连接设备</div>
 			<div class="content">
 				<table id="dev-grid" class="line-table"></table>
 			</div>
 		</div>
 
-		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">Save <i class="icon-check"></i></button>
-		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">Cancel <i class="icon-cancel"></i></button>
+		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">保存 <i class="icon-check"></i></button>
+		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">取消 <i class="icon-cancel"></i></button>
 		<span id="footer-msg" class="alert alert-warning" style="visibility: hidden;"></span>
 
 	</form>

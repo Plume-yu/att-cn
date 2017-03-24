@@ -5,10 +5,10 @@ http://www.polarcloud.com/tomato/
 
 For use with Tomato Firmware only.
 No part of this file may be used without permission.
---><title>Miscellaneous</title>
+--><title>其他设置</title>
 <content>
 	<script type="text/javascript">
-		//	<% nvram("t_features,wait_time,wan_speed,clkfreq,jumbo_frame_enable,jumbo_frame_size,ctf_disable"); %>
+		//	<% nvram("at_update,tomatoanon_answer,t_features,wait_time,wan_speed,clkfreq,jumbo_frame_enable,jumbo_frame_size,ctf_disable"); %>
 
 		et1000 = features('1000et');
 
@@ -51,40 +51,40 @@ No part of this file may be used without permission.
 		<!-- CTF-END -->
 
 		<div class="box">
-			<div class="heading">Miscellaneous Settings</div>
+			<div class="heading">其他设置</div>
 			<div class="content">
 
 				<div id="form-fields"></div><hr>
 				<script type="text/javascript">
 					a = [];
-					for (i = 3; i <= 20; ++i) a.push([i, i + ' seconds']);
+					for (i = 3; i <= 20; ++i) a.push([i, i + ' 秒']);
 
 					$('#form-fields').forms([
-						{ title: 'Boot Wait Time *', name: 'wait_time', type: 'select', options: a, value: fixInt(nvram.wait_time, 3, 20, 3) },
-						{ title: 'WAN Port Speed *', name: 'wan_speed', type: 'select', options: [[0,'10Mb Full'],[1,'10Mb Half'],[2,'100Mb Full'],[3,'100Mb Half'],[4,'Auto']], value: nvram.wan_speed },
+						{ title: '引导等待时间 *', name: 'wait_time', type: 'select', options: a, value: fixInt(nvram.wait_time, 3, 20, 3) },
+						{ title: 'WAN端口速度 *', name: 'wan_speed', type: 'select', options: [[0,'10Mb Full'],[1,'10Mb Half'],[2,'100Mb Full'],[3,'100Mb Half'],[4,'自动']], value: nvram.wan_speed },
 						null,
 
 						/* CTF-BEGIN */
-						{ title: 'CTF (Cut-Through Forwarding)', name: 'f_ctf_disable', type: 'checkbox', value: nvram.ctf_disable != '1' },
+						{ title: 'CTF (直通转发)', name: 'f_ctf_disable', type: 'checkbox', value: nvram.ctf_disable != '1' },
 						null,
 						/* CTF-END */
 
-						{ title: 'Enable Jumbo Frames *', name: 'f_jumbo_frame_enable', type: 'checkbox', value: nvram.jumbo_frame_enable != '0', hidden: !et1000 },
-						{ title: 'Jumbo Frame Size *', name: 'jumbo_frame_size', type: 'text', maxlen: 4, size: 6, value: fixInt(nvram.jumbo_frame_size, 1, 9720, 2000),
-							suffix: ' <small>Bytes (range: 1 - 9720; default: 2000)</small>', hidden: !et1000 }
+						{ title: '启用巨型帧 *', name: 'f_jumbo_frame_enable', type: 'checkbox', value: nvram.jumbo_frame_enable != '0', hidden: !et1000 },
+						{ title: '巨型帧尺寸 *', name: 'jumbo_frame_size', type: 'text', maxlen: 4, size: 6, value: fixInt(nvram.jumbo_frame_size, 1, 9720, 2000),
+							suffix: ' <small>Bytes (范围: 1 - 9720; 默认: 2000)</small>', hidden: !et1000 }
 
 					]);
 				</script>
 
-				<h4>Notes</h4>
+				<h4>说明</h4>
 				<ul>
-					<li>Not all models support these options</li>
+					<li>以上选项并不支持所有路由器（部分不受支持）。</li>
 				</ul>
 			</div>
 		</div>
 
-		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">Save <i class="icon-check"></i></button>
-		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">Cancel <i class="icon-cancel"></i></button>
+		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">保存 <i class="icon-check"></i></button>
+		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">取消 <i class="icon-cancel"></i></button>
 		<span id="footer-msg" class="alert alert-warning" style="visibility: hidden;"></span>
 	</form>
 

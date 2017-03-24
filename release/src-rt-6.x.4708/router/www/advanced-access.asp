@@ -5,11 +5,11 @@ http://www.polarcloud.com/tomato/
 For use with Tomato Firmware only.
 No part of this file may be used without permission.
 LAN Access admin module by Augusto Bott
---><title>LAN Access</title>
+--><title>LAN口访问</title>
 <content>
 	<script type="text/javascript" src="js/wireless.jsx?_http_id=<% nv(http_id); %>"></script>
 	<script type="text/javascript">
-		//<% nvram ("lan_ifname,lan1_ifname,lan2_ifname,lan3_ifname,lan_access");%>
+		//<% nvram ("at_update,tomatoanon_answer,lan_ifname,lan1_ifname,lan2_ifname,lan3_ifname,lan_access");%>
 
 		var MAX_BRIDGE_ID = 3;
 
@@ -22,7 +22,7 @@ LAN Access admin module by Augusto Bott
 				{ type: 'select', options: [[0, 'LAN (br0)'],[1, 'LAN1 (br1)'],[2, 'LAN2 (br2)'],[3, 'LAN3 (br3)']], prefix: '<div class="centered">', suffix: '</div>', class: 'input-medium' },
 				{ type: 'text', maxlen: 32, class: 'input-medium' },
 				{ type: 'text', maxlen: 32, class: 'input-medium' }]);
-			this.headerSet(['On', 'Src', 'Src Address', 'Dst', 'Dst Address', 'Description']);
+			this.headerSet(['启用', '源', '源地址', '目标', '目标地址', '描述']);
 
 			var r = nvram.lan_access.split('>');
 			for (var i = 0; i < r.length; ++i) {
@@ -195,24 +195,24 @@ LAN Access admin module by Augusto Bott
 	<input type="hidden" name="lan_access">
 
 	<div class="box">
-		<div class="heading">LAN Access Settings</div>
+		<div class="heading">LAN口访问设置</div>
 		<div class="content">
 			<table class="line-table" id="la-grid"></table><br /><hr>
 
-			<h4>Notes <a href="javascript:toggleVisibility('notes');"><span id="sesdiv_notes_showhide"><i class="icon-chevron-up"></i></span></a></h4>
+			<h4>说明 <a href="javascript:toggleVisibility('notes');"><span id="sesdiv_notes_showhide"><i class="icon-chevron-up"></i></span></a></h4>
 			<div class="section" id="sesdiv_notes" style="display:none">
 				<ul>
-					<li><b>Src</b> - Source LAN bridge.</li>
-					<li><b>Src Address</b> <i>(optional)</i> - Source address allowed. Ex: "1.2.3.4", "1.2.3.4 - 2.3.4.5", "1.2.3.0/24".</li>
-					<li><b>Dst</b> - Destination LAN bridge.</li>
-					<li><b>Dst Address</b> <i>(optional)</i> - Destination address inside the LAN.</li>
+					<li><b>源</b> - Source LAN bridge.</li>
+					<li><b>源地址</b> <i>(可选)</i> - 允许的源地址。 例如x: "1.2.3.4", "1.2.3.4 - 2.3.4.5", "1.2.3.0/24".</li>
+					<li><b>目标</b> - Destination LAN bridge.</li>
+					<li><b>目标地址</b> <i>(可选)</i> - LAN接口上的地址</li>
 				</ul>
 			</div>
 		</div>
 	</div>
 
-	<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">Save <i class="icon-check"></i></button>
-	<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">Cancel <i class="icon-cancel"></i></button>
+	<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">保存 <i class="icon-check"></i></button>
+	<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">取消 <i class="icon-cancel"></i></button>
 	<span id="footer-msg" class="alert alert-warning" style="visibility: hidden;"></span>
 
 	<script type="text/javascript">init();</script>

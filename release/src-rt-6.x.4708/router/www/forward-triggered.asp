@@ -5,7 +5,7 @@ http://www.polarcloud.com/tomato/
 
 For use with Tomato Firmware only.
 No part of this file may be used without permission.
---><title>Triggered Forwarding</title>
+--><title>端口触发</title>
 <content>
 	<style type="text/css">
 		#tg-grid .co1 {
@@ -26,7 +26,7 @@ No part of this file may be used without permission.
 		}
 	</style>
 	<script type="text/javascript">
-		//	<% nvram("trigforward"); %>
+		//	<% nvram("at_update,tomatoanon_answer,trigforward"); %>
 
 		var tg = new TomatoGrid();
 
@@ -50,7 +50,7 @@ No part of this file may be used without permission.
 		}
 
 		tg.dataToView = function(data) {
-			return [data[0] ? '<i class="icon-check icon-green"></i>' : '<i class="icon-cancel icon-red"></i>', ['TCP', 'UDP', 'Both'][data[1] - 1], data[2], data[3], data[4]];
+			return [data[0] ? '<i class="icon-check icon-green"></i>' : '<i class="icon-cancel icon-red"></i>', ['TCP', 'UDP', '两者'][data[1] - 1], data[2], data[3], data[4]];
 		}
 
 		tg.fieldValuesToData = function(row) {
@@ -64,7 +64,7 @@ No part of this file may be used without permission.
 			if (!v_portrange(f[2], quiet)) return 0;
 			if (!v_portrange(f[3], quiet)) return 0;
 			f[4].value = f[4].value.replace(/>/g, '_');
-			if (!v_nodelim(f[4], quiet, 'Description')) return 0;
+			if (!v_nodelim(f[4], quiet, '描述')) return 0;
 			return 1;
 		}
 
@@ -81,11 +81,11 @@ No part of this file may be used without permission.
 		tg.setup = function() {
 			this.init('tg-grid', 'sort', 50, [
 				{ type: 'checkbox' },
-				{ type: 'select', options: [[1, 'TCP'],[2, 'UDP'],[3,'Both']], class : 'input-small' },
+				{ type: 'select', options: [[1, 'TCP'],[2, 'UDP'],[3,'两者']], class : 'input-small' },
 				{ type: 'text', maxlen: 16 },
 				{ type: 'text', maxlen: 16 },
 				{ type: 'text', maxlen: 32 }]);
-			this.headerSet(['On', 'Protocol', 'Trigger Ports', 'Forwarded Ports', 'Description']);
+			this.headerSet(['状态', '协议', '触发端口', '转发端口', '描述']);
 			var nv = nvram.trigforward.split('>');
 			for (var i = 0; i < nv.length; ++i) {
 				var r;
@@ -124,7 +124,6 @@ No part of this file may be used without permission.
 			tg.resetNewEditor();
 
 		}
-
 	</script>
 
 	<form id="_fom" method="post" action="tomato.cgi">
@@ -133,24 +132,24 @@ No part of this file may be used without permission.
 	<input type="hidden" name="trigforward">
 
 	<div class="box">
-		<div class="heading">Triggered Port-Forwarding</div>
+		<div class="heading">端口触发</div>
 		<div class="content">
 			<table class="line-table" id="tg-grid"></table><br /><hr>
 
-			<h4>Notes</h4>
+			<h4>说明</h4>
 			<div class="section" id="sesdiv_notes" >
 				<ul>
-					<li>Use "-" to specify a range of ports (200-300).
-					<li>Trigger Ports are the initial LAN to WAN "trigger".
-					<li>Forwarded Ports are the WAN to LAN ports that are opened if the "trigger" is activated.
-					<li>These ports are automatically closed after a few minutes of inactivity.
+					<li>使用 "-" 指定端口范围 (200-300)。
+					<li>触发端口是局域网到广域网的端口。
+					<li>转发端口是广域网到局域网的端口。
+					<li>开启的通讯端口若未使用,几分钟之后会自动关闭。
 				</ul>
 			</div>
 		</div>
 	</div>
 
-	<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">Save <i class="icon-check"></i></button>
-	<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">Cancel <i class="icon-cancel"></i></button>
+	<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">保存 <i class="icon-check"></i></button>
+	<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">取消 <i class="icon-cancel"></i></button>
 	<span id="footer-msg" class="alert alert-warning" style="visibility: hidden;"></span>
 
 	<script type="text/javascript">tg.setup(); init();</script>

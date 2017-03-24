@@ -5,10 +5,10 @@ http://www.polarcloud.com/tomato/
 
 For use with Tomato Firmware only.
 No part of this file may be used without permission.
---><title>Conntrack / Netfilter</title>
+--><title>连接数 / 网络拦截</title>
 <content>
 	<script type="text/javascript">
-		//	<% nvram("ct_tcp_timeout,ct_udp_timeout,ct_timeout,ct_max,ct_hashsize,nf_l7in,nf_ttl,nf_sip,nf_rtsp,nf_pptp,nf_h323,nf_ftp"); %>
+		//	<% nvram("at_update,tomatoanon_answer,ct_tcp_timeout,ct_udp_timeout,ct_timeout,ct_max,ct_hashsize,nf_l7in,nf_ttl,nf_sip,nf_rtsp,nf_pptp,nf_h323,nf_ftp"); %>
 
 		var checker = null;
 		var timer = new TomatoTimer(check);
@@ -31,9 +31,9 @@ No part of this file may be used without permission.
 					conntrack = [];
 				}
 				for (i = 1; i < 13; ++i) {
-					E('count' + i).innerHTML = '&nbsp; <small>('+ ((conntrack[i] || 0) * 1) + ' in this state)</small>';
+					E('count' + i).innerHTML = '&nbsp; <small>('+ ((conntrack[i] || 0) * 1) + ' 在当前状态)</small>';
 				}
-				E('count0').innerHTML = '(' + ((conntrack[0] || 0) * 1) + ' connections currently tracked)';
+				E('count0').innerHTML = '(' + ((conntrack[0] || 0) * 1) + ' 个连接数)';
 				checker = null;
 				timer.start(3000);
 			}
@@ -67,7 +67,7 @@ No part of this file may be used without permission.
 			}
 			else {
 				setTimeout(expireTimer, 1000);
-				e.value = 'Expire Scheduled... ' + expireTime;
+				e.value = '剩余时间... ' + expireTime;
 			}
 		}
 
@@ -168,25 +168,25 @@ No part of this file may be used without permission.
 	<input type="hidden" name="nf_sip">
 
 	<div class="box" data-box="ctnf-cons">
-		<div class="heading">Connections</div>
+		<div class="heading">活动连接数</div>
 		<div class="content">
 			<div class="conectionsfirst"></div>
 			<script type="text/javascript">
 				$('.conectionsfirst').forms([
-					{ title: 'Maximum Connections', name: 'ct_max', type: 'text', maxlen: 6, size: 8,
-						suffix: '&nbsp; <a href="javascript:clicked()" id="count0">[ count current... ]</a> <div class="spinner" style="visibility:hidden" id="spin" onclick="clicked()"></div>',
+					{ title: '最大连接数', name: 'ct_max', type: 'text', maxlen: 6, size: 8,
+						suffix: '&nbsp; <a href="javascript:clicked()" id="count0">[ 统计当前连接数... ]</a> <div class="spinner" style="visibility:hidden" id="spin" onclick="clicked()"></div>',
 						value: fixInt(nvram.ct_max || 4096, 128, 300000, 4096) }
 					/* LINUX26-BEGIN */
-					,{ title: 'Hash Table Size', name: 'ct_hashsize', type: 'text', maxlen: 6, size: 8, value: nvram.ct_hashsize || 1023 }
+					,{ title: '哈希表大小', name: 'ct_hashsize', type: 'text', maxlen: 6, size: 8, value: nvram.ct_hashsize || 1023 }
 					/* LINUX26-END */
 				], { grid: ['col-sm-2', 'col-sm-10'] });
 			</script>
-			<button type="button" value="Drop Idle" onclick="expireClicked()" id="expire" class="btn">Drop Idle <i class="icon-disable"></i></button>
+			<button type="button" value="Drop Idle" onclick="expireClicked()" id="expire" class="btn">释放空闲数 <i class="icon-disable"></i></button>
 		</div>
 	</div>
 
 	<div class="box" data-box="ctnf-tcp-time">
-		<div class="heading">TCP Timeout</div>
+		<div class="heading">TCP 连接超时</div>
 		<div class="section tcptimeout content"></div>
 		<script type="text/javascript">
 			if ((v = nvram.ct_tcp_timeout.match(/^(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)$/)) == null) {
@@ -206,7 +206,7 @@ No part of this file may be used without permission.
 	</div>
 
 	<div class="box" data-box="ctnf-udp-time">
-		<div class="heading">UDP Timeout</div>
+		<div class="heading">UDP 超时</div>
 		<div class="udptimeout content"></div>
 		<script type="text/javascript">
 			if ((v = nvram.ct_udp_timeout.match(/^(\d+)\s+(\d+)$/)) == null) {
@@ -221,7 +221,7 @@ No part of this file may be used without permission.
 	</div>
 
 	<div class="box" data-box="ctnf-timeout">
-		<div class="heading">Other Timeouts</div>
+		<div class="heading">其他超时</div>
 		<div class="otimeout content"></div>
 		<script type="text/javascript">
 			if ((v = nvram.ct_timeout.match(/^(\d+)\s+(\d+)$/)) == null) {
@@ -253,7 +253,7 @@ No part of this file may be used without permission.
 	</div>
 
 	<div class="box" data-box="ctnf-misc"">
-		<div class="heading">Miscellaneous</div>
+		<div class="heading">其他</div>
 		<div class="content misc"></div>
 		<script type="text/javascript">
 			v = [];
@@ -273,8 +273,8 @@ No part of this file may be used without permission.
 
 	</div>
 
-	<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">Save <i class="icon-check"></i></button>
-	<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">Cancel <i class="icon-cancel"></i></button>
+	<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">保存 <i class="icon-check"></i></button>
+	<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">取消 <i class="icon-cancel"></i></button>
 	<span id="footer-msg" class="alert alert-warning" style="visibility: hidden;"></span>
 
 	<script type="text/javascript">verifyFields(null, 1);</script>

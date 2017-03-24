@@ -5,7 +5,7 @@ http://www.polarcloud.com/tomato/
 
 For use with Tomato Firmware only.
 No part of this file may be used without permission.
---><title>Routing</title>
+--><title>路由</title>
 <content>
 	<script type="text/javascript">
 		// <% nvram("wk_mode,dr_setting,lan_stp,routes_static,dhcp_routes,lan_ifname,lan1_ifname,lan2_ifname,lan3_ifname,wan_ifname,wan_iface,wan2_ifname,wan2_iface,wan3_ifname,wan3_iface,wan4_ifname,wan4_iface,emf_enable,dr_lan_rx,dr_lan1_rx,dr_lan2_rx,dr_lan3_rx,dr_wan_rx,dr_wan2_rx,dr_wan3_rx,dr_wan4_rx,wan_proto,wan2_proto,wan3_proto,wan4_proto,mwan_num"); %>
@@ -17,7 +17,7 @@ No part of this file may be used without permission.
 			var i, a;
 
 			this.init( 'ara-grid', 'sort' );
-			this.headerSet( [ 'Destination', 'Gateway / Next Hop', 'Subnet Mask', 'Metric', 'Interface' ] );
+			this.headerSet( [ '目的地', '网关/下一跳', '子网掩码', '度量值', '接口' ] );
 			for ( i = 0; i < activeroutes.length; ++i ) {
 				a = activeroutes[ i ];
 				if ( a[ 0 ] == nvram.lan_ifname ) a[ 0 ] += ' (LAN)';
@@ -54,7 +54,7 @@ No part of this file may be used without permission.
 				,['WAN3','WAN3'],['MAN3','MAN3'],['WAN4','WAN4'],['MAN4','MAN4']
 				/* MULTIWAN-END */
 				] }, { type: 'text', maxlen: 32 }]);
-			this.headerSet( [ 'Destination', 'Gateway', 'Subnet Mask', 'Metric', 'Interface', 'Description' ] );
+			this.headerSet( [ '目的地', '网关', '子网掩码', '度量值', '接口', '描述' ] );
 			var routes = nvram.routes_static.split( '>' );
 			for ( var i = 0; i < routes.length; ++i ) {
 				var r;
@@ -200,7 +200,7 @@ No part of this file may be used without permission.
 /* MULTIWAN-END */
 
 		<div class="box" data-box="routing-table">
-			<div class="heading">Current Routing Table</div>
+			<div class="heading">当前路由表</div>
 			<div class="section content">
 				<table class="line-table" id="ara-grid"></table>
 				<br />
@@ -208,18 +208,18 @@ No part of this file may be used without permission.
 		</div>
 
 		<div class="box" data-box="routing-static">
-			<div class="heading">Static Routing Table</div>
+			<div class="heading">静态路由表</div>
 			<div class="section content">
 				<table class="line-table" id="ars-grid"></table>
 			</div>
 		</div>
 
 		<div class="box" data-box="routing-misc">
-			<div class="heading">Miscellaneous</div>
+			<div class="heading">其他</div>
 			<div class="content misc"></div>
 			<script type="text/javascript">
 				$( '.content.misc' ).forms([
-                   { title: 'Mode', name: 'wk_mode', type: 'select', options: [['gateway','Gateway'],['router','Router']], value: nvram.wk_mode },
+                   { title: '模式', name: 'wk_mode', type: 'select', options: [['gateway','网关'],['router','路由']], value: nvram.wk_mode },
                    /* ZEBRA-BEGIN */
                    { title: 'RIPv1 &amp; v2' },
                    { title: 'LAN', indent: 2, name: 'f_dr_lan', type: 'checkbox', value: ((nvram.dr_lan_rx != '0') && (nvram.dr_lan_rx != '')) },
@@ -242,8 +242,8 @@ No part of this file may be used without permission.
 			</script>
 		</div>
 
-		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">Save <i class="icon-check"></i></button>
-		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">Cancel <i class="icon-cancel"></i></button>
+		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">保存 <i class="icon-check"></i></button>
+		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">取消 <i class="icon-cancel"></i></button>
 		<span id="footer-msg" class="alert alert-warning" style="visibility: hidden;"></span>
 
 	</form>

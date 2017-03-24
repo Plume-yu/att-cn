@@ -5,12 +5,12 @@ http://www.polarcloud.com/tomato/
 
 For use with Tomato Firmware only.
 No part of this file may be used without permission.
---><title>Debugging</title>
+--><title>调试</title>
 <content>
 	<style>table.fields-table tr td:first-child { width: 40%; }</style>
 	<script type="text/javascript">
 
-		//	<% nvram("debug_nocommit,debug_cprintf,debug_cprintf_file,console_loglevel,t_cafree,t_hidelr,debug_ddns,debug_norestart"); %>
+		//	<% nvram("at_update,tomatoanon_answer,debug_nocommit,debug_cprintf,debug_cprintf_file,console_loglevel,t_cafree,t_hidelr,debug_ddns,debug_norestart"); %>
 
 		function nvramCommit()
 		{
@@ -58,14 +58,12 @@ No part of this file may be used without permission.
 		<input type="hidden" name="t_hidelr">
 
 		<div class="alert alert-warning icon">
-			<h5>Warning!</h5> The NVRAM Dump text file may contain information like wireless
-			encryption keys and usernames/passwords for the router, ISP and DDNS. Please
-			review &amp; edit this file before sharing it with
-			anyone.
+			<h5>警告！</h5> NVRAM转储文本文件包含无线
+			密码，路由器密码，宽带密码等，&amp; 请不要共享！
 		</div>
 
 		<div class="box">
-			<div class="heading">Debugging Settings & Information</div>
+			<div class="heading">调试设置 & 信息</div>
 			<div class="content">
 
 				<div id="debug"></div>
@@ -73,14 +71,14 @@ No part of this file may be used without permission.
 					a = [];
 					for (i = 1; i <= 8; ++i) a.push([i, i]);
 					$('#debug').forms([
-						{ title: 'Avoid performing an NVRAM commit', name: 'f_debug_nocommit', type: 'checkbox', value: nvram.debug_nocommit != '0' },
-						{ title: 'Enable cprintf output to console', name: 'f_debug_cprintf', type: 'checkbox', value: nvram.debug_cprintf != '0' },
-						{ title: 'Enable cprintf output to /tmp/cprintf', name: 'f_debug_cprintf_file', type: 'checkbox', value: nvram.debug_cprintf_file != '0' },
-						{ title: 'Enable DDNS output to /tmp/mdu-*', name: 'f_debug_ddns', type: 'checkbox', value: nvram.debug_ddns != '0' },
-						{ title: 'Count cache memory and buffers as free memory', name: 'f_cafree', type: 'checkbox', value: nvram.t_cafree == '1' },
-						{ title: 'Avoid displaying LAN to router connections', name: 'f_hidelr', type: 'checkbox', value: nvram.t_hidelr == '1' },
-						{ title: 'Console log level', name: 'console_loglevel', type: 'select', options: a, value: fixInt(nvram.console_loglevel, 1, 8, 1) },
-						{ title: 'Do not restart the following process if they die', multi: [
+						{ title: '避免执行NVRAM提交', name: 'f_debug_nocommit', type: 'checkbox', value: nvram.debug_nocommit != '0' },
+						{ title: '启用cprintf输出到控制台', name: 'f_debug_cprintf', type: 'checkbox', value: nvram.debug_cprintf != '0' },
+						{ title: '启用cprintf输出到/tmp/cprintf', name: 'f_debug_cprintf_file', type: 'checkbox', value: nvram.debug_cprintf_file != '0' },
+						{ title: '启用DDNS输出到/tmp/mdu-*', name: 'f_debug_ddns', type: 'checkbox', value: nvram.debug_ddns != '0' },
+						{ title: '将缓存内存和缓冲区计算为可用内存', name: 'f_cafree', type: 'checkbox', value: nvram.t_cafree == '1' },
+						{ title: '不显示LAN到路由器连接', name: 'f_hidelr', type: 'checkbox', value: nvram.t_hidelr == '1' },
+						{ title: '终端日志级别', name: 'console_loglevel', type: 'select', options: a, value: fixInt(nvram.console_loglevel, 1, 8, 1) },
+						{ title: '如果以下进程结束，请勿重新启动', multi: [
 							{ name: 'f_nr_crond', type: 'checkbox', suffix: ' crond<br>', value: (nvram.debug_norestart.indexOf('crond') != -1) },
 							{ name: 'f_nr_dnsmasq', type: 'checkbox', suffix: ' dnsmasq<br>', value: (nvram.debug_norestart.indexOf('dnsmasq') != -1) },
 							/* LINUX26-BEGIN */
@@ -92,22 +90,22 @@ No part of this file may be used without permission.
 				</script>
 				<hr>
 
-				&raquo; <a href="#clear-cookies.asp">Clear Cookies</a><br>
-				&raquo; <a href="javascript:nvramCommit()">NVRAM Commit</a><br>
+				&raquo; <a href="#clear-cookies.asp">清除 Cookies</a><br>
+				&raquo; <a href="javascript:nvramCommit()">提交NVRAM变更</a><br>
 				<br>
 
-				&raquo; <a href="/cfe/cfe.bin?_http_id=<% nv(http_id); %>">Download CFE</a><br>
-				&raquo; <a href="/ipt/iptables.txt?_http_id=<% nv(http_id); %>">Download Iptables Dump</a><br>
+				&raquo; <a href="/cfe/cfe.bin?_http_id=<% nv(http_id); %>">下载 CFE</a><br>
+				&raquo; <a href="/ipt/iptables.txt?_http_id=<% nv(http_id); %>">下载 Iptables Dump</a><br>
 				<!-- IPV6-BEGIN -->
-				&raquo; <a href="/ip6t/ip6tables.txt?_http_id=<% nv(http_id); %>">Download Ip6tables Dump</a><br>
+				&raquo; <a href="/ip6t/ip6tables.txt?_http_id=<% nv(http_id); %>">下载 Ip6tables Dump</a><br>
 				<!-- IPV6-END -->
-				&raquo; <a href="/logs/syslog.txt?_http_id=<% nv(http_id); %>">Download Logs</a><br>
-				&raquo; <a href="/nvram/nvram.txt?_http_id=<% nv(http_id); %>">Download NVRAM Dump</a>
+				&raquo; <a href="/logs/syslog.txt?_http_id=<% nv(http_id); %>">下载日志</a><br>
+				&raquo; <a href="/nvram/nvram.txt?_http_id=<% nv(http_id); %>">下载NVRAM Dump</a>
 			</div>
 		</div>
 
-		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">Save <i class="icon-check"></i></button>
-		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">Cancel <i class="icon-cancel"></i></button>
+		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">保存 <i class="icon-check"></i></button>
+		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">取消 <i class="icon-cancel"></i></button>
 		<span id="footer-msg" class="alert alert-warning" style="visibility: hidden;"></span>
 	</form>
 </content>

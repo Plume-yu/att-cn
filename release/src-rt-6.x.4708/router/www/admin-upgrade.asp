@@ -5,7 +5,7 @@ http://www.polarcloud.com/tomato/
 
 For use with Tomato Firmware only.
 No part of this file may be used without permission.
---><title>Firmware Upgrade</title>
+--><title>固件升级</title>
 <content>
 	<style>
 		#afu-progress {
@@ -63,11 +63,11 @@ No part of this file may be used without permission.
 			name = fixFile(fom.file.value);
 
 			if (name.search(/\.(bin|trx|chk)$/i) == -1) {
-				alert('Expecting a ".bin", ".trx" or ".chk" file.');
+				alert('支持 ".bin", ".trx" 或者 ".chk" 文件。');
 				return false;
 			}
 
-			if (!confirm('Are you sure you want to flash ' + name + '?')) return;
+			if (!confirm('你确定要刷这个固件 ' + name + '?')) return;
 			E('afu-upgrade-button').disabled = true;
 
 			// Some cool things
@@ -84,30 +84,30 @@ No part of this file may be used without permission.
 	<div id="afu-input">
 
 		<div class="alert alert-warning icon">
-			<h5>Attention!</h5>Sometimes an image file can become corrupted while downloading to your computer.
-			To avoid problems, please verify the MD5 checksum (<a target="_blank" href="http://en.wikipedia.org/wiki/Checksum">Read more</a>) of the AdvancedTomato image file before attempting to flash your router.
+			<h5>注意！</h5>有时下载的固件会出现损坏。
+			为避免出现问题，请在刷写固件之前验证固件的MD5校验值 (<a target="_blank" href="http://en.wikipedia.org/wiki/Checksum">了解更多</a>) 。
 			<a class="close"><i class="icon-cancel"></i></a>
 		</div>
 
 		<form name="form_upgrade" method="post" action="upgrade.cgi" encType="multipart/form-data">
 
 			<div class="box">
-				<div class="heading">Router Upgrade</div>
+				<div class="heading">路由升级</div>
 				<div class="content">
 
 					<fieldset>
-						<label class="control-left-label col-sm-3">Select new image:</label>
+						<label class="control-left-label col-sm-3">选择固件：</label>
 						<div class="col-sm-9"><input class="uploadfile" type="file" name="file" size="50">
-							<button type="button" value="Upgrade" id="afu-upgrade-button" onclick="upgrade();" class="btn btn-danger">Upgrade <i class="icon-upload"></i></button>
+							<button type="button" value="Upgrade" id="afu-upgrade-button" onclick="upgrade();" class="btn btn-danger">升级 <i class="icon-upload"></i></button>
 						</div>
 					</fieldset>
 
 					<fieldset>
-						<label class="control-left-label col-sm-3" for="f_reset">Restore defaults</label>
+						<label class="control-left-label col-sm-3" for="f_reset">恢复出厂设置</label>
 						<div class="col-sm-9">
 							<div id="reset-input">
 								<div class="checkbox c-checkbox"><label><input class="custom" type="checkbox" id="f_reset">
-									<span class="icon-check"></span> &nbsp; After flashing, erase all data in NVRAM memory</label>
+									<span class="icon-check"></span> &nbsp; 升级固件后，清除NVRAM内存中的所有数据</label>
 								</div>
 							</div>
 						</div>
@@ -117,10 +117,10 @@ No part of this file may be used without permission.
 			</div>
 
 			<div class="box">
-				<div class="heading">Router Info</div>
+				<div class="heading">路由信息</div>
 				<div class="content">
 					<table class="line-table" id="version-table">
-						<tr><td>Current Version:</td><td>&nbsp; <% version(1); %></td></tr>
+						<tr><td>当前版本：</td><td>&nbsp; <% version(1); %></td></tr>
 					</table>
 				</div>
 			</div>
@@ -129,8 +129,8 @@ No part of this file may be used without permission.
 				<div class="text-container">
 					<div class="spinner spinner-large"></div><br /><br />
 					<b id="afu-time">0:00</b><br />
-					Please wait while new image is being uploaded and flashed...<br />
-					<b>Do not interrupt web browser or the router!</b>
+					正在上传并升级固件，请稍候...<br />
+					<b>请不要关闭浏览器和路由器！</b>
 				</div>
 			</div>
 		</form>
@@ -138,10 +138,10 @@ No part of this file may be used without permission.
 
 	/* JFFS2-BEGIN */
 	<div class="alert alert-error" style="display:none;" id="jwarn">
-		<h5>Upgrade forbidden!</h5>
-		An upgrade may overwrite the JFFS partition currently in use. Before upgrading,
-		please backup the contents of the JFFS partition, disable it, then reboot the router.
-		<a href="/#admin-jffs2.asp">Disable &raquo;</a>
+		<h5>禁止升级!</h5>
+		升级可能会覆盖当前使用的JFFS分区。 升级前，
+		请备份JFFS分区的内容，禁用JFFS后，然后重新启动路由器再升级。
+		<a href="/#admin-jffs2.asp">禁用 &raquo;</a>
 	</div>
 	<script type="text/javascript">
 		//	<% sysinfo(); %>

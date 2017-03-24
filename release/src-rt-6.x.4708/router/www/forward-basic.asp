@@ -5,9 +5,9 @@ http://www.polarcloud.com/tomato/
 
 For use with Tomato Firmware only.
 No part of this file may be used without permission.
---><title>Basic Forwarding</title>
+--><title>IPv4端口转发</title>
 <content><script type="text/javascript">
-		//	<% nvram("portforward"); %>
+		//	<% nvram("at_update,tomatoanon_answer,portforward"); %>
 
 		var lipp = '<% lipp(); %>.';
 
@@ -25,7 +25,7 @@ No part of this file may be used without permission.
 					r = cmpIP(da[col], db[col]);
 					break;
 				case 0:	// on
-				case 1: // protocol
+				case 1: // proto
 				case 3:	// ext prt
 				case 4:	// int prt
 					r = cmpInt(da[col], db[col]);
@@ -42,7 +42,7 @@ No part of this file may be used without permission.
 
 			return [
 				(data[0] != '0') ? '<i class="icon-check icon-green"></i>' : '<i class="icon-cancel icon-red"></i>',
-				['TCP', 'UDP', 'Both'][data[1] - 1],
+				['TCP', 'UDP', '两者'][data[1] - 1],
 				(data[2].match(/(.+)-(.+)/)) ? (RegExp.$1 + ' -<br>' + RegExp.$2) : data[2],
 				data[3],
 				data[4],
@@ -84,7 +84,7 @@ No part of this file may be used without permission.
 			if (!v_ip(f[5], quiet, 1)) return 0;
 
 			f[6].value = f[6].value.replace(/>/g, '_');
-			if (!v_nodelim(f[6], quiet, 'Description')) return 0;
+			if (!v_nodelim(f[6], quiet, '描述')) return 0;
 			return 1;
 		}
 
@@ -103,13 +103,13 @@ No part of this file may be used without permission.
 		fog.setup = function() {
 			this.init('fo-grid', 'sort', 100, [
 				{ type: 'checkbox' },
-				{ type: 'select', options: [[1, 'TCP'],[2, 'UDP'],[3,'Both']], class : 'input-small' },
+				{ type: 'select', options: [[1, 'TCP'],[2, 'UDP'],[3,'两者']], class : 'input-small' },
 				{ type: 'text', maxlen: 32, class : 'input-medium' },
 				{ type: 'text', maxlen: 16, class : 'input-medium', size: '12' },
 				{ type: 'text', maxlen: 5,  class : 'input-mini' },
 				{ type: 'text', maxlen: 15, class : 'input-medium' },
 				{ type: 'text', maxlen: 32, class : 'input-medium' }]);
-			this.headerSet(['On', 'Protocol', 'Src Address', 'Ext Ports', 'Int Port', 'Int Address', 'Description']);
+			this.headerSet(['状态', '协议', '源地址', '外部端口', '内部端口', '内部地址', '描述']);
 			var nv = nvram.portforward.split('>');
 			for (var i = 0; i < nv.length; ++i) {
 				var r;
@@ -170,26 +170,25 @@ No part of this file may be used without permission.
 		<input type="hidden" name="portforward">
 
 		<div class="box">
-			<div class="heading">Basic Port-forwarding</div>
+			<div class="heading">IPv4端口转发</div>
 			<div class="content">
 
 				<script type="text/javascript">show_notice1('<% notice("iptables"); %>');</script>
 				<table class="line-table" id="fo-grid"></table><br /><hr>
 
-				<h4>Notes</h4>
+				<h4>说明</h4>
 				<ul>
-					<li><b>Src Address</b> <i>(optional)</i> - Forward only if from this address. Ex: "1.2.3.4", "1.2.3.4 - 2.3.4.5", "1.2.3.0/24", "me.example.com".
-					<li><b>Ext Ports</b> - The ports to be forwarded, as seen from the WAN. Ex: "2345", "200,300", "200-300,400".
-					<li><b>Int Port</b> <i>(optional)</i> - The destination port inside the LAN. If blank, the destination port
-					is the same as <i>Ext Ports</i>. Only one port per entry is supported when forwarding to a different internal
-					port.
-					<li><b>Int Address</b> - The destination address inside the LAN.
+					<li><b>源地址</b> <i>(可选)</i> - 需要转发的外部地址（IP或域名）. 例如: "1.2.3.4", "1.2.3.4 - 2.3.4.5", "1.2.3.0/24", "me.example.com"。
+					<li><b>外部端口</b> - 要转发的外网端口，例如: "2345", "200,300", "200-300,400"。
+					<li><b>内部端口</b> <i>(可选)</i> - 局域网内的目标端口。如果空白，目标端口
+					与 <i>外部端口</i>相同。 当转发到一个不同的内部IP时，每项只支持一个端口。
+					<li><b>内部地址</b> - 局域网内的IP地址。
 				</ul>
 			</div>
 		</div>
 
-		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">Save <i class="icon-check"></i></button>
-		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">Cancel <i class="icon-cancel"></i></button>
+		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">保存 <i class="icon-check"></i></button>
+		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">取消 <i class="icon-cancel"></i></button>
 		<span id="footer-msg" class="alert alert-warning" style="visibility: hidden;"></span>
 	</form>
 

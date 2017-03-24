@@ -1,10 +1,10 @@
-<title>Device List</title>
+<title>设备列表</title>
 <content>
 	<script type="text/javascript" src="js/wireless.jsx?_http_id=<% nv(http_id); %>"></script>
 	<script type="text/javascript">
 
 		ipp = '<% lipp(); %>.';
-		//<% nvram('lan_ifname,wl_ifname,wl_mode,wl_radio'); %>
+		//<% nvram('at_update,tomatoanon_answer,lan_ifname,wl_ifname,wl_mode,wl_radio'); %>
 		//<% devlist(); %>
 
 		list = [];
@@ -66,7 +66,7 @@
 			}
 
 			a = E(a);
-			a.innerHTML = 'deleting...';
+			a.innerHTML = '删除中...';
 
 			xob.onCompleted = function(text, xml) {
 				a.innerHTML = '...';
@@ -163,7 +163,7 @@
 			for (i = dhcpd_lease.length - 1; i >= 0; --i) {
 				a = dhcpd_lease[i];
 				e = get(a[2], a[1]);
-				e.lease = '<a href="javascript:deleteLease(\'L' + i + '\',\'' + a[1] + '\')" title="Delete Lease" id="L' + i + '">' + a[3] + ' <i class="icon-cancel icon-red"></i></a>';
+				e.lease = '<a href="javascript:deleteLease(\'L' + i + '\',\'' + a[1] + '\')" title="删除设备" id="L' + i + '">' + a[3] + ' <i class="icon-cancel icon-red"></i></a>';
 				e.name = a[0];
 				/* NOVLAN-BEGIN */
 				e.ifname = nvram.lan_ifname;
@@ -231,12 +231,12 @@
 
 				b = e.mac;
 				if (e.mac.match(/^(..):(..):(..)/)) {
-					b += '<br /><a class="btn btn-small" href="http://api.macvendors.com/' + RegExp.$1 + '-' + RegExp.$2 + '-' + RegExp.$3 + '" target="_new" title="OUI Search">OUI</a> ' +
-					'<a class="btn btn-small" href="javascript:addStatic(' + i + ')" title="Static Lease...">Static</a> ' +
-					'<a class="btn btn-small" href="javascript:addqoslimit(' + i + ')" title="QoS BW Limiter">BW Limit</a>';
+					b += '<br /><a class="btn btn-small" href="http://api.macvendors.com/' + RegExp.$1 + '-' + RegExp.$2 + '-' + RegExp.$3 + '" target="_new" title="网卡查询">查询</a> ' +
+					'<a class="btn btn-small" href="javascript:addStatic(' + i + ')" title="静态分配...">静态</a> ' +
+					'<a class="btn btn-small" href="javascript:addqoslimit(' + i + ')" title="QoS带宽限制">限速</a>';
 
 					if (e.rssi != '') {
-						b += ' <a class="btn btn-small" href="javascript:addWF(' + i + ')" title="Wireless Filter...">Wifi Filter</a>';
+						b += ' <a class="btn btn-small" href="javascript:addWF(' + i + ')" title="无线黑名单...">黑名单</a>';
 					}
 				}
 				else {
@@ -279,7 +279,7 @@
 		dg.setup = function()
 		{
 			this.init('dev-grid', 'sort');
-			this.headerSet(['Interface', 'MAC Address', 'IP (Hostname)', 'RSSI', 'Quality (%)', 'TX/RX Rate', 'Lease']);
+			this.headerSet(['接口', 'MAC地址', 'IP地址 (主机名)', 'RSSI', '信号质量 (%)', '上行/下行 速率', '租期']);
 			this.populate();
 			this.sort(2);
 		}
@@ -303,7 +303,7 @@
 	</style>
 
 	<div class="box">
-		<div class="heading">Devices List</div>
+		<div class="heading">设备列表</div>
 		<div class="content">
 			<table id="dev-grid" class="line-table"></table><br />
 			<div class="devicedata"></div>
@@ -316,8 +316,8 @@
 							var a = '';
 							if ((nvram['wl'+u+'_mode'] == 'ap') || (nvram['wl'+u+'_mode'] == 'wds'))
 								a = '&nbsp; &nbsp; <button type="button" class="btn btn-primary" value="Measure" onclick="javascript:window.location=\'wlmnoise.cgi?_http_id=' + nvram.http_id + '&_wl_unit=' + u +'\'">\
-								Measure <i class="icon-signal"></i></button>';
-							f.push( { title: '<b>Noise Floor (' + wl_ifaces[uidx][0] + ')</b>',
+								测量 <i class="icon-signal"></i></button>';
+							f.push( { title: '<b>底噪 (' + wl_ifaces[uidx][0] + ')</b>',
 								prefix: '<span id="noise'+uidx+'">',
 								custom: wlnoise[uidx],
 								suffix: '</span></span> <small>dBm</small>' + a } );

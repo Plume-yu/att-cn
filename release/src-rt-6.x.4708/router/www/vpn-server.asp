@@ -7,7 +7,7 @@ Portions Copyright (C) 2008-2010 Keith Moyer, tomatovpn@keithmoyer.com
 
 For use with Tomato Firmware only.
 No part of this file may be used without permission.
---><title>OpenVPN Server Configuration</title>
+--><title>OpenVPN 服务器设置</title>
 <content>
 	<script type="text/javascript" src="js/vpn.js"></script>
 	<script type="text/javascript">
@@ -19,8 +19,8 @@ No part of this file may be used without permission.
 		function UsersGrid() {return this;}
 		UsersGrid.prototype = new TomatoGrid;
 
-		tabs = [['server1', 'VPN Server 1 <i class="icon-tools"></i>'],['server2', 'VPN Server 2 <i class="icon-tools"></i>']];
-		sections = [['basic', '<i class="icon-system"></i> Basic'],['advanced', '<i class="icon-shield"></i> Advanced'],['keys','<i class="icon-lock"></i> Keys'],['status','<i class="icon-info"></i> Status']];
+		tabs = [['server1', 'VPN服务器 1 <i class="icon-tools"></i>'],['server2', 'VPN服务器 2 <i class="icon-tools"></i>']];
+		sections = [['basic', '<i class="icon-system"></i>  基本设置'],['advanced', '<i class="icon-shield"></i> 高级设置'],['keys','<i class="icon-lock"></i> 安全设置'],['status','<i class="icon-info"></i> 状态']];
 		ccdTables = [];
 		usersTables = [];
 		statusUpdaters = [];
@@ -31,7 +31,7 @@ No part of this file may be used without permission.
 			usersTables[i].servername = tabs[i][0];
 			statusUpdaters.push(new StatusUpdater());
 		}
-		ciphers = [['default','Use Default'],['none','None']];
+		ciphers = [['default','使用默认'],['none','无']];
 		for (i = 0; i < vpnciphers.length; ++i) ciphers.push([vpnciphers[i],vpnciphers[i]]);
 
 		changed = 0;
@@ -48,7 +48,7 @@ No part of this file may be used without permission.
 			}
 			xob.onError = function(ex)
 			{
-				statusUpdaters[num].errors.innerHTML += 'ERROR! '+ex+'<br>';
+				statusUpdaters[num].errors.innerHTML += '错误! '+ex+'<br>';
 				xob = null;
 			}
 
@@ -98,7 +98,7 @@ No part of this file may be used without permission.
 
 		function toggle(service, isup)
 		{
-			if (changed && !confirm("Unsaved changes will be lost. Continue anyway?")) return;
+			if (changed && !confirm("未保存的更改将丢失。 仍然继续?")) return;
 
 			$('#_' + service + '_button').html('<div class="spinner spinner-small"></div>');
 			form.submitHidden('service.cgi', {
@@ -247,13 +247,13 @@ No part of this file may be used without permission.
 			var f = fields.getAll(row);
 
 			// Verify fields in this row of the table
-			if (f[1].value == "") { ferror.set(f[1], "Common name is mandatory.", quiet); ret = 0; }
-			if (f[1].value.indexOf('>') >= 0 || f[1].value.indexOf('<') >= 0) { ferror.set(f[1], "Common name cannot contain '<' or '>' characters.", quiet); ret = 0; }
+			if (f[1].value == "") { ferror.set(f[1], "通用名称（CN）是必需的。", quiet); ret = 0; }
+			if (f[1].value.indexOf('>') >= 0 || f[1].value.indexOf('<') >= 0) { ferror.set(f[1], "通用名称（CN）不能包含 '<' 和 '>' 。", quiet); ret = 0; }
 			if (f[2].value != "" && !v_ip(f[2],quiet,0)) ret = 0;
 			if (f[3].value != "" && !v_netmask(f[3],quiet)) ret = 0;
-			if (f[2].value == "" && f[3].value != "" ) { ferror.set(f[2], "Either both or neither subnet and netmask must be provided.", quiet); ret = 0; }
-			if (f[3].value == "" && f[2].value != "" ) { ferror.set(f[3], "Either both or neither subnet and netmask must be provided.", quiet); ret = 0; }
-			if (f[4].checked && (f[2].value == "" || f[3].value == "")) { ferror.set(f[4], "Cannot push routes if they're not given. Please provide subnet/netmask.", quiet); ret = 0; }
+			if (f[2].value == "" && f[3].value != "" ) { ferror.set(f[2], "要么提供子网和网络掩码，要么不提供子网和网络掩码。", quiet); ret = 0; }
+			if (f[3].value == "" && f[2].value != "" ) { ferror.set(f[3], "要么提供子网和网络掩码，要么不提供子网和网络掩码。", quiet); ret = 0; }
+			if (f[4].checked && (f[2].value == "" || f[3].value == "")) { ferror.set(f[4], "如果未提供路由，则无法推送路由。 请提供子网/网络掩码。", quiet); ret = 0; }
 
 			return ret;
 		}
@@ -325,10 +325,10 @@ No part of this file may be used without permission.
 			var f = fields.getAll(row);
 
 			// Verify fields in this row of the table
-			if (f[1].value == "") { ferror.set(f[1], "username is mandatory.", quiet); ret = 0; }
-			if (f[1].value.indexOf('>') >= 0 || f[1].value.indexOf('<') >= 0) { ferror.set(f[1], "user name cannot contain '<' or '>' characters.", quiet); ret = 0; }
-			if (f[2].value == "" ) { ferror.set(f[2], "password is mandatory.", quiet); ret = 0; }
-			if (f[2].value.indexOf('>') >= 0 || f[1].value.indexOf('<') >= 0) { ferror.set(f[2], "password cannot contain '<' or '>' characters.", quiet); ret = 0; }
+			if (f[1].value == "") { ferror.set(f[1], "必须提供用户名", quiet); ret = 0; }
+			if (f[1].value.indexOf('>') >= 0 || f[1].value.indexOf('<') >= 0) { ferror.set(f[1], "用户名不能包含 '<' 和 '>' 。", quiet); ret = 0; }
+			if (f[2].value == "" ) { ferror.set(f[2], "必须设置密码", quiet); ret = 0; }
+			if (f[2].value.indexOf('>') >= 0 || f[1].value.indexOf('<') >= 0) { ferror.set(f[2], "密码不能包含 '<' 和 '>' 。", quiet); ret = 0; }
 			return ret;
 		}
 		UsersGrid.prototype.fieldValuesToData = function(row)
@@ -412,7 +412,7 @@ No part of this file may be used without permission.
 				t = tabs[i][0];
 
 				ccdTables[i].init('table_'+t+'_ccd', 'sort', 0, [{ type: 'checkbox' }, { type: 'text' }, { type: 'text', maxlen: 15 }, { type: 'text', maxlen: 15 }, { type: 'checkbox' }]);
-				ccdTables[i].headerSet(['Enable', 'Common Name', 'Subnet', 'Netmask', 'Push']);
+				ccdTables[i].headerSet(['启用', '公用名', '子网', '掩码', '推送']);
 				var ccdVal = eval( 'nvram.vpn_'+t+'_ccd_val' );
 
 				if (ccdVal.length) {
@@ -431,7 +431,7 @@ No part of this file may be used without permission.
 				ccdTables[i].resetNewEditor();
 
 				usersTables[i].init('table_' + t + '_users','sort', 0, [{ type: 'checkbox' }, { type: 'text' }, { type: 'text', maxlen: 15 }]);
-				usersTables[i].headerSet(['Enable', 'Username', 'Password']);
+				usersTables[i].headerSet(['启用', '用户名', '密码']);
 
 				var usersVal = eval('nvram.vpn_' + t + '_users_val');
 				if(usersVal.length) {
@@ -490,82 +490,82 @@ No part of this file may be used without permission.
 						htmlOut += '<li><a href="javascript:sectSelect('+i+', \''+sections[j][0]+'\')" id="'+t+'-'+sections[j][0]+'-tab">'+sections[j][1]+'</a></li>';
 					}
 
-					var action = (eval('vpn'+(i+1)+'up') ? 'title="Stop VPN Server ' + (i+1) + '"><i class="icon-stop"></i>' : 'title="Start VPN Server ' + (i+1) + '"><i class="icon-play"></i>');
-					var status = (!eval('vpn'+(i+1)+'up') ? '<small style="color: red">(Stopped)</small>' : '<small style="color: green;">(Running)</small>');
+					var action = (eval('vpn'+(i+1)+'up') ? 'title="关闭VPN服务器 ' + (i+1) + '"><i class="icon-stop"></i>' : 'title="启动VPN服务器' + (i+1) + '"><i class="icon-play"></i>');
+					var status = (!eval('vpn'+(i+1)+'up') ? '<small style="color: red">(未运行)</small>' : '<small style="color: green;">(运行中)</small>');
 
 					htmlOut += '</ul>'
-					+ '<div class="box"><div class="heading">VPN Server #'+(i+1) + status + ' <a id="_vpn' + t + '_button" class="pull-right" href="#" data-toggle="tooltip"' +
+					+ '<div class="box"><div class="heading">VPN 服务器 #'+(i+1) + status + ' <a id="_vpn' + t + '_button" class="pull-right" href="#" data-toggle="tooltip"' +
 					'onclick="toggle(\'vpn'+t+'\', vpn'+(i+1)+'up); return false;"' + action + '</a></div><div class="content">';
 
 					htmlOut += '<div id=\''+t+'-basic\'>';
 					htmlOut += createFormFields([
-						{ title: 'Start with WAN', name: 'f_vpn_'+t+'_eas', type: 'checkbox', value: nvram.vpn_server_eas.indexOf(''+(i+1)) >= 0 },
-						{ title: 'Interface Type', name: 'vpn_'+t+'_if', type: 'select', options: [ ['tap','TAP'], ['tun','TUN'] ], value: eval( 'nvram.vpn_'+t+'_if' ) },
-						{ title: 'Bridge TAP with', indent: 2, name: 'vpn_'+t+'_br', type: 'select', options: [
+						{ title: '连接互联网后运行', name: 'f_vpn_'+t+'_eas', type: 'checkbox', value: nvram.vpn_server_eas.indexOf(''+(i+1)) >= 0 },
+						{ title: '接口类型', name: 'vpn_'+t+'_if', type: 'select', options: [ ['tap','TAP'], ['tun','TUN'] ], value: eval( 'nvram.vpn_'+t+'_if' ) },
+						{ title: '桥接TAP至', indent: 2, name: 'vpn_'+t+'_br', type: 'select', options: [
 							['br0','LAN (br0)*'],
 							['br1','LAN1 (br1)'],
 							['br2','LAN2 (br2)'],
 							['br3','LAN3 (br3)']
 							], value: eval ( 'nvram.vpn_'+t+'_br' ), suffix: ' <small>* default</small> ' },
-						{ title: 'Protocol', name: 'vpn_'+t+'_proto', type: 'select', options: [ ['udp','UDP'], ['tcp-server','TCP'] ], value: eval( 'nvram.vpn_'+t+'_proto' ) },
-						{ title: 'Port', name: 'vpn_'+t+'_port', type: 'text', value: eval( 'nvram.vpn_'+t+'_port' ) },
-						{ title: 'Firewall', name: 'vpn_'+t+'_firewall', type: 'select', options: [ ['auto', 'Automatic'], ['external', 'External Only'], ['custom', 'Custom'] ], value: eval( 'nvram.vpn_'+t+'_firewall' ) },
-						{ title: 'Authorization Mode', name: 'vpn_'+t+'_crypt', type: 'select', options: [ ['tls', 'TLS'], ['secret', 'Static Key'], ['custom', 'Custom'] ], value: eval( 'nvram.vpn_'+t+'_crypt' ),
-							suffix: '<span id=\''+t+'_custom_crypto_text\'>&nbsp;<small>(must configure manually...)</small></span>' },
-						{ title: 'Extra HMAC authorization (tls-auth)', name: 'vpn_'+t+'_hmac', type: 'select', options: [ [-1, 'Disabled'], [2, 'Bi-directional'], [0, 'Incoming (0)'], [1, 'Outgoing (1)'] ], value: eval( 'nvram.vpn_'+t+'_hmac' ) },
-						{ title: 'VPN subnet/netmask', multi: [
+						{ title: '协议', name: 'vpn_'+t+'_proto', type: 'select', options: [ ['udp','UDP'], ['tcp-server','TCP'] ], value: eval( 'nvram.vpn_'+t+'_proto' ) },
+						{ title: '端口', name: 'vpn_'+t+'_port', type: 'text', value: eval( 'nvram.vpn_'+t+'_port' ) },
+						{ title: '防火墙', name: 'vpn_'+t+'_firewall', type: 'select', options: [ ['auto', '自动'], ['external', '仅外部'], ['custom', '自定义'] ], value: eval( 'nvram.vpn_'+t+'_firewall' ) },
+						{ title: '验证模式', name: 'vpn_'+t+'_crypt', type: 'select', options: [ ['tls', 'TLS'], ['secret', '静态密钥'], ['custom', '自定义'] ], value: eval( 'nvram.vpn_'+t+'_crypt' ),
+							suffix: '<span id=\''+t+'_custom_crypto_text\'>&nbsp;<small>(必须手动配置...)</small></span>' },
+						{ title: '额外HMAC授权(tls-auth)', name: 'vpn_'+t+'_hmac', type: 'select', options: [  [-1, '禁用'], [2, '双向'], [0, '入站 (0)'], [1, '出站 (1)'] ], value: eval( 'nvram.vpn_'+t+'_hmac' ) },
+						{ title: 'VPN 子网/掩码', multi: [
 							{ name: 'vpn_'+t+'_sn', type: 'text', maxlen: 15, size: 17, value: eval( 'nvram.vpn_'+t+'_sn' ) },
 							{ name: 'vpn_'+t+'_nm', type: 'text', maxlen: 15, size: 17, value: eval( 'nvram.vpn_'+t+'_nm' ) } ] },
-						{ title: 'Client address pool', multi: [
+						{ title: '客户端地址池', multi: [
 							{ name: 'f_vpn_'+t+'_dhcp', type: 'checkbox', value: eval( 'nvram.vpn_'+t+'_dhcp' ) != 0, suffix: ' DHCP ' },
 							{ name: 'vpn_'+t+'_r1', type: 'text', maxlen: 15, size: 17, value: eval( 'nvram.vpn_'+t+'_r1' ), prefix: '<span id=\''+t+'_range\'>', suffix: '-' },
 							{ name: 'vpn_'+t+'_r2', type: 'text', maxlen: 15, size: 17, value: eval( 'nvram.vpn_'+t+'_r2' ), suffix: '</span>' } ] },
-						{ title: 'Local/remote endpoint addresses', multi: [
+						{ title: '本地/远程端点地址', multi: [
 							{ name: 'vpn_'+t+'_local', type: 'text', maxlen: 15, size: 17, value: eval( 'nvram.vpn_'+t+'_local' ) },
 							{ name: 'vpn_'+t+'_remote', type: 'text', maxlen: 15, size: 17, value: eval( 'nvram.vpn_'+t+'_remote' ) } ] }
 					]);
 					htmlOut += '</div>';
 					htmlOut += '<div id=\''+t+'-advanced\'>';
 					htmlOut += createFormFields([
-						{ title: 'Poll Interval', name: 'vpn_'+t+'_poll', type: 'text', maxlen: 4, size: 5, value: eval( 'nvram.vpn_'+t+'_poll' ), suffix: '&nbsp;<small>(in minutes, 0 to disable)</small>' },
-						{ title: 'Push LAN to clients', name: 'f_vpn_'+t+'_plan', type: 'checkbox', value: eval( 'nvram.vpn_'+t+'_plan' ) != 0 },
-						{ title: 'Direct clients to<br>redirect Internet traffic', name: 'f_vpn_'+t+'_rgw', type: 'checkbox', value: eval( 'nvram.vpn_'+t+'_rgw' ) != 0 },
-						{ title: 'Respond to DNS', name: 'f_vpn_'+t+'_dns', type: 'checkbox', value: nvram.vpn_server_dns.indexOf(''+(i+1)) >= 0 },
-						{ title: 'Advertise DNS to clients', name: 'f_vpn_'+t+'_pdns', type: 'checkbox', value: eval( 'nvram.vpn_'+t+'_pdns' ) != 0 },
-						{ title: 'Encryption cipher', name: 'vpn_'+t+'_cipher', type: 'select', options: ciphers, value: eval( 'nvram.vpn_'+t+'_cipher' ) },
-						{ title: 'Compression', name: 'vpn_'+t+'_comp', type: 'select', options: [ ['-1', 'Disabled'], ['no', 'None'], ['yes', 'Enabled'], ['adaptive', 'Adaptive'] ], value: eval( 'nvram.vpn_'+t+'_comp' ) },
-						{ title: 'TLS Renegotiation Time', name: 'vpn_'+t+'_reneg', type: 'text', maxlen: 10, size: 7, value: eval( 'nvram.vpn_'+t+'_reneg' ),
-							suffix: '&nbsp;<small>(in seconds, -1 for default)</small>' },
-						{ title: 'Manage Client-Specific Options', name: 'f_vpn_'+t+'_ccd', type: 'checkbox', value: eval( 'nvram.vpn_'+t+'_ccd' ) != 0 },
-						{ title: 'Allow Client<->Client', name: 'f_vpn_'+t+'_c2c', type: 'checkbox', value: eval( 'nvram.vpn_'+t+'_c2c' ) != 0 },
-						{ title: 'Allow Only These Clients', name: 'f_vpn_'+t+'_ccd_excl', type: 'checkbox', value: eval( 'nvram.vpn_'+t+'_ccd_excl' ) != 0 },
+						{ title: '轮询间隔', name: 'vpn_'+t+'_poll', type: 'text', maxlen: 4, size: 5, value: eval( 'nvram.vpn_'+t+'_poll' ), suffix: '&nbsp;<small>(in minutes, 0 to disable)</small>' },
+						{ title: '将LAN推送到客户端', name: 'f_vpn_'+t+'_plan', type: 'checkbox', value: eval( 'nvram.vpn_'+t+'_plan' ) != 0 },
+						{ title: '直连客户端<br>重定向到互联网流量', name: 'f_vpn_'+t+'_rgw', type: 'checkbox', value: eval( 'nvram.vpn_'+t+'_rgw' ) != 0 },
+						{ title: '响应DNS', name: 'f_vpn_'+t+'_dns', type: 'checkbox', value: nvram.vpn_server_dns.indexOf(''+(i+1)) >= 0 },
+						{ title: '向客户端广播DNS', name: 'f_vpn_'+t+'_pdns', type: 'checkbox', value: eval( 'nvram.vpn_'+t+'_pdns' ) != 0 },
+						{ title: '加密方式', name: 'vpn_'+t+'_cipher', type: 'select', options: ciphers, value: eval( 'nvram.vpn_'+t+'_cipher' ) },
+						{ title: '启用压缩', name: 'vpn_'+t+'_comp', type: 'select', options: [ ['-1', '禁用'], ['no', '无'], ['yes', '启用'], ['adaptive', '自适应'] ], value: eval( 'nvram.vpn_'+t+'_comp' ) },
+						{ title: 'TLS重新协商时间', name: 'vpn_'+t+'_reneg', type: 'text', maxlen: 10, size: 7, value: eval( 'nvram.vpn_'+t+'_reneg' ),
+							suffix: '&nbsp;<small>(秒, -1 默认)</small>' },
+						{ title: '管理客户端特定选项', name: 'f_vpn_'+t+'_ccd', type: 'checkbox', value: eval( 'nvram.vpn_'+t+'_ccd' ) != 0 },
+						{ title: '允许客户端< - >客户端通信', name: 'f_vpn_'+t+'_c2c', type: 'checkbox', value: eval( 'nvram.vpn_'+t+'_c2c' ) != 0 },
+						{ title: '仅允许这些客户端', name: 'f_vpn_'+t+'_ccd_excl', type: 'checkbox', value: eval( 'nvram.vpn_'+t+'_ccd_excl' ) != 0 },
 						{ title: '', suffix: '<table class=\'line-table\' id=\'table_'+t+'_ccd\'></table>' },
-						{ title: 'Allow User/Pass Auth', name: 'f_vpn_'+t+'_userpass', type: 'checkbox', value: eval( 'nvram.vpn_'+t+'_userpass' ) != 0 },
-						{ title: 'Allow Only User/Pass(Without cert) Auth', name: 'f_vpn_'+t+'_nocert', type: 'checkbox', value: eval( 'nvram.vpn_'+t+'_nocert' ) != 0 },
+						{ title: '允许用户/密码验证', name: 'f_vpn_'+t+'_userpass', type: 'checkbox', value: eval( 'nvram.vpn_'+t+'_userpass' ) != 0 },
+						{ title: '仅允许通过验证的用户（无证书）', name: 'f_vpn_'+t+'_nocert', type: 'checkbox', value: eval( 'nvram.vpn_'+t+'_nocert' ) != 0 },
 						{ title: '', suffix: '<table class=\'line-table\' id=\'table_'+t+'_users\'></table>' },
-						{ title: 'Custom Configuration', name: 'vpn_'+t+'_custom', type: 'textarea', value: eval( 'nvram.vpn_'+t+'_custom' ), style: 'width: 100%; height: 80px;' }
+						{ title: '自定义设置', name: 'vpn_'+t+'_custom', type: 'textarea', value: eval( 'nvram.vpn_'+t+'_custom' ), style: 'width: 100%; height: 80px;' }
 					]);
 					htmlOut += '</div>';
 					htmlOut += '<div id=\''+t+'-keys\' class="langrid">';
-					htmlOut += '<p class=\'keyhelp\'>For help generating keys, refer to the OpenVPN <a id=\''+t+'-keyhelp\'>HOWTO</a>.</p>';
+					htmlOut += '<p class=\'keyhelp\'有关生成密钥的帮助，请参阅OpenVPN <a id=\''+t+'-keyhelp\'>HOWTO</a>.</p>';
 					htmlOut += createFormFields([
-						{ title: 'Static Key', name: 'vpn_'+t+'_static', type: 'textarea', value: eval( 'nvram.vpn_'+t+'_static' ), style: 'width: 100%; height: 80px;' },
-						{ title: 'Certificate Authority', name: 'vpn_'+t+'_ca', type: 'textarea', value: eval( 'nvram.vpn_'+t+'_ca' ), style: 'width: 100%; height: 80px;' },
-						{ title: 'Server Certificate', name: 'vpn_'+t+'_crt', type: 'textarea', value: eval( 'nvram.vpn_'+t+'_crt' ), style: 'width: 100%; height: 80px;' },
-						{ title: 'Server Key', name: 'vpn_'+t+'_key', type: 'textarea', value: eval( 'nvram.vpn_'+t+'_key' ), style: 'width: 100%; height: 80px;' },
-						{ title: 'Diffie Hellman parameters', name: 'vpn_'+t+'_dh', type: 'textarea', value: eval( 'nvram.vpn_'+t+'_dh' ), style: 'width: 100%; height: 80px;' }
+						{ title: '静态密钥', name: 'vpn_'+t+'_static', type: 'textarea', value: eval( 'nvram.vpn_'+t+'_static' ), style: 'width: 100%; height: 80px;' },
+						{ title: '证书颁发机构', name: 'vpn_'+t+'_ca', type: 'textarea', value: eval( 'nvram.vpn_'+t+'_ca' ), style: 'width: 100%; height: 80px;' },
+						{ title: '服务器证书', name: 'vpn_'+t+'_crt', type: 'textarea', value: eval( 'nvram.vpn_'+t+'_crt' ), style: 'width: 100%; height: 80px;' },
+						{ title: '服务器KEY', name: 'vpn_'+t+'_key', type: 'textarea', value: eval( 'nvram.vpn_'+t+'_key' ), style: 'width: 100%; height: 80px;' },
+						{ title: 'Diffie-Hellman算法', name: 'vpn_'+t+'_dh', type: 'textarea', value: eval( 'nvram.vpn_'+t+'_dh' ), style: 'width: 100%; height: 80px;' }
 					]);
 					htmlOut += '</div>';
 					htmlOut += '<div id=\''+t+'-status\'>';
-					htmlOut += '<div id=\''+t+'-no-status\'><p>Server is not running or status could not be read.</p></div>';
+					htmlOut += '<div id=\''+t+'-no-status\'><p>服务器未运行或无法读取状态。</p></div>';
 					htmlOut += '<div id=\''+t+'-status-content\' style=\'display:none\' class=\'status-content\'>';
-					htmlOut += '<div id=\''+t+'-status-header\' class=\'status-header\'><p>Data current as of <span id=\''+t+'-status-time\'></span>.</p></div>';
-					htmlOut += '<div id=\''+t+'-status-clients\'><div class=\'section-title\'>Client List</div><table class=\'line-table\' id=\''+t+'-status-clients-table\'></table><br></div>';
-					htmlOut += '<div id=\''+t+'-status-routing\'><div class=\'section-title\'>Routing Table</div><table class=\'line-table\' id=\''+t+'-status-routing-table\'></table><br></div>';
-					htmlOut += '<div id=\''+t+'-status-stats\'><div class=\'section-title\'>General Statistics</div><table class=\'line-table\' id=\''+t+'-status-stats-table\'></table><br></div>';
+					htmlOut += '<div id=\''+t+'-status-header\' class=\'status-header\'><p>当前数据<span id=\''+t+'-status-time\'></span>.</p></div>';
+					htmlOut += '<div id=\''+t+'-status-clients\'><div class=\'section-title\'>客户端列表</div><table class=\'line-table\' id=\''+t+'-status-clients-table\'></table><br></div>';
+					htmlOut += '<div id=\''+t+'-status-routing\'><div class=\'section-title\'>路由表</div><table class=\'line-table\' id=\''+t+'-status-routing-table\'></table><br></div>';
+					htmlOut += '<div id=\''+t+'-status-stats\'><div class=\'section-title\'>一般统计</div><table class=\'line-table\' id=\''+t+'-status-stats-table\'></table><br></div>';
 					htmlOut += '<div id=\''+t+'-status-errors\' class=\'error\'></div>';
 					htmlOut += '</div>';
-					htmlOut += '<div><a href=\'javascript:updateStatus('+i+')\'>Refresh Status</a></div>';
+					htmlOut += '<div><a href=\'javascript:updateStatus('+i+')\'>刷新状态</a></div>';
 					htmlOut += '</div>';
 					htmlOut += '</div></div></div>';
 				}
@@ -576,8 +576,8 @@ No part of this file may be used without permission.
 			</script>
 		</div>
 
-		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">Save <i class="icon-check"></i></button>
-		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">Cancel <i class="icon-cancel"></i></button>
+		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">保存 <i class="icon-check"></i></button>
+		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">取消 <i class="icon-cancel"></i></button>
 		<span id="footer-msg" class="alert alert-warning" style="visibility: hidden;"></span>
 
 	</form>

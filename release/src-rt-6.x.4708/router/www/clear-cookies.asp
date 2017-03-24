@@ -1,8 +1,8 @@
-<title>Clear Cookies</title>
+<title>清除 Cookies</title>
 <content>
 
 	<div class="box">
-		<div class="heading">Cleared Cookies</div>
+		<div class="heading">清除 Cookies</div>
 		<div class="content clearcookies"></div>
 	</div>
 	<script type="text/javascript">
@@ -14,7 +14,7 @@
 				cookie.unset(RegExp.$1);
 			}
 		}
-		if (b.length == 0) b.push('<b>No cookie found!</b>');
+		if (b.length == 0) b.push('<b>找不到cookie!</b>');
 		$('.content.clearcookies').append(b.join('<br>'));
 	</script>
 

@@ -4,7 +4,7 @@ Copyright (C) 2007-2011 Shibby
 http://openlinksys.info
 For use with Tomato Firmware only.
 No part of this file may be used without permission.
---><title>TOR Project</title>
+--><title>Tor项目</title>
 <content>
 	<style type="text/css">
 		textarea {
@@ -46,52 +46,52 @@ No part of this file may be used without permission.
 			var s = E( '_tor_custom' );
 
 			if ( s.value.search( /SocksPort/ ) == 0 ) {
-				ferror.set( s, 'Cannot set "SocksPort" option here. You can set it in Tomato GUI', quiet );
+				ferror.set( s, '无法在此处设置“Socks端口”选项。 您可以在Tomato GUI中设置它。', quiet );
 				ok = 0;
 			}
 
 			if ( s.value.search( /SocksBindAddress/ ) == 0 ) {
-				ferror.set( s, 'Cannot set "SocksBindAddress" option here.', quiet );
+				ferror.set( s, '无法在此处设置“Socks绑定地址”选项。', quiet );
 				ok = 0;
 			}
 
 			if ( s.value.search( /AllowUnverifiedNodes/ ) == 0 ) {
-				ferror.set( s, 'Cannot set "AllowUnverifiedNodes" option here.', quiet );
+				ferror.set( s, '无法在此处设置“允许未验证节点”选项。', quiet );
 				ok = 0;
 			}
 
 			if ( s.value.search( /Log/ ) == 0 ) {
-				ferror.set( s, 'Cannot set "Log" option here.', quiet );
+				ferror.set( s, '无法在此处设置“日志”选项。', quiet );
 				ok = 0;
 			}
 
 			if ( s.value.search( /DataDirectory/ ) == 0 ) {
-				ferror.set( s, 'Cannot set "DataDirectory" option here. You can set it in Tomato GUI', quiet );
+				ferror.set( s, '无法在此处设置“数据目录”选项。 您可以在Tomato GUI中设置它。', quiet );
 				ok = 0;
 			}
 
 			if ( s.value.search( /TransPort/ ) == 0 ) {
-				ferror.set( s, 'Cannot set "TransPort" option here. You can set it in Tomato GUI', quiet );
+				ferror.set( s, '无法在此处设置“传输端口”选项。 您可以在Tomato GUI中设置它。', quiet );
 				ok = 0;
 			}
 
 			if ( s.value.search( /TransListenAddress/ ) == 0 ) {
-				ferror.set( s, 'Cannot set "TransListenAddress" option here.', quiet );
+				ferror.set( s, '无法在此处设置“传输监听地址”选项。', quiet );
 				ok = 0;
 			}
 
 			if ( s.value.search( /DNSPort/ ) == 0 ) {
-				ferror.set( s, 'Cannot set "DNSPort" option here. You can set it in Tomato GUI', quiet );
+				ferror.set( s, '无法在此处设置“DNS端口”选项。 您可以在Tomato GUI中设置它。', quiet );
 				ok = 0;
 			}
 
 			if ( s.value.search( /DNSListenAddress/ ) == 0 ) {
-				ferror.set( s, 'Cannot set "DNSListenAddress" option here.', quiet );
+				ferror.set( s, '无法在此处设置“DNS监听地址”选项。', quiet );
 				ok = 0;
 			}
 
 			if ( s.value.search( /User/ ) == 0 ) {
-				ferror.set( s, 'Cannot set "User" option here.', quiet );
+				ferror.set( s, '无法在此处设置“用户”选项。', quiet );
 				ok = 0;
 			}
 
@@ -119,54 +119,54 @@ No part of this file may be used without permission.
 		<input type='hidden' name='tor_enable'>
 
 		<div class="box">
-			<div class="heading">Tor Project Settings</div>
+			<div class="heading">Tor项目设置</div>
 			<div class="content">
 				<div id="tor-settings"></div><hr>
 
 				<script type="text/javascript">
 					$('#tor-settings').forms([
-	                     { title: 'Enable Tor', name: 'f_tor_enable', type: 'checkbox', value: nvram.tor_enable == '1' },
+	                     { title: '启用 TOR', name: 'f_tor_enable', type: 'checkbox', value: nvram.tor_enable == '1' },
 	                     null,
-	                     { title: 'Socks Port', name: 'tor_socksport', type: 'text', maxlen: 5, size: 7, value: fixPort(nvram.tor_socksport, 9050) },
-	                     { title: 'Trans Port', name: 'tor_transport', type: 'text', maxlen: 5, size: 7, value: fixPort(nvram.tor_transport, 9040) },
-	                     { title: 'DNS Port', name: 'tor_dnsport', type: 'text', maxlen: 5, size: 7, value: fixPort(nvram.tor_dnsport, 9053) },
-	                     { title: 'Data Directory', name: 'tor_datadir', type: 'text', maxlen: 24, size: 28, value: nvram.tor_datadir },
+	                     { title: 'Socks 端口', name: 'tor_socksport', type: 'text', maxlen: 5, size: 7, value: fixPort(nvram.tor_socksport, 9050) },
+	                     { title: '传输端口', name: 'tor_transport', type: 'text', maxlen: 5, size: 7, value: fixPort(nvram.tor_transport, 9040) },
+	                     { title: 'DNS端口', name: 'tor_dnsport', type: 'text', maxlen: 5, size: 7, value: fixPort(nvram.tor_dnsport, 9053) },
+	                     { title: '数据目录', name: 'tor_datadir', type: 'text', maxlen: 24, size: 28, value: nvram.tor_datadir },
 	                     null,
-	                     { title: 'Redirect all users from', multi: [
+	                     { title: '重定向所有用户', multi: [
 	                         { name: 'tor_iface', type: 'select', options: [
 		                         ['br0','LAN (br0)'],
 		                         ['br1','LAN1 (br1)'],
 		                         ['br2','LAN2 (br2)'],
 		                         ['br3','LAN3 (br3)'],
-		                         ['custom','Selected IP`s']
+		                         ['custom','选择IP']
 	                         ], value: nvram.tor_iface },
 	                         { name: 'tor_users', type: 'text', maxlen: 512, size: 64, value: nvram.tor_users } ] },
-	                     { title: 'Redirect TCP Ports', multi: [
+	                     { title: '重定向TCP端口', multi: [
 	                         { name: 'tor_ports', type: 'select', options: [
 		                         ['80','HTTP only (TCP 80)'],
 		                         ['80,443','HTTP/HTTPS (TCP 80,443)'],
-		                         ['custom','Selected Ports']
+		                         ['custom','选择端口']
 	                         ], value: nvram.tor_ports },
 	                         { name: 'tor_ports_custom', type: 'text', maxlen: 512, size: 64, value: nvram.tor_ports_custom } ] },
 	                     null,
-	                     { title: 'Custom Configuration', name: 'tor_custom', type: 'textarea', value: nvram.tor_custom }
+	                     { title: '自定义设置', name: 'tor_custom', type: 'textarea', value: nvram.tor_custom }
 	                 ]);
 				</script>
 
-				<h4>Notes</h4>
+				<h4>说明</h4>
 				<div class="section">
 					<ul>
-						<li><b>Enable Tor</b> - Be patient. Starting the Tor client can take from several seconds to several minutes.
-						<li><b>Selected IP`s</b> - ex: 1.2.3.4,1.1.0/24,1.2.3.1-1.2.3.4
-						<li><b>Selected Ports</b> - ex: one port (80), few ports (80,443,8888), range of ports (80:88), mix (80,8000:9000,9999)
-						<li><span style="color: red;">Caution!</span> If your router has only 32MB of RAM, you'll have to use swap.
+						<li><b>启用 TOR</b> - 耐心一点。 启动TOR客户端可能需要几秒钟到几分钟。
+						<li><b>选择IP</b> - 例如: 1.2.3.4,1.1.0/24,1.2.3.1-1.2.3.4
+						<li><b>选择端口</b> - 例如: 一个端口 (80), 多个端口 (80,443,8888), 端口范围 (80:88), 混合 (80,8000:9000,9999)
+						<li><span style="color: red;">警告!</span> 如果你的路由器只有32MB的内存，你必须使用交换空间作为虚拟内存。
 					</ul>
 				</div>
 			</div>
 		</div>
 
-		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">Save <i class="icon-check"></i></button>
-		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">Cancel <i class="icon-cancel"></i></button>
+		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">保存 <i class="icon-check"></i></button>
+		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">取消 <i class="icon-cancel"></i></button>
 		<span id="footer-msg" class="alert alert-warning" style="visibility: hidden;"></span>
 
 	</form>

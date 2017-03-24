@@ -6,7 +6,7 @@ http://www.polarcloud.com/tomato/
 For use with Tomato Firmware only.
 No part of this file may be used without permission.
 -->
-<title>MultiWAN Routing Policy</title>
+<title>MultiWAN策略路由</title>
 <content>
 	<script type="text/javascript">
 		//	<% nvram("pbr_rules"); %>
@@ -52,7 +52,7 @@ No part of this file may be used without permission.
 							c.push('MAC: ' + data[6]);
 							break;
 						case '3':
-							c.push('Domain: ' + data[6]);
+							c.push('域: ' + data[6]);
 							break;
 					}
 				}
@@ -64,12 +64,12 @@ No part of this file may be used without permission.
 					else if (data[1] == 17) a.push('UDP');
 						else if (data[1] == 2) a.push('ICMP');
 				if (data[1] != 2) {
-					if (data[4] != '') b.push('Port: ' + data[4].replace(/:/g, '-'));
-					if (data[7] != '') c.push('Port: ' + data[7].replace(/:/g, '-'));
+					if (data[4] != '') b.push('端口: ' + data[4].replace(/:/g, '-'));
+					if (data[7] != '') c.push('端口: ' + data[7].replace(/:/g, '-'));
 				}
 			}	else a.push('All');
 			d.push(getOUTifdesc(data[8] * 1));
-			return [(data[0] != '0') ? 'On' : 'Off', a.join('<br>'), b.join('<br>'), c.join('<br>'), d.join('<br>'), escapeHTML(data[9])];
+			return [(data[0] != '0') ? '开启' : '关闭', a.join('<br>'), b.join('<br>'), c.join('<br>'), d.join('<br>'), escapeHTML(data[9])];
 		}
 
 		pbr.fieldValuesToData = function(row) {
@@ -175,7 +175,7 @@ No part of this file may be used without permission.
 		pbr.setup = function() {
 
 			var i, a, b;
-			a = [[-2, 'All Protocols'],[-1,'TCP/UDP'],[6,'TCP'],[17,'UDP'],[2, 'ICMP']];
+			a = [[-2, '所有协议'],[-1,'TCP/UDP'],[6,'TCP'],[17,'UDP'],[2, 'ICMP']];
 			// what a mess...
 			this.init('qg', 'move', 100, [
 				{ type: 'checkbox' },
@@ -183,18 +183,18 @@ No part of this file may be used without permission.
 				{ multi: [
 					{ type: 'select', options: [['0','All'],['1','IP'],['2','MAC']], prefix: '<div class="x1a">', suffix: '</div>' },
 					{ type: 'text', prefix: '<div class="x1b">', suffix: '</div>' },
-					{ type: 'text', prefix: '<div class="x1c">Port', suffix: '</div>' }
+					{ type: 'text', prefix: '<div class="x1c">端口', suffix: '</div>' }
 				] },
 				{ multi: [
-					{ type: 'select', options: [['0','All'],['1','IP'],['3','Domain']], prefix: '<div class="x1a">', suffix: '</div>' },
+					{ type: 'select', options: [['0','All'],['1','IP'],['3','域']], prefix: '<div class="x1a">', suffix: '</div>' },
 					{ type: 'text', prefix: '<div class="x1b">', suffix: '</div>' },
-					{ type: 'text', prefix: '<div class="x1c">Port', suffix: '</div>' }
+					{ type: 'text', prefix: '<div class="x1c">端口', suffix: '</div>' }
 				] },
 				{ type: 'select', options: class1, vtop: 1 },
 				{ type: 'text', maxlen: 32, vtop: 1 }
 			]);
 
-			this.headerSet(['On', 'Protocol', 'Source Address', 'Destination Address', 'Select WAN', 'Description']);
+			this.headerSet(['开启', '协议', '源地址', '目标地址', '接口', '描述']);
 			/*  Enable(0) < SAddrType(1) < SAddrValue(2) < ProtoType(3) < PortValue(4) < DAddrType(5) < DAddrValue(6) < ProtoType(7) <PortValue(8) < WANx(9) < Desc(10) */
 			a = nvram.pbr_rules.split('>');
 			if (a != '') {
@@ -245,17 +245,17 @@ No part of this file may be used without permission.
         <input type="hidden" name="pbr_rules">
 
         <div class="box">
-            <div class="heading">MultiWAN Routing Policy</div>
+            <div class="heading">MultiWAN策略路由</div>
             <div class="content">
 
                 <table class="line-table" id="qg"></table>
-                <br>Note: Policy routing traffic only work on the LAN to the Internet.
+                <br>Note: 策略路由流量只能在LAN到Internet。
 
             </div>
         </div>
 
-        <button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">Save <i class="icon-check"></i></button>
-        <button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">Cancel <i class="icon-cancel"></i></button>
+        <button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">保存 <i class="icon-check"></i></button>
+        <button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">取消 <i class="icon-cancel"></i></button>
         <span id="footer-msg" class="alert alert-warning" style="visibility: hidden;"></span>
 
     </form>

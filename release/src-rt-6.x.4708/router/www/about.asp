@@ -236,6 +236,16 @@
 				Copyright (C) 2016 <a href='https://bitbucket.org/oneleft/at1l' target='_new'>oneleft</a><br>
 			</div>
 		</div>
+		<!-- CNLANG-BEGIN -->
+		<div class="box"><div class="heading">中文翻译</div>
+			<div class="content">
+				<p>
+					- 中文翻译，ML版中文翻译<br>
+				</p>
+				Copyright (C) 2016 <a href='https://bitbucket.org/lasx' target='_new'>lasx</a><br>
+			</div>
+		</div>
+		<!-- CNLANG-END -->
 
 	</div>
 

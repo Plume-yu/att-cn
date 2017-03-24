@@ -1,4 +1,4 @@
-<title>Status Overview</title>
+<title>状态概览</title>
 <content>
 	<script type="text/javascript" src="js/wireless.jsx?_http_id=<% nv(http_id); %>"></script>
 	<script type="text/javascript" src="js/interfaces.js?_http_id=<% nv(http_id); %>"></script>
@@ -6,10 +6,10 @@
 	<script type="text/javascript">
 		//    <% nvstat(); %>
 		//    <% etherstates(); %>
-		wmo = {'ap':'Access Point','sta':'Wireless Client','wet':'Wireless Ethernet Bridge','wds':'WDS'};
+		wmo = {'ap':'接入点','sta':'无线客户端','wet':'无线以太网桥','wds':'WDS'};
 		auth = {'disabled':'-','wep':'WEP','wpa_personal':'WPA Personal (PSK)','wpa_enterprise':'WPA Enterprise','wpa2_personal':'WPA2 Personal (PSK)','wpa2_enterprise':'WPA2 Enterprise','wpaX_personal':'WPA / WPA2 Personal','wpaX_enterprise':'WPA / WPA2 Enterprise','radius':'Radius'};
 		enc = {'tkip':'TKIP','aes':'AES','tkip+aes':'TKIP / AES'};
-		bgmo = {'disabled':'-','mixed':'Auto','b-only':'B Only','g-only':'G Only','bg-mixed':'B/G Mixed','lrs':'LRS','n-only':'N Only'};
+		bgmo = {'disabled':'-','mixed':'自动','b-only':'仅B','g-only':'仅G','bg-mixed':'B/G 混合','lrs':'LRS','n-only':'仅N'};
 	</script>
 	<script type="text/javascript">
 		show_dhcpc = [];
@@ -104,7 +104,7 @@
 				if ( $v == 'DOWN' ) {
 
 					status = 'off';
-					speed  = etherstates[ $k ].replace( "DOWN", "Unplugged" );
+					speed  = etherstates[ $k ].replace( "DOWN", "断开" );
 
 				} else {
 
@@ -151,7 +151,7 @@
 				c( 'wan' + u + 'gateway', stats.wangateway[ uidx - 1 ] );
 				c( 'wan' + u + 'dns', stats.dns[ uidx - 1 ] );
 				c( 'wan' + u + 'uptime', stats.wanuptime[ uidx - 1 ] );
-				c( 'wan' + u + 'status', ( ( stats.wanstatus[ uidx - 1 ] == 'Connected') ? '<span class="text-green">Connected</span>' : '<span class="text-red">' + stats.wanstatus[ uidx - 1 ] + '</span>') );
+				c( 'wan' + u + 'status', ( ( stats.wanstatus[ uidx - 1 ] == 'Connected') ? '<span class="text-green">已连接</span>' : '<span class="text-red">' + stats.wanstatus[ uidx - 1 ] + '</span>') );
 				if ( show_dhcpc[ uidx - 1 ] ) c( 'wan' + u + 'lease', stats.wanlease[ uidx - 1 ] );
 				if ( show_dhcpc[ uidx - 1 ] ) c( 'wan' + u + 'lease', stats.wanlease[ uidx - 1 ] );
 				if ( show_codi ) {
@@ -172,7 +172,7 @@
 
 			for ( uidx = 0; uidx < wl_ifaces.length; ++uidx ) {
 				if ( wl_sunit( uidx ) < 0 ) {
-					c( 'radio' + uidx, wlstats[ uidx ].radio ? 'Enabled <i class="icon-check"></i>' : 'Disabled <i class="icon-cancel"></i>' );
+					c( 'radio' + uidx, wlstats[ uidx ].radio ? '启用 <i class="icon-check"></i>' : '禁用 <i class="icon-cancel"></i>' );
 					c( 'rate' + uidx, wlstats[ uidx ].rate );
 
 					if ( show_radio[ uidx ] ) {
@@ -245,28 +245,28 @@
 	<div class="fluid-grid">
 
 		<div class="box" data-box="home_systembox">
-			<div class="heading">System</div>
+			<div class="heading">系统</div>
 			<div class="content" id="sesdiv_system">
 				<div class="section"></div>
 				<script type="text/javascript">
 					var a = (nvstat.size - nvstat.free) / nvstat.size * 100.0;
 					createFieldTable('', [
-						{ title: 'Name', text: nvram.router_name },
-						{ title: 'Model', text: nvram.t_model_name },
-						{ title: 'Chipset', text: stats.systemtype },
-						{ title: 'CPU Frequency', text: stats.cpumhz, suffix: ' <small>(dual-core)</small>' },
-						{ title: 'Flash Size', text: stats.flashsize },
+						{ title: '路由名称', text: nvram.router_name },
+						{ title: '路由型号', text: nvram.t_model_name },
+						{ title: '处理器类型', text: stats.systemtype },
+						{ title: 'CPU频率', text: stats.cpumhz, suffix: ' <small>(dual-core)</small>' },
+						{ title: '芯片大小', text: stats.flashsize },
 						null,
-						{ title: 'Time', rid: 'time', text: stats.time },
-						{ title: 'Uptime', rid: 'uptime', text: stats.uptime },
-						{ title: 'CPU Usage', rid: 'cpupercent', text: stats.cpupercent },
-						{ title: 'CPU Load <small>(1 / 5 / 15 mins)</small>', rid: 'cpu', text: stats.cpuload },
-						{ title: 'Memory Usage', rid: 'memory', text: stats.memory + '<div class="progress small"><div class="bar" style="width: ' + stats.memoryperc + ';"></div></div>' },
-						{ title: 'Swap Usage', rid: 'swap', text: stats.swap + '<div class="progress small"><div class="bar" style="width: ' + stats.swapperc + ';"></div></div>', hidden: (stats.swap == '') },
-						{ title: 'NVRAM Usage', text: scaleSize(nvstat.size - nvstat.free) + ' <small>/</small> ' + scaleSize(nvstat.size) + ' (' + (a).toFixed(2) + '%) <div class="progress small"><div class="bar" style="width: ' + (a).toFixed(2) + '%;"></div></div>' },
+						{ title: '系统时间', rid: 'time', text: stats.time },
+						{ title: '运行时间', rid: 'uptime', text: stats.uptime },
+						{ title: 'CPU占用', rid: 'cpupercent', text: stats.cpupercent },
+						{ title: 'CPU负载<small>(1 / 5 / 15 分钟)</small>', rid: 'cpu', text: stats.cpuload },
+						{ title: '内存占用', rid: 'memory', text: stats.memory + '<div class="progress small"><div class="bar" style="width: ' + stats.memoryperc + ';"></div></div>' },
+						{ title: 'Swap占用', rid: 'swap', text: stats.swap + '<div class="progress small"><div class="bar" style="width: ' + stats.swapperc + ';"></div></div>', hidden: (stats.swap == '') },
+						{ title: 'NVRAM占用', text: scaleSize(nvstat.size - nvstat.free) + ' <small>/</small> ' + scaleSize(nvstat.size) + ' (' + (a).toFixed(2) + '%) <div class="progress small"><div class="bar" style="width: ' + (a).toFixed(2) + '%;"></div></div>' },
 						null,
-						{ title: 'CPU Temperature', rid: 'temps', text: stats.cputemp + 'C'},
-						{ title: 'Wireless Temperature', rid: 'wlsense', text: stats.wlsense }
+						{ title: 'CPU温度', rid: 'temps', text: stats.cputemp + 'C'},
+						{ title: '无线芯片温度', rid: 'wlsense', text: stats.wlsense }
 					], '#sesdiv_system', 'data-table dataonly');
 				</script>
 			</div>
@@ -282,27 +282,27 @@
 				                         '<div class="content" id="sesdiv_wan' + u + '"></div></div>' );
 
 				createFieldTable( '', [
-					{ title: 'MAC Address', text: nvram[ 'wan' + u + '_hwaddr' ] },
-					{ title: 'Connection Type', text: { 'dhcp': 'DHCP', 'static': 'Static IP', 'pppoe': 'PPPoE', 'pptp': 'PPTP', 'l2tp': 'L2TP', 'ppp3g': '3G Modem', 'lte': '4G/LTE' }[ nvram[ 'wan' + u + '_proto' ] ] || '-' },
-					{ title: 'IP Address', rid: 'wan' + u + 'ip', text: stats.wanip[ uidx - 1 ] },
-					{ title: 'Subnet Mask', rid: 'wan' + u + 'netmask', text: stats.wannetmask[ uidx - 1 ] },
-					{ title: 'Gateway', rid: 'wan' + u + 'gateway', text: stats.wangateway[ uidx - 1 ] },
+					{ title: 'MAC地址', text: nvram[ 'wan' + u + '_hwaddr' ] },
+					{ title: '连接类型', text: { 'dhcp': 'DHCP', 'static': '静态IP', 'pppoe': 'PPPoE', 'pptp': 'PPTP', 'l2tp': 'L2TP', 'ppp3g': '3G调制解调器', 'lte': '4G/LTE' }[ nvram[ 'wan' + u + '_proto' ] ] || '-' },
+					{ title: 'IP地址', rid: 'wan' + u + 'ip', text: stats.wanip[ uidx - 1 ] },
+					{ title: '子网掩码', rid: 'wan' + u + 'netmask', text: stats.wannetmask[ uidx - 1 ] },
+					{ title: '网关', rid: 'wan' + u + 'gateway', text: stats.wangateway[ uidx - 1 ] },
 					/* IPV6-BEGIN */
-					{ title: 'IPv6 Address', rid: 'ip6_wan', text: stats.ip6_wan, hidden: (stats.ip6_wan == '') },
+					{ title: 'IPv6地址', rid: 'ip6_wan', text: stats.ip6_wan, hidden: (stats.ip6_wan == '') },
 					/* IPV6-END */
 					{ title: 'DNS', rid: 'wan' + u + 'dns', text: stats.dns[ uidx - 1 ] },
 					{ title: 'MTU', text: nvram[ 'wan' + u + '_run_mtu' ] },
 					null,
-					{ title: 'Status', rid: 'wan' + u + 'status', text: stats.wanstatus[ uidx - 1 ] },
-					{ title: 'Connection Uptime', rid: 'wan' + u + 'uptime', text: stats.wanuptime[ uidx - 1 ] },
-					{ title: 'Remaining Lease Time', rid: 'wan' + u + 'lease', text: stats.wanlease[ uidx - 1 ], ignore: !show_dhcpc[ uidx - 1 ] }
+					{ title: '状态', rid: 'wan' + u + 'status', text: stats.wanstatus[ uidx - 1 ] },
+					{ title: '连接时间', rid: 'wan' + u + 'uptime', text: stats.wanuptime[ uidx - 1 ] },
+					{ title: '剩余租期', rid: 'wan' + u + 'lease', text: stats.wanlease[ uidx - 1 ], ignore: !show_dhcpc[ uidx - 1 ] }
 				], '#sesdiv_wan' + u, 'data-table dataonly' );
 
 				$( '#sesdiv_wan' + u ).append(
-						'<br><button type="button" class="btn btn-primary pull-left" onclick="wan_connect(' + uidx + ')" value="Connect" id="b' + u + '_connect" style="display:none;margin-right: 5px;">Connect <i class="icon-reboot"></i></button>' +
-						'<button type="button" class="btn btn-danger pull-left" onclick="wan_disconnect(' + uidx + ')" value="Disconnect" id="b' + u + '_disconnect" style="display:none;margin-right: 5px;">Disconnect <i class="icon-cancel"></i></button>' +
-						'<div id="b' + u + '_dhcpc" class="btn-group pull-left" style="display:none;"><button type="button" class="btn" onclick="dhcpc(\'renew\', \'wan' + u + '\')" value="Renew">Renew</button>' +
-						'<button type="button" class="btn" onclick="dhcpc(\'release\', \'wan' + u + '\')" value="Release">Release</button><div class="clearfix"></div></div>'
+						'<br><button type="button" class="btn btn-primary pull-left" onclick="wan_connect(' + uidx + ')" value="Connect" id="b' + u + '_connect" style="display:none;margin-right: 5px;">连接 <i class="icon-reboot"></i></button>' +
+						'<button type="button" class="btn btn-danger pull-left" onclick="wan_disconnect(' + uidx + ')" value="Disconnect" id="b' + u + '_disconnect" style="display:none;margin-right: 5px;">断开 <i class="icon-cancel"></i></button>' +
+						'<div id="b' + u + '_dhcpc" class="btn-group pull-left" style="display:none;"><button type="button" class="btn" onclick="dhcpc(\'renew\', \'wan' + u + '\')" value="Renew">续期</button>' +
+						'<button type="button" class="btn" onclick="dhcpc(\'release\', \'wan' + u + '\')" value="Release">释放</button><div class="clearfix"></div></div>'
 				);
 
 			}
@@ -310,7 +310,7 @@
 		</script>
 
 		<div class="box" id="ethernetPorts" data-box="home_ethports">
-			<div class="heading">Ethernet Ports State
+			<div class="heading">以太网口状态
 				<a class="ajaxload pull-right" data-toggle="tooltip" title="Configure Settings" href="#basic-network.asp"><i class="icon-system"></i></a>
 			</div>
 			<div class="content" id="sesdiv_lan-ports"></div>
@@ -362,7 +362,7 @@
 								s += '<b>br' + i + '</b> (LAN' + j + ') - ' + nvram['dhcpd' + j + '_startip'] + ' - ' + nvram['dhcpd' + j + '_endip'];
 							} else {
 								s += ((s.length>0)&&(s.charAt(s.length-1) != ' ')) ? '<br>' : '';
-								s += '<b>br' + i + '</b> (LAN' + j + ') - Disabled';
+								s += '<b>br' + i + '</b> (LAN' + j + ') - 禁用';
 							}
 							t += ((t.length>0)&&(t.charAt(t.length-1) != ' ')) ? '<br>' : '';
 							t += '<b>br' + i + '</b> (LAN' + j + ') - ' + nvram['lan' + j + '_ipaddr'] + '/' + numberOfBitsOnNetMask(nvram['lan' + j + '_netmask']);
@@ -371,12 +371,12 @@
 					}
 
 					createFieldTable('', [
-						{ title: 'Router MAC Address', text: nvram.et0macaddr },
-						{ title: 'Router IP Addresses', text: t },
-						{ title: 'Gateway', text: nvram.lan_gateway, ignore: nvram.wan_proto != 'disabled' },
+						{ title: '路由器MAC地址', text: nvram.et0macaddr },
+						{ title: '路由器IP地址', text: t },
+						{ title: '网关', text: nvram.lan_gateway, ignore: nvram.wan_proto != 'disabled' },
 						/* IPV6-BEGIN */
-						{ title: 'Router IPv6 Address', rid: 'ip6_lan', text: stats.ip6_lan, hidden: (stats.ip6_lan == '') },
-						{ title: 'IPv6 Link-local Address', rid: 'ip6_lan_ll', text: stats.ip6_lan_ll, hidden: (stats.ip6_lan_ll == '') },
+						{ title: '路由器IPv6地址', rid: 'ip6_lan', text: stats.ip6_lan, hidden: (stats.ip6_lan == '') },
+						{ title: 'IPv6链路本地地址', rid: 'ip6_lan_ll', text: stats.ip6_lan_ll, hidden: (stats.ip6_lan_ll == '') },
 						/* IPV6-END */
 						{ title: 'DNS', rid: 'dns', text: stats.dns, ignore: nvram.wan_proto != 'disabled' },
 						{ title: 'DHCP', text: s }
@@ -396,7 +396,7 @@
 				 //	u = wl_unit(uidx);
 				 REMOVE-END */
 				u = wl_fface(uidx);
-				data += '<div class="box" data-box="home_wl' + u +'"><div class="heading" id="wl'+u+'-title">Wireless';
+				data += '<div class="box" data-box="home_wl' + u +'"><div class="heading" id="wl'+u+'-title">无线';
 				if (wl_ifaces.length > 0)
 					data += ' (' + wl_display_ifname(uidx) + ')';
 				data += '</div>';
@@ -408,29 +408,29 @@
 				if ((nvram['wl'+u+'_mode'] == 'ap') && (nvram['wl'+u+'_wds_enable'] * 1)) wmode += ' + WDS';
 
 				data += createFieldTable('', [
-					{ title: 'MAC Address', text: nvram['wl'+u+'_hwaddr'] },
-					{ title: 'Wireless Mode', text: wmode },
-					{ title: 'Wireless Network Mode', text: bgmo[nvram['wl'+u+'_net_mode']], ignore: (wl_sunit(uidx)>=0) },
-					{ title: 'Interface Status', rid: 'ifstatus'+uidx, text: wlstats[uidx].ifstatus },
-					{ title: 'Radio', rid: 'radio'+uidx, text: (wlstats[uidx].radio == 0) ? 'Disabled <i class="icon-cancel"></i>' : 'Enabled <i class="icon-check"></i>', ignore: (wl_sunit(uidx)>=0) },
+					{ title: 'MAC地址', text: nvram['wl'+u+'_hwaddr'] },
+					{ title: '无线模式', text: wmode },
+					{ title: '无线网络模式', text: bgmo[nvram['wl'+u+'_net_mode']], ignore: (wl_sunit(uidx)>=0) },
+					{ title: '接口状态', rid: 'ifstatus'+uidx, text: wlstats[uidx].ifstatus },
+					{ title: '无线电', rid: 'radio'+uidx, text: (wlstats[uidx].radio == 0) ? '禁用 <i class="icon-cancel"></i>' : '启用 <i class="icon-check"></i>', ignore: (wl_sunit(uidx)>=0) },
 					/* REMOVE-BEGIN */
 					//	{ title: 'SSID', text: (nvram['wl'+u+'_ssid'] + ' <small><i>' + ((nvram['wl'+u+'_mode'] != 'ap') ? '' : ((nvram['wl'+u+'_closed'] == 0) ? '(Broadcast Enabled)' : '(Broadcast Disabled)')) + '</i></small>') },
 					/* REMOVE-END */
 					{ title: 'SSID', text: nvram['wl'+u+'_ssid'] },
-					{ title: 'Broadcast', text: (nvram['wl'+u+'_closed'] == 0) ? '<span class="text-green">Enabled <i class="icon-check"></i></span>' : '<span class="text-red">Disabled <i class="icon-cancel"></i></span>', ignore: (nvram['wl'+u+'_mode'] != 'ap') },
-					{ title: 'Security', text: sec },
-					{ title: 'Channel', rid: 'channel'+uidx, text: stats.channel[uidx], ignore: (wl_sunit(uidx)>=0) },
-					{ title: 'Channel Width', rid: 'nbw'+uidx, text: wlstats[uidx].nbw, ignore: ((!nphy) || (wl_sunit(uidx)>=0)) },
-					{ title: 'Interference Level', rid: 'interference'+uidx, text: stats.interference[uidx], hidden: ((stats.interference[uidx] == '') || (wl_sunit(uidx)>=0)) },
-					{ title: 'Rate', rid: 'rate'+uidx, text: wlstats[uidx].rate, ignore: (wl_sunit(uidx)>=0) },
+					{ title: '广播', text: (nvram['wl'+u+'_closed'] == 0) ? '<span class="text-green">启用 <i class="icon-check"></i></span>' : '<span class="text-red">禁用 <i class="icon-cancel"></i></span>', ignore: (nvram['wl'+u+'_mode'] != 'ap') },
+					{ title: '安全模式', text: sec },
+					{ title: '信道', rid: 'channel'+uidx, text: stats.channel[uidx], ignore: (wl_sunit(uidx)>=0) },
+					{ title: '信道带宽', rid: 'nbw'+uidx, text: wlstats[uidx].nbw, ignore: ((!nphy) || (wl_sunit(uidx)>=0)) },
+					{ title: '干扰水平', rid: 'interference'+uidx, text: stats.interference[uidx], hidden: ((stats.interference[uidx] == '') || (wl_sunit(uidx)>=0)) },
+					{ title: '速率', rid: 'rate'+uidx, text: wlstats[uidx].rate, ignore: (wl_sunit(uidx)>=0) },
 					{ title: 'RSSI', rid: 'rssi'+uidx, text: wlstats[uidx].rssi || '', ignore: ((!wlstats[uidx].client) || (wl_sunit(uidx)>=0)) },
-					{ title: 'Noise', rid: 'noise'+uidx, text: wlstats[uidx].noise || '', ignore: ((!wlstats[uidx].client) || (wl_sunit(uidx)>=0)) },
-					{ title: 'Signal Quality', rid: 'qual'+uidx, text: stats.qual[uidx] || '', ignore: ((!wlstats[uidx].client) || (wl_sunit(uidx)>=0)) }
+					{ title: '噪声', rid: 'noise'+uidx, text: wlstats[uidx].noise || '', ignore: ((!wlstats[uidx].client) || (wl_sunit(uidx)>=0)) },
+					{ title: '信号质量', rid: 'qual'+uidx, text: stats.qual[uidx] || '', ignore: ((!wlstats[uidx].client) || (wl_sunit(uidx)>=0)) }
 				], null, 'data-table dataonly');
 
 				data += '<div class="btn-control-group"><br>';
-				data += '<button type="button" class="btn btn-primary" onclick="wlenable('+uidx+', 1)" id="b_wl'+uidx+'_enable" value="Enable" style="display:none;">Enable <i class="icon-check"></i></button>';
-				data += '<button type="button" class="btn btn-danger" onclick="wlenable('+uidx+', 0)" id="b_wl'+uidx+'_disable" value="Disable" style="display:none;">Disable <i class="icon-disable"></i></button>';
+				data += '<button type="button" class="btn btn-primary" onclick="wlenable('+uidx+', 1)" id="b_wl'+uidx+'_enable" value="Enable" style="display:none;">启用 <i class="icon-check"></i></button>';
+				data += '<button type="button" class="btn btn-danger" onclick="wlenable('+uidx+', 0)" id="b_wl'+uidx+'_disable" value="Disable" style="display:none;">禁用 <i class="icon-disable"></i></button>';
 				data += '</div></div></div>';
 				$('#LAN-settings').after(data);
 			}

@@ -1,4 +1,4 @@
-<title>Adblock</title>
+<title>Adblock广告拦截</title>
 <content>
 	<!-- / / / -->
 	<style type='text/css'>
@@ -72,7 +72,7 @@
 				{ type: 'text', maxlen: 90 },
 				{ type: 'text', maxlen: 40 }
 			] );
-			this.headerSet( [ 'On', 'URL', 'Description' ] );
+			this.headerSet( [ '拦截', 'URL地址', '描述' ] );
 			var s = nvram.adblock_blacklist.split( '>' );
 			for ( var i = 0; i < s.length; ++i ) {
 				var t = s[ i ].split( '<' );
@@ -115,50 +115,50 @@
 		<input type="hidden" name="adblock_blacklist">
 
 		<div class="box">
-			<div class="heading">Adblock Settings</div>
+			<div class="heading">Adblock 设置</div>
 			<div class="content">
 
 				<div class="adblock-setting"></div><hr><br>
 				<script type="text/javascript">
 					$( '.adblock-setting' ).forms([
-								{ title: 'Enable', name: 'f_adblock_enable', type: 'checkbox', value: nvram.adblock_enable != '0' },
-								{ title: 'Debug Mode', indent: 2, name: 'f_dnsmasq_debug', type: 'checkbox', value: nvram.dnsmasq_debug == '1' }
+								{ title: '启用', name: 'f_adblock_enable', type: 'checkbox', value: nvram.adblock_enable != '0' },
+								{ title: '调试模式', indent: 2, name: 'f_dnsmasq_debug', type: 'checkbox', value: nvram.dnsmasq_debug == '1' }
 						]);
 				</script>
 
-				<h4>Blacklists</h4>
+				<h4>黑名单</h4>
 				<table class="line-table" cellspacing=1 id="adblockg-grid"></table>
 				<script type="text/javascript">adblockg.setup();</script>
 
 				<br><hr>
-				<h4>Custom List</h4>
+				<h4>自定义黑名单</h4>
 				<div class="blacklist_custom"></div><hr>
 				<script type='text/javascript'>
-					$( '.blacklist_custom' ).forms( [ { title: 'Blacklisted domains', name: 'adblock_blacklist_custom', type: 'textarea', value: nvram.adblock_blacklist_custom } ] );
+					$( '.blacklist_custom' ).forms( [ { title: '域名黑名单', name: 'adblock_blacklist_custom', type: 'textarea', value: nvram.adblock_blacklist_custom } ] );
 				</script>
 
-				<h4>Whitelist</h4>
+				<h4>自定义白名单</h4>
 				<div class="whitelist"></div><hr>
 				<script type="text/javascript">
-					$( '.whitelist' ).forms( [ { title: 'Whitelisted domains', name: 'adblock_whitelist', type: 'textarea', value: nvram.adblock_whitelist } ] );
+					$( '.whitelist' ).forms( [ { title: '域名白名单', name: 'adblock_whitelist', type: 'textarea', value: nvram.adblock_whitelist } ] );
 				</script>
 
-				<h5>Notes</h5>
+				<h5>说明</h5>
 				<div class='section'>
 					<ul>
-						<li><b>Adblock</b> - Autoupdate will be launch on 1:00AM every day
-						<li><b>Debug Mode</b> - All queries to dnsmasq will be logged to syslog
-						<li><b>Blacklist URL</b> - Correct file format: 0.0.0.0 domain.com or 127.0.0.1 domain.com, one domain per line
-						<li><b>Blacklist Custom</b> - Optional, space separated: domain1.com domain2.com domain3.com
-						<li><b>Whitelist</b> - Optional, space separated: domain1.com domain2.com domain3.com
+						<li><b>Adblock</b> - 自动更新将在每天凌晨1:00启动。
+						<li><b>调试模式</b> - dnsmasq的所有查询将被记录到syslog。
+						<li><b>黑名单 URL</b> - 正确的文件格式：0.0.0.0 domain.com或127.0.0.1 domain.com，每行一个。
+						<li><b>自定义黑名单</b> - 可选 , 空格分隔：domain1.com domain2.com domain3.com。
+						<li><b>自定义白名单</b> - 可选 , 空格分隔：domain1.com domain2.com domain3.com。
 					</ul>
 				</div>
 
 			</div>
 		</div>
 
-		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">Save <i class="icon-check"></i></button>
-		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">Cancel <i class="icon-cancel"></i></button>
+		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">保存 <i class="icon-check"></i></button>
+		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">取消 <i class="icon-cancel"></i></button>
 		<span id="footer-msg" class="alert alert-warning" style="visibility: hidden;"></span>
 
 	</form>

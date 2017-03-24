@@ -5,7 +5,7 @@ http://www.polarcloud.com/tomato/
 
 For use with Tomato Firmware only.
 No part of this file may be used without permission.
---><title>Basic Network Settings</title>
+--><title>基础网络设置</title>
 <content>
 	<style type="text/css">
 		#lan-grid .co1,
@@ -57,7 +57,7 @@ No part of this file may be used without permission.
 			}
 			sta_list[u+1] = new Array();
 			sta_list[u+1][0] = '';
-			sta_list[u+1][1] = 'Disabled';
+			sta_list[u+1][1] = '禁用';
 		}
 		
 		var lg = new TomatoGrid();
@@ -70,7 +70,7 @@ No part of this file may be used without permission.
 				{ type: 'checkbox', prefix: '<div class="centered">', suffix: '</div>' },
 				{ multi: [ { type: 'text', maxlen: 15, size: 17}, { type: 'text', maxlen: 15, size: 17 } ] },
 				{ type: 'text', maxlen: 6, size: 8 }] );
-			this.headerSet(['Bridge', 'STP', 'IP Address', 'Netmask', 'DHCP', 'IP&nbsp;Range&nbsp;<i>(first/last)</i>', 'Lease&nbsp;Time&nbsp;<i>(mins)</i>']);
+			this.headerSet(['LAN', 'STP', 'IP地址', '子网掩码', 'DHCP服务', 'IP&nbsp;范围&nbsp;<i>(前/后)</i>', '租期&nbsp;<i>(分钟)</i>']);
 
 			var numBridges = 0;
 			for (var i = 0 ; i <= MAX_BRIDGE_ID ; i++) {
@@ -105,10 +105,10 @@ No part of this file may be used without permission.
 
 		lg.dataToView = function(data) {
 			return ['br' + data[0],
-					(data[1].toString() == '1') ? '<small><i>Enabled</i></small>' : '<small><i>Disabled</i></small>',
+					(data[1].toString() == '1') ? '<small><i>启用</i></small>' : '<small><i>禁用</i></small>',
 					data[2],
 					data[3],
-					(data[4].toString() == '1') ? '<small><i>Enabled</i></small>' : '<small><i>Disabled</i></small>',
+					(data[4].toString() == '1') ? '<small><i>启用</i></small>' : '<small><i>禁用</i></small>',
 					(data[5].toString() + ((numberOfBitsOnNetMask(data[3])>=24) ? (' - ' + data[6].split('.').splice(3, 1).toString()) : ('<br>' + data[6].toString()) )),
 					(((data[7] != null) && (data[7] != '')) ? data[7] : '') ];
 		}
@@ -251,7 +251,7 @@ No part of this file may be used without permission.
 			}
 
 			if(this.countBridge(f[0].selectedIndex) > 0) {
-				ferror.set(f[0], 'Cannot add another entry for bridge br' + f[0].selectedIndex, quiet);
+				ferror.set(f[0], '无法为网桥br添加另一个条目' + f[0].selectedIndex, quiet);
 				ok = 0;
 			} else {
 				ferror.clear(f[0]);
@@ -269,25 +269,25 @@ No part of this file may be used without permission.
 				} else {
 // should be 22 bits or smaller network
 					if ((numberOfBitsOnNetMask(f[3].value) < 22) && (nvram.cstats_enable == '1' )) {
-						if (!confirm("Netmask should have at least 22 bits (255.255.252.0). You may continue anyway but remember - you was warned")) return;
+						if (!confirm("网络掩码应至少有22位（255.255.252.0）。 你可以继续，但记住 - 我已经警告过了")) return;
 					} else {
 						ferror.clear(f[3]);
 					}
 				}
 				if(f[2].value == getNetworkAddress(f[2].value, f[3].value)) {
-					var s = 'Invalid IP address or subnet mask (the address of the network cannot be used)';
+					var s = '无效的IP地址或子网掩码（无法使用网络的地址）';
 					ferror.set(f[2], s, quiet);
 					ferror.set(f[3], s, quiet);
 					return 0;
 				} else
 				if(f[2].value == getBroadcastAddress(getNetworkAddress(f[2].value, f[3].value), f[3].value)) {
-					var s = 'Invalid IP address or subnet mask (the broadcast address cannot be used)';
+					var s = '无效的IP地址或子网掩码（广播地址不能使用）';
 					ferror.set(f[2], s, quiet);
 					ferror.set(f[3], s, quiet);
 					return 0;
 				} else
 				if (this.countOverlappingNetworks(f[2].value) > 0) {
-					var s = 'Invalid IP address or subnet mask (conflicts/overlaps with another LAN bridge)';
+					var s = '无效的IP地址或子网掩码（与另一个LAN网口冲突/重叠）';
 					ferror.set(f[2], s, quiet);
 					ferror.set(f[3], s, quiet);
 					return 0;
@@ -338,7 +338,7 @@ No part of this file may be used without permission.
 					(f[5].value == getBroadcastAddress(getNetworkAddress(f[2].value, f[3].value), f[3].value)) ||
 					(f[5].value == getNetworkAddress(f[2].value, f[3].value)) ||
 					(f[2].value == f[5].value)) {
-					ferror.set(f[5], 'Invalid first IP address or subnet mask', quiet || !ok);
+					ferror.set(f[5], '第一个IP地址或子网掩码无效', quiet || !ok);
 					return 0;
 				} else {
 					ferror.clear(f[5]);
@@ -348,7 +348,7 @@ No part of this file may be used without permission.
 					(f[6].value == getBroadcastAddress(getNetworkAddress(f[2].value, f[3].value), f[3].value)) ||
 					(f[6].value == getNetworkAddress(f[2].value, f[3].value)) ||
 					(f[2].value == f[6].value)) {
-					ferror.set(f[6], 'Invalid last IP address or subnet mask', quiet || !ok);
+					ferror.set(f[6], '最后一个IP地址或子网掩码无效', quiet || !ok);
 					return 0;
 				} else {
 					ferror.clear(f[6]);
@@ -434,19 +434,19 @@ No part of this file may be used without permission.
 			if (uidx >= wl_ifaces.length) return;
 			var u = wl_unit(uidx);
 
-			var m = [['mixed','Auto']];
+			var m = [['mixed','自动']];
 			if (selectedBand(uidx) == '1') {
-				m.push(['a-only','A Only']);
+				m.push(['a-only','仅A']);
 				if (nphy) {
-					m.push(['n-only','N Only']);
+					m.push(['n-only','仅N']);
 				}
 			}
 			else {
-				m.push(['b-only','B Only']);
-				m.push(['g-only','G Only']);
+				m.push(['b-only','仅B']);
+				m.push(['g-only','仅G']);
 				if (nphy) {
-					m.push(['bg-mixed','B/G Mixed']);
-					m.push(['n-only','N Only']);
+					m.push(['bg-mixed','B/G 混合']);
+					m.push(['n-only','仅N']);
 				}
 			}
 
@@ -608,7 +608,7 @@ No part of this file may be used without permission.
 					for (i = 1; i < ghz[uidx].length; ++i) {
 						var s = ghz[uidx][i][1];
 						var u = wscan.inuse[ghz[uidx][i][0]];
-						if (u) s += ' (' + u.count + ' AP' + (u.count == 1 ? '' : 's') + ' / strongest: "' + escapeHTML(ellipsis(u.ssid, 15)) + '" ' + u.rssi + ' dBm)';
+						if (u) s += ' (' + u.count + ' AP' + (u.count == 1 ? '' : 's') + ' / 最强: "' + escapeHTML(ellipsis(u.ssid, 15)) + '" ' + u.rssi + ' dBm)';
 						e.options[i].innerHTML = s;
 					}
 					e.style.width = '400px';
@@ -626,7 +626,7 @@ No part of this file may be used without permission.
 				spin(0, unit);
 			}
 			xob.onError = function(x) {
-				alert('error: ' + x);
+				alert('错误: ' + x);
 				spin(0, unit);
 				xob = null;
 			}
@@ -691,7 +691,7 @@ No part of this file may be used without permission.
 			else {
 				s = s.toUpperCase().replace(/[^0-9A-F]/g, '');
 				if (s.length != e.maxLength) {
-					ferror.set(e, 'Invalid WEP key. Expecting ' + e.maxLength + ' hex or ' + (e.maxLength >> 1) + ' ASCII characters.', quiet);
+					ferror.set(e, 'WEP密钥无效。 最多 ' + e.maxLength + '个16进制或 ' + (e.maxLength >> 1) + ' 个ASCII字符。', quiet);
 					return 0;
 				}
 			}
@@ -756,12 +756,12 @@ No part of this file may be used without permission.
 
 			if (!v_ip('_f_mwan_ckdst_1', true) && !v_domain('_f_mwan_ckdst_1', true))
 			{
-				ferror.set(E('_f_mwan_ckdst_1'), "Target 1 is not a valid IP address or domain name.", quiet);
+				ferror.set(E('_f_mwan_ckdst_1'), "目标1不是有效的IP地址或域名。", quiet);
 				ok = 0;
 			}
 			if (!v_ip('_f_mwan_ckdst_2', true) && !v_domain('_f_mwan_ckdst_2', true))
 			{
-				ferror.set(E('_f_mwan_ckdst_2'), "Target 2 is not a valid IP address or domain name.", quiet);
+				ferror.set(E('_f_mwan_ckdst_2'), "目标2不是有效的IP地址或域名。", quiet);
 				ok = 0;
 			}
 
@@ -1396,7 +1396,7 @@ No part of this file may be used without permission.
 						case 'mixed':
 						case 'n-only':
 							if ((nphy || acphy) && (a.value == 'tkip') && (sm2.indexOf('wpa') != -1)) {
-								ferror.set(a, 'TKIP encryption is not supported with WPA / WPA2 in N and AC mode.', quiet || !ok);
+								ferror.set(a, 'WPA / WPA2在N和AC模式下不支持TKIP加密。', quiet || !ok);
 								ok = 0;
 							}
 							else ferror.clear(a);
@@ -1410,11 +1410,11 @@ No part of this file may be used without permission.
 					if ((wmode == 'sta') || (wmode == 'wet')) {
 						++wlclnt;
 						if (wlclnt > 1) {
-							ferror.set(b, 'Only one wireless interface can be configured in client mode.', quiet || !ok);
+							ferror.set(b, '在客户端模式下只能配置一个无线接口。', quiet || !ok);
 							ok = 0;
 						}
 						else if (a.value == 'n-only') {
-							ferror.set(a, 'N-only is not supported in wireless client modes, use Auto.', quiet || !ok);
+							ferror.set(a, '在无线客户端模式下不支持仅N，请选择自动。', quiet || !ok);
 							ok = 0;
 						}
 					}
@@ -1423,14 +1423,14 @@ No part of this file may be used without permission.
 					ferror.clear(a);
 					if (wl_vis[uidx]._wl_wpa_psk == 1) {
 						if ((a.value.length < 8) || ((a.value.length == 64) && (a.value.search(/[^0-9A-Fa-f]/) != -1))) {
-							ferror.set('_wl'+u+'_wpa_psk', 'Invalid pre-shared key. Please enter at least 8 characters or 64 hexadecimal digits.', quiet || !ok);
+							ferror.set('_wl'+u+'_wpa_psk', '预共享密钥无效。 请输入至少8个字符或64个十六进制数字。', quiet || !ok);
 							ok = 0;
 						}
 					}
 
 					// wl channel
 					if (((wmode == 'wds') || (wmode == 'apwds')) && (wl_vis[uidx]._wl_channel == 1) && (E('_wl'+u+'_channel').value == '0')) {
-						ferror.set('_wl'+u+'_channel', 'Fixed wireless channel required in WDS mode.', quiet || !ok);
+						ferror.set('_wl'+u+'_channel', '在WDS模式下需要固定无线信道。', quiet || !ok);
 						ok = 0;
 					}
 					else ferror.clear('_wl'+u+'_channel');
@@ -1514,7 +1514,7 @@ No part of this file may be used without permission.
 							else if (!isMAC0(a.value)) b = 1;
 						}
 						if (!b) {
-							ferror.set('_f_wl'+u+'_wds_0', 'WDS MAC address required.', quiet || !ok);
+							ferror.set('_f_wl'+u+'_wds_0', '需要WDS MAC地址。', quiet || !ok);
 							ok = 0;
 						}
 					}
@@ -1552,7 +1552,7 @@ No part of this file may be used without permission.
 					E('_'+sta_wl+'_security_mode').options[5].disabled = true;
 					for (var i = uidx+1; i <= curr_mwan_num; ++i){
 						if(E('_wan'+u+'_sta').value == E('_wan'+i+'_sta').value) {
-							ferror.set('_wan'+i+'_sta', 'Wireless Client mode can be set only to one WAN port', quiet || !ok);
+							ferror.set('_wan'+i+'_sta', '无线客户端模式只能设置到一个WAN端口', quiet || !ok);
 							ok = 0;
 						}
 					}
@@ -1590,7 +1590,7 @@ No part of this file may be used without permission.
 			if(count > 1) {
 				for (var g = 0; g <= curr_mwan_num; g++) {
 					var h = (g==0) ? '' : g.toString();
-					ferror.set('_wan'+h+'_proto', '3G or LTE mode can be set only to one WAN port', quiet || !ok);
+					ferror.set('_wan'+h+'_proto', '3G或LTE模式只能设置到一个WAN端口', quiet || !ok);
 					ok = 0;
 				}
 			}
@@ -1775,7 +1775,7 @@ No part of this file may be used without permission.
 			for (var i = 0; i < d.length; ++i) {
 
 				if (lg.countOverlappingNetworks(d[i][2]) > 1) {
-					var s = 'Cannot proceed: two or more LAN bridges have conflicting IP addresses or overlapping subnets';
+					var s = '无法继续：两个或多个LAN网桥具有冲突的IP地址或重叠的子网';
 					alert(s);
 					var e = E('footer-msg');
 					e.innerHTML = s;
@@ -1817,7 +1817,7 @@ No part of this file may be used without permission.
 			var e = E('footer-msg');
 			var t = fixIP(fom['lan_ipaddr'].value);
 			if ((fom['lan_ifname'].value != 'br0') || (fom['lan_ipaddr'].value == '0.0.0.0') || (!t)) {
-				e.innerHTML = 'Bridge br0 must be always defined and have a valid IP address set.';
+				e.innerHTML = '网桥br0必须始终定义，并设置有效的IP地址。';
 				e.style.visibility = 'visible';
 				setTimeout(
 					function() {
@@ -1958,17 +1958,17 @@ No part of this file may be used without permission.
 					ckdst = nvram.mwan_ckdst.split( ',' );
 					$( '#wan-settings' ).forms([
 						{
-							title: 'Number of WAN Ports', name: 'mwan_num', type: 'select', options: [ [ '1', '1 WAN' ], [ '2', '2 WAN' ]
+							title: 'WAN端口数量', name: 'mwan_num', type: 'select', options: [ [ '1', '1 WAN' ], [ '2', '2 WAN' ]
 							/* MULTIWAN-BEGIN */
 							, [ '3', '3 WAN' ], [ '4', '4 WAN' ]
 							/* MULTIWAN-END */
-						], value : nvram.mwan_num, suffix: ' <small>Please configure <a href="/#advanced-vlan.asp">VLAN</a> first</small>'
+						], value : nvram.mwan_num, suffix: ' <small>请先配置 <a href="/#advanced-vlan.asp">VLAN</a> </small>'
 						},
 						{
-							title : 'Check connections every', name: 'mwan_cktime', type: 'select', options: [
-							[ '0', 'Disabled' ], [ '60', '1 minute' ], [ '120', '2 minutes *' ], [ '180', '3 minutes' ], [ '300', '5 minutes' ],
-							[ '600', '10 minutes' ], [ '900', '15 minutes' ], [ '1800', '30 minutes' ], [ '3600', '1 hour' ] ],
-							suffix: ' <small>(Default: 2 minutes, when the network conditions are poor, try using longer detection period)</small>',
+							title : '检查连接', name: 'mwan_cktime', type: 'select', options: [
+							[ '0', '禁用' ],  [ '60', '1 分钟' ], [ '120', '2 分钟（默认）' ], [ '180', '3 分钟' ], [ '300', '5 分钟' ],
+							[ '600', '10 分钟' ], [ '900', '15 分钟' ], [ '1800', '30 分钟' ], [ '3600', '1 小时' ] ],
+							suffix: ' <small>(默认值：2分钟，当网络条件较差时，请尝试使用较长的检测周期)</small>',
 							value : nvram.mwan_cktime
 						},
 						{ title: 'Target 1', indent: 2, name: 'f_mwan_ckdst_1', type: 'text', maxlen: 30, size: 30, value: ckdst[ 0 ] || '' },
@@ -1995,10 +1995,10 @@ No part of this file may be used without permission.
 					$(thisForm).append( '<input type=\'hidden\' name=\'wan' + u + '_ppp_mlppp\'>' );
 					$(thisForm).append( '<input type=\'hidden\' name=\'wan' + u + '_dns\'>' );
 
-					$( '#wan-settings' ).append( '<div id=\'sesdiv_wan' + u + '\'><br/><h5 id=\'wan' + u + '-title\'>WAN' + u + ' Settings</h5>' );
+					$( '#wan-settings' ).append( '<div id=\'sesdiv_wan' + u + '\'><br/><h5 id=\'wan' + u + '-title\'>WAN' + u + ' 设置</h5>' );
 					$( '#wan-settings' ).forms([
 						{
-							title: 'Type', name: 'wan' + u + '_proto', type: 'select', options: [ [ 'dhcp', 'DHCP' ], [ 'pppoe', 'PPPoE' ], [ 'static', 'Static' ], [ 'pptp', 'PPTP' ], [ 'l2tp', 'L2TP' ],
+							title: '类型', name: 'wan' + u + '_proto', type: 'select', options: [ [ 'dhcp', 'DHCP' ], [ 'pppoe', 'PPPoE' ], [ 'static', '静态IP' ], [ 'pptp', 'PPTP' ], [ 'l2tp', 'L2TP' ],
 							/* LINUX26-BEGIN */
 							/* USB-BEGIN */
 							[ 'ppp3g', '3G Modem' ],
@@ -2008,68 +2008,68 @@ No part of this file may be used without permission.
 						  [ 'disabled', 'Disabled' ] ],
 							value: nvram[ 'wan' + u + '_proto' ]
 						},
-						{ title: 'Wireless Client Mode', name: 'wan' + u + '_sta', type: 'select', options: sta_list, value: nvram[ 'wan' + u + '_sta' ] },
-						{ title    : 'Modem device',
+						{ title: '无线客户端模式', name: 'wan' + u + '_sta', type: 'select', options: sta_list, value: nvram[ 'wan' + u + '_sta' ] },
+						{ title    : '调制解调器设备',
 							name   : 'wan' + u + '_modem_dev',
 							type   : 'select',
 							options: [ [ 'ttyUSB0', '/dev/ttyUSB0' ], [ 'ttyUSB1', '/dev/ttyUSB1' ], [ 'ttyUSB2', '/dev/ttyUSB2' ], [ 'ttyUSB3', '/dev/ttyUSB3' ], [ 'ttyUSB4', '/dev/ttyUSB4' ], [ 'ttyUSB5', '/dev/ttyUSB5' ], [ 'ttyUSB6', '/dev/ttyUSB6' ], [ 'ttyACM0', '/dev/ttyACM0' ] ],
 							value  : nvram[ 'wan' + u + '_modem_dev' ]
 						},
-						{ title: 'Load Balance Weight', name: 'wan' + u + '_weight', type: 'text', maxlen: 3, size: 8, value: nvram[ 'wan' + u + '_weight' ], suffix: ' <i>(Failover: 0; Load balancing: 1 - 256)</i>' },
-						{ title: 'PIN Code', name: 'wan' + u + '_modem_pin', type: 'text', maxlen: 6, size: 8, value: nvram[ 'wan' + u + '_modem_pin' ], suffix: ' <i>Advised to turn off PIN Code</i>' },
-						{ title: 'Modem init string', name: 'wan' + u + '_modem_init', type: 'text', maxlen: 25, size: 32, value: nvram[ 'wan' + u + '_modem_init' ] },
-						{ title: 'APN', name: 'wan' + u + '_modem_apn', type: 'text', maxlen: 25, size: 32, suffix: ' <small>(if empty, AT+CGDCONT will not be sent)</small>', value: nvram[ 'wan' + u + '_modem_apn' ] },
-						{ title    : 'Network Type',
+						{ title: '负载平衡', name: 'wan' + u + '_weight', type: 'text', maxlen: 3, size: 8, value: nvram[ 'wan' + u + '_weight' ], suffix: ' <i>(故障转移：0; 负载均衡：1 - 256)</i>' },
+						{ title: 'PIN码', name: 'wan' + u + '_modem_pin', type: 'text', maxlen: 6, size: 8, value: nvram[ 'wan' + u + '_modem_pin' ], suffix: ' <i>建议关闭PIN码</i>' },
+						{ title: '调制解调器初始化参数', name: 'wan' + u + '_modem_init', type: 'text', maxlen: 25, size: 32, value: nvram[ 'wan' + u + '_modem_init' ] },
+						{ title: 'APN', name: 'wan' + u + '_modem_apn', type: 'text', maxlen: 25, size: 32, suffix: ' <small>(如果为空, 将不会发送AT+CGDCONT)</small>', value: nvram[ 'wan' + u + '_modem_apn' ] },
+						{ title    : '网络类型',
 							name   : 'wan' + u + '_modem_speed',
 							type   : 'select',
-							options: [ [ '00', 'Auto' ], [ '030201', '4G/3G/2G' ], [ '0302', '4G/3G only' ], [ '03', '4G only' ], [ '02', '3G only' ] ],
+							options: [ [ '00', '自动' ], [ '030201', '4G/3G/2G' ], [ '0302', '4G/3G only' ], [ '03', '4G only' ], [ '02', '3G only' ] ],
 							value  : nvram[ 'wan' + u + '_modem_speed' ],
-							suffix : ' <i>works only with non-Hilink modems</i>'
+							suffix : ' <i>仅适用于非Hilink调制解调器</i>'
 						},
-						{ title: 'Username', name: 'wan' + u + '_ppp_username', type: 'text', maxlen: 60, size: 64, value: nvram[ 'wan' + u + '_ppp_username' ] },
-						{ title: 'Password', name: 'wan' + u + '_ppp_passwd', type: 'password', maxlen: 60, size: 64, peekaboo: 1, value: nvram[ 'wan' + u + '_ppp_passwd' ] },
-						{ title: 'Service Name', name: 'wan' + u + '_ppp_service', type: 'text', maxlen: 50, size: 64, value: nvram[ 'wan' + u + '_ppp_service' ] },
-						{ title: 'L2TP Server', name: 'wan' + u + '_l2tp_server_ip', type: 'text', maxlen: 128, size: 64, value: nvram[ 'wan' + u + '_l2tp_server_ip' ] },
-						{ title: 'Use DHCP', name: 'f_wan'+u+'_pptp_dhcp', type: 'checkbox', value: (nvram['wan'+u+'_pptp_dhcp'] == 1) },
-						{ title: 'IP Address', name: 'wan' + u + '_ipaddr', type: 'text', maxlen: 15, size: 17, value: nvram[ 'wan' + u + '_ipaddr' ] },
-						{ title: 'Subnet Mask', name: 'wan' + u + '_netmask', type: 'text', maxlen: 15, size: 17, value: nvram[ 'wan' + u + '_netmask' ] },
-						{ title: 'Gateway', name: 'wan' + u + '_gateway', type: 'text', maxlen: 15, size: 17, value: nvram[ 'wan' + u + '_gateway' ] },
-						{ title: 'PPTP Gateway', name: 'wan' + u + '_pptp_server_ip', type: 'text', maxlen: 128, size: 64, value: nvram[ 'wan' + u + '_pptp_server_ip' ] },
-						{ title: 'Options', name: 'wan' + u + '_ppp_custom', type: 'text', maxlen: 256, size: 64, value: nvram[ 'wan' + u + '_ppp_custom' ] },
-						{ title: 'DNS Server', name: 'wan' + u + '_dns_auto', type: 'select', options: [ [ '1', 'Auto' ], [ '0', 'Manual' ] ], value: nvram[ 'wan' + u + '_dns_auto' ] },
+						{ title: '用户名', name: 'wan' + u + '_ppp_username', type: 'text', maxlen: 60, size: 64, value: nvram[ 'wan' + u + '_ppp_username' ] },
+						{ title: '密码', name: 'wan' + u + '_ppp_passwd', type: 'password', maxlen: 60, size: 64, peekaboo: 1, value: nvram[ 'wan' + u + '_ppp_passwd' ] },
+						{ title: '服务名称', name: 'wan' + u + '_ppp_service', type: 'text', maxlen: 50, size: 64, value: nvram[ 'wan' + u + '_ppp_service' ] },
+						{ title: 'L2TP服务', name: 'wan' + u + '_l2tp_server_ip', type: 'text', maxlen: 128, size: 64, value: nvram[ 'wan' + u + '_l2tp_server_ip' ] },
+						{ title: '使用DHCP', name: 'f_wan'+u+'_pptp_dhcp', type: 'checkbox', value: (nvram['wan'+u+'_pptp_dhcp'] == 1) },
+						{ title: 'IP地址', name: 'wan' + u + '_ipaddr', type: 'text', maxlen: 15, size: 17, value: nvram[ 'wan' + u + '_ipaddr' ] },
+						{ title: '子网掩码', name: 'wan' + u + '_netmask', type: 'text', maxlen: 15, size: 17, value: nvram[ 'wan' + u + '_netmask' ] },
+						{ title: '网关', name: 'wan' + u + '_gateway', type: 'text', maxlen: 15, size: 17, value: nvram[ 'wan' + u + '_gateway' ] },
+						{ title: 'PPTP网关', name: 'wan' + u + '_pptp_server_ip', type: 'text', maxlen: 128, size: 64, value: nvram[ 'wan' + u + '_pptp_server_ip' ] },
+						{ title: '选项', name: 'wan' + u + '_ppp_custom', type: 'text', maxlen: 256, size: 64, value: nvram[ 'wan' + u + '_ppp_custom' ] },
+						{ title: 'DNS服务器', name: 'wan' + u + '_dns_auto', type: 'select', options: [ [ '1', '自动' ], [ '0', '自定义' ] ], value: nvram[ 'wan' + u + '_dns_auto' ] },
 						{ title: 'DNS 1', indent: 2, name: 'f_wan' + u + '_dns_1', type: 'text', maxlen: 15, size: 17, value: dns[ 0 ] || '0.0.0.0' },
 						{ title: 'DNS 2', indent: 2, name: 'f_wan' + u + '_dns_2', type: 'text', maxlen: 15, size: 17, value: dns[ 1 ] || '0.0.0.0' },
 						{
-							title: 'Connect Mode', name: 'wan' + u + '_ppp_demand', type: 'select', options: [ [ '1', 'Connect On Demand' ], [ '0', 'Keep Alive' ] ],
+							title: '连接模式', name: 'wan' + u + '_ppp_demand', type: 'select', options: [ [ '1', '按需连接' ], [ '0', '保持连接' ] ],
 							value: nvram[ 'wan' + u + '_ppp_demand' ]
 						},
 						{
-							title: 'Max Idle Time', indent: 2, name: 'wan' + u + '_ppp_idletime', type: 'text', maxlen: 5, size: 7, suffix: ' <i>(minutes)</i>',
+							title: '自动断线空闲时间', indent: 2, name: 'wan' + u + '_ppp_idletime', type: 'text', maxlen: 5, size: 7, suffix: ' <i>(分钟)</i>',
 							value: nvram[ 'wan' + u + '_ppp_idletime' ]
 						},
 						{
-							title: 'Redial Interval', indent: 2, name: 'wan' + u + '_ppp_redialperiod', type: 'text', maxlen: 5, size: 7, suffix: ' <i>(seconds)</i>',
+							title: '重拨间隔', indent: 2, name: 'wan' + u + '_ppp_redialperiod', type: 'text', maxlen: 5, size: 7, suffix: ' <i>(秒)</i>',
 							value: nvram[ 'wan' + u + '_ppp_redialperiod' ]
 						},
 						{
-							title: 'LCP Echo Interval', indent: 2, name: 'wan' + u + '_pppoe_lei', type: 'text', maxlen: 5, size: 7, suffix: ' <i>seconds (range: 1 - 60; default: 10)</i>',
+							title: 'LCP回波间隔', indent: 2, name: 'wan' + u + '_pppoe_lei', type: 'text', maxlen: 5, size: 7, suffix: ' <i>秒 (范围：1-60; 默认值：10)</i>',
 							value: nvram[ 'wan' + u + '_pppoe_lei' ]
 						},
 						{
-							title: 'LCP Echo Link fail limit', indent: 2, name: 'wan' + u + '_pppoe_lef', type: 'text', maxlen: 5, size: 7, suffix: ' <i>(range: 1 - 10; default: 5)</i>',
+							title: 'LCP回显链路故障限制', indent: 2, name: 'wan' + u + '_pppoe_lef', type: 'text', maxlen: 5, size: 7, suffix: ' <i>(范围: 1 - 10; 默认值: 5)</i>',
 							value: nvram[ 'wan' + u + '_pppoe_lef' ]
 						},
 						{
 							title: 'MTU', multi: [
-							{ name: 'wan' + u + '_mtu_enable', type: 'select', options: [ [ '0', 'Default' ], [ '1', 'Manual' ] ], value: nvram[ 'wan' + u + '_mtu_enable' ] },
+							{ name: 'wan' + u + '_mtu_enable', type: 'select', options: [ [ '0', '默认' ], [ '1', '自定义' ] ], value: nvram[ 'wan' + u + '_mtu_enable' ] },
 							{ name: 'f_wan' + u + '_mtu', type: 'text', maxlen: 4, size: 6, value: nvram[ 'wan' + u + '_mtu' ] } ]
 						},
 						{ title: 'Single Line MLPPP', name: 'f_wan' + u + '_ppp_mlppp', type: 'checkbox', value: (nvram[ 'wan' + u + '_ppp_mlppp' ] == 1) },
 
-						{ title: 'Route Modem IP', name: 'wan' + u + '_modem_ipaddr',type: 'text',	maxlen: 15,	size  : 17,	suffix: ' <i>(must be in different subnet to router, 0.0.0.0 to disable)</i>', value : nvram[ 'wan' + u + '_modem_ipaddr' ]	},
-						{ title: 'Watchdog Mode', name: 'wan'+u+'_ckmtd', type: 'select', options: [['1','Ping'],['2','Traceroute*']], value: nvram['wan'+u+'_ckmtd'], suffix: ' <i>(default: Traceroute; Use Ping only when Traceroute is not working correctly</i>' },
+						{ title: '路由调制解调器IP', name: 'wan' + u + '_modem_ipaddr',type: 'text',	maxlen: 15,	size  : 17,	suffix: ' <i>(必须和路由器在不同的子网，0.0.0.0 代表禁用)</i>', value : nvram[ 'wan' + u + '_modem_ipaddr' ]	},
+						{ title: '看门狗模式', name: 'wan'+u+'_ckmtd', type: 'select', options: [['1','Ping'],['2','跟踪路由*']], value: nvram['wan'+u+'_ckmtd'], suffix: ' <i>默认：跟踪路由; 仅当Traceroute不正常工作时，才使用Ping</i>' },
 
-						{ title: 'Bridge WAN port to primary LAN (br0)', name: 'f_wan' + u + '_islan', type: 'checkbox', value: (nvram[ 'wan' + u + '_islan' ] == 1) }
+						{ title: '桥接WAN端口到主LAN口 (br0)', name: 'f_wan' + u + '_islan', type: 'checkbox', value: (nvram[ 'wan' + u + '_islan' ] == 1) }
 					]);
 
 					$( '#wan-settings' ).append( '</div>');
@@ -2081,7 +2081,7 @@ No part of this file may be used without permission.
 		</div>
 
 		<div class="box" data-box="network-lan">
-			<div class="heading">LAN</div>
+			<div class="heading">LAN设置</div>
 			<div class="content lan-settings">
 				<!-- VLAN-BEGIN -->
 				<table class="line-table" id="lan-grid"></table><br />
@@ -2092,36 +2092,36 @@ No part of this file may be used without permission.
 			<script type="text/javascript">
 				dns = nvram.wan_dns.split(/\s+/);
 				$('.content.lan-settings').forms([
-	                { title: 'Default Gateway', name: 'lan_gateway', type: 'text', maxlen: 15, size: 17, value: nvram.lan_gateway },
-	                { title: 'Static DNS', suffix: '&nbsp; <i>(IP:port)</i>', name: 'f_dns_1', type: 'text', maxlen: 21, size: 25, value: dns[0] || '0.0.0.0' },
+	                { title: '默认网关', name: 'lan_gateway', type: 'text', maxlen: 15, size: 17, value: nvram.lan_gateway },
+	                { title: '静态DNS', suffix: '&nbsp; <i>(IP:port)</i>', name: 'f_dns_1', type: 'text', maxlen: 21, size: 25, value: dns[0] || '0.0.0.0' },
 	                { title: '', name: 'f_dns_2', type: 'text', maxlen: 21, size: 25, value: dns[1] || '0.0.0.0' },
 	                /* DNSSEC-BEGIN */
-	                { title: 'Enable DNSSEC', name: 'f_dnssec_enable', type: 'checkbox', suffix: ' <i>(must be supported by the upstream nameservers)</i>', value: (nvram.dnssec_enable == 1) },
+	                { title: '启用DNSSEC', name: 'f_dnssec_enable', type: 'checkbox', suffix: ' <i>(必须受上游域名服务器支持)</i>', value: (nvram.dnssec_enable == 1) },
 	                /* DNSSEC-END */
 	                /* DNSCRYPT-BEGIN */
-	                { title: 'Use dnscrypt-proxy', name: 'f_dnscrypt_proxy', type: 'checkbox', value: (nvram.dnscrypt_proxy == 1) },
-	                { title: 'Manual Entry', indent: 2, name: 'f_dnscrypt_manual', type: 'checkbox', value: (nvram.dnscrypt_manual == 1) },
-					{ title: 'Resolver', indent: 2, name: 'dnscrypt_resolver', type: 'select', options: [/*dnscrypt_resolvers*/],  value: nvram.dnscrypt_resolver, suffix: ' <a href=\'https://github.com/jedisct1/dnscrypt-proxy/blob/master/dnscrypt-resolvers.csv\' target=\'_new\'>Resolver Details</a>' },
-					{ title: 'Resolver Address', indent: 2, name: 'dnscrypt_resolver_address', type: 'text', maxlen: 50, size: 25, value: nvram.dnscrypt_resolver_address, suffix: ' <a href=\'https://github.com/jedisct1/dnscrypt-proxy/blob/master/dnscrypt-resolvers.csv\' target=\'_new\'>Resolver Details</a>' },
-					{ title: 'Provider Name', indent: 2, name: 'dnscrypt_provider_name', type: 'text', maxlen: 60, size: 25, value: nvram.dnscrypt_provider_name },
-					{ title: 'Provider Public Key', indent: 2, name: 'dnscrypt_provider_key', type: 'text', maxlen: 80, size: 25, value: nvram.dnscrypt_provider_key },
-					{ title: 'Priority', indent: 2, name: 'dnscrypt_priority', type: 'select', options: [['1','Strict-Order'],['2','No-Resolv'],['0','None']], value: nvram.dnscrypt_priority },
-					{ title: 'Local Port', indent: 2, name: 'dnscrypt_port', type: 'text', maxlen: 5, size: 7, value: nvram.dnscrypt_port },
-					{ title: 'Log Level', indent: 2, name: 'dnscrypt_log', type: 'text', maxlen: 2, size: 5, value: nvram.dnscrypt_log },
+	                { title: '使用dnscrypt-proxy', name: 'f_dnscrypt_proxy', type: 'checkbox', value: (nvram.dnscrypt_proxy == 1) },
+	                { title: '手动输入', indent: 2, name: 'f_dnscrypt_manual', type: 'checkbox', value: (nvram.dnscrypt_manual == 1) },
+					{ title: 'DNS服务器', indent: 2, name: 'dnscrypt_resolver', type: 'select', options: [/*dnscrypt_resolvers*/],  value: nvram.dnscrypt_resolver, suffix: ' <a href=\'https://github.com/jedisct1/dnscrypt-proxy/blob/master/dnscrypt-resolvers.csv\' target=\'_new\'>Resolver Details</a>' },
+					{ title: 'Resolver Address', indent: 2, name: 'dnscrypt_resolver_address', type: 'text', maxlen: 50, size: 25, value: nvram.dnscrypt_resolver_address, suffix: ' <a href=\'https://github.com/jedisct1/dnscrypt-proxy/blob/master/dnscrypt-resolvers.csv\' target=\'_new\'>DNS详细信息</a>' },
+					{ title: 'DNS服务器名称', indent: 2, name: 'dnscrypt_provider_name', type: 'text', maxlen: 60, size: 25, value: nvram.dnscrypt_provider_name },
+					{ title: '提供的公钥', indent: 2, name: 'dnscrypt_provider_key', type: 'text', maxlen: 80, size: 25, value: nvram.dnscrypt_provider_key },
+					{ title: '优先级', indent: 2, name: 'dnscrypt_priority', type: 'select', options: [['1','Strict-Order'],['2','No-Resolv'],['0','None']], value: nvram.dnscrypt_priority },
+					{ title: '本地端口', indent: 2, name: 'dnscrypt_port', type: 'text', maxlen: 5, size: 7, value: nvram.dnscrypt_port },
+					{ title: '日志级别', indent: 2, name: 'dnscrypt_log', type: 'text', maxlen: 2, size: 5, value: nvram.dnscrypt_log },
 					/* DNSCRYPT-END */
-					{ title: 'WINS <i>(for DHCP)</i>', name: 'wan_wins', type: 'text', maxlen: 15, size: 17, value: nvram.wan_wins }
+					{ title: 'WINS <i>(用于DHCP服务)</i>', name: 'wan_wins', type: 'text', maxlen: 15, size: 17, value: nvram.wan_wins }
 				]);
 			</script>
 		</div>
 
 		<div class="box" data-box="network-ethports">
-			<div class="heading">Ethernet Ports State - Configuration</div>
+			<div class="heading">以太网端口状态 - 配置</div>
 			<div class="content eth-ports"></div>
 			<script type="text/javascript">
 				$('.content.eth-ports').forms([
-					{ title: 'Enable Ports State', name: 'f_lan_state', type: 'checkbox', value: (nvram.lan_state == 1) },
-					{ title: 'Show Speed Info', indent: 2, name: 'f_lan_desc', type: 'checkbox', value: (nvram.lan_desc == 1) },
-					{ title: 'Invert Ports Order', indent: 2, name: 'f_lan_invert', type: 'checkbox', value: (nvram.lan_invert == 1) }
+					{ title: '启用端口状态', name: 'f_lan_state', type: 'checkbox', value: (nvram.lan_state == 1) },
+					{ title: '显示速度信息', indent: 2, name: 'f_lan_desc', type: 'checkbox', value: (nvram.lan_desc == 1) },
+					{ title: '反转端口顺序', indent: 2, name: 'f_lan_invert', type: 'checkbox', value: (nvram.lan_invert == 1) }
 				]);
 			</script>
 		</div>
@@ -2155,7 +2155,7 @@ No part of this file may be used without permission.
 					htmlOut += ('<input type="hidden" id="_wl'+u+'_nctrlsb" name="wl'+u+'_nctrlsb">');
 					htmlOut += ('<input type="hidden" id="_wl'+u+'_nbw" name="wl'+u+'_nbw">');
 
-					htmlOut += '<div class="box" data-box="network_wl' + u +'"><div class="heading">Wireless';
+					htmlOut += '<div class="box" data-box="network_wl' + u +'"><div class="heading">WiFi设置';
 					//	if (wl_ifaces.length > 1)
 					htmlOut += ' (' + wl_display_ifname(uidx) + ')';
 					htmlOut += '</div>';
@@ -2163,45 +2163,45 @@ No part of this file may be used without permission.
 					htmlOut += '<div class="content wifi-' + uidx + '">';
 
 					f = [
-						{ title: 'Enable Wireless', name: 'f_wl'+u+'_radio', type: 'checkbox',
+						{ title: '启用无线', name: 'f_wl'+u+'_radio', type: 'checkbox',
 							value: (eval('nvram.wl'+u+'_radio') == '1') && (eval('nvram.wl'+u+'_net_mode') != 'disabled') },
-						{ title: 'MAC Address', text: '<a href="/#advanced-mac.asp">' + eval('nvram.wl'+u+'_hwaddr') + '</a>' },
-						{ title: 'Wireless Mode', name: 'f_wl'+u+'_mode', type: 'select',
-							options: [['ap', 'Access Point'],['apwds', 'Access Point + WDS'],['sta', 'Wireless Client'],['wet', 'Wireless Ethernet Bridge'],['wds', 'WDS']],
+						{ title: 'MAC地址', text: '<a href="/#advanced-mac.asp">' + eval('nvram.wl'+u+'_hwaddr') + '</a>' },
+						{ title: '无线模式', name: 'f_wl'+u+'_mode', type: 'select',
+							options: [['ap', '接入点'],['apwds', '接入点 + WDS'],['sta', '无线客户端'],['wet', '无线以太网桥'],['wds', 'WDS']],
 							value: ((eval('nvram.wl'+u+'_mode') == 'ap') && (eval('nvram.wl'+u+'_wds_enable') == '1')) ? 'apwds' : eval('nvram.wl'+u+'_mode') },
-						{ title: 'Radio Band', name: 'f_wl'+u+'_nband', type: 'select', options: bands[uidx],
+						{ title: '无线电频段', name: 'f_wl'+u+'_nband', type: 'select', options: bands[uidx],
 							value: eval('nvram.wl'+u+'_nband') || '0' == '0' ? bands[uidx][0][0] : eval('nvram.wl'+u+'_nband') },
-						{ title: 'Wireless Network Mode', name: 'wl'+u+'_net_mode', type: 'select',
+						{ title: '无线网络模式', name: 'wl'+u+'_net_mode', type: 'select',
 							value: (eval('nvram.wl'+u+'_net_mode') == 'disabled') ? 'mixed' : eval('nvram.wl'+u+'_net_mode'),
 							options: [], prefix: '<span id="__wl'+u+'_net_mode">', suffix: '</span>' },
 						{ title: 'SSID', name: 'wl'+u+'_ssid', type: 'text', maxlen: 32, size: 34, value: eval('nvram.wl'+u+'_ssid') },
-						{ title: 'Broadcast', indent: 2, name: 'f_wl'+u+'_bcast', type: 'checkbox', value: (eval('nvram.wl'+u+'_closed') == '0') },
-						{ title: 'Channel', name: 'wl'+u+'_channel', type: 'select', options: ghz[uidx], prefix: '<div class="pull-left" id="__wl'+u+'_channel">', suffix: '</div> &nbsp; <button class="btn btn-primary" type="button" id="_f_wl'+u+'_scan" value="Scan" onclick="scanButton('+u+')">Scan <i class="icon-search"></i></button> &nbsp; <div class="spinner" style="visibility: hidden;" id="spin'+u+'"></div>',
+						{ title: '广播', indent: 2, name: 'f_wl'+u+'_bcast', type: 'checkbox', value: (eval('nvram.wl'+u+'_closed') == '0') },
+						{ title: '信道', name: 'wl'+u+'_channel', type: 'select', options: ghz[uidx], prefix: '<div class="pull-left" id="__wl'+u+'_channel">', suffix: '</div> &nbsp; <button class="btn btn-primary" type="button" id="_f_wl'+u+'_scan" value="Scan" onclick="scanButton('+u+')">扫描 <i class="icon-search"></i></button> &nbsp; <div class="spinner" style="visibility: hidden;" id="spin'+u+'"></div>',
 							value: eval('nvram.wl'+u+'_channel') },
-						{ title: 'Channel Width', name: 'wl'+u+'_nbw_cap', type: 'select', options: [],
+						{ title: '信道宽度', name: 'wl'+u+'_nbw_cap', type: 'select', options: [],
 							value: eval('nvram.wl'+u+'_nbw_cap'), prefix: '<span id="__wl'+u+'_nbw_cap">', suffix: '</span>' },
-						{ title: 'Control Sideband', name: 'f_wl'+u+'_nctrlsb', type: 'select', options: [['lower','Lower'],['upper','Upper']],
+						{ title: '控制边带', name: 'f_wl'+u+'_nctrlsb', type: 'select', options: [['lower','下层'],['upper','上层']],
 							value: eval('nvram.wl'+u+'_nctrlsb') == 'none' ? 'lower' : eval('nvram.wl'+u+'_nctrlsb') },
-						{ title: 'Security', name: 'wl'+u+'_security_mode', type: 'select',
-							options: [['disabled','Disabled'],['wep','WEP'],['wpa_personal','WPA Personal'],['wpa_enterprise','WPA Enterprise'],['wpa2_personal','WPA2 Personal'],['wpa2_enterprise','WPA2 Enterprise'],['wpaX_personal','WPA / WPA2 Personal'],['wpaX_enterprise','WPA / WPA2 Enterprise'],['radius','Radius']],
+						{ title: '安全', name: 'wl'+u+'_security_mode', type: 'select',
+							options: [['disabled','禁用'],['wep','WEP'],['wpa_personal','WPA Personal'],['wpa_enterprise','WPA Enterprise'],['wpa2_personal','WPA2 Personal'],['wpa2_enterprise','WPA2 Enterprise'],['wpaX_personal','WPA / WPA2 Personal'],['wpaX_enterprise','WPA / WPA2 Enterprise'],['radius','Radius']],
 							value: eval('nvram.wl'+u+'_security_mode') },
-						{ title: 'Encryption', indent: 2, name: 'wl'+u+'_crypto', type: 'select',
+						{ title: '加密类型', indent: 2, name: 'wl'+u+'_crypto', type: 'select',
 							options: [['tkip','TKIP'],['aes','AES'],['tkip+aes','TKIP / AES']], value: eval('nvram.wl'+u+'_crypto') },
-						{ title: 'Shared Key', indent: 2, name: 'wl'+u+'_wpa_psk', type: 'password', maxlen: 64, size: 64, peekaboo: 1,
-							suffix: ' <button class="btn" type="button" id="_f_wl'+u+'_psk_random1" value="Random" onclick="random_psk(\'_wl'+u+'_wpa_psk\')">Random</button>',
+						{ title: '共享密钥', indent: 2, name: 'wl'+u+'_wpa_psk', type: 'password', maxlen: 64, size: 64, peekaboo: 1,
+							suffix: ' <button class="btn" type="button" id="_f_wl'+u+'_psk_random1" value="Random" onclick="random_psk(\'_wl'+u+'_wpa_psk\')">随机</button>',
 							value: eval('nvram.wl'+u+'_wpa_psk') },
-						{ title: 'Shared Key', indent: 2, name: 'wl'+u+'_radius_key', type: 'password', maxlen: 64, size: 32, peekaboo: 1,
-							suffix: ' <button class="btn" type="button" id="_f_wl'+u+'_psk_random2" value="Random" onclick="random_psk(\'_wl'+u+'_radius_key\')">Random</button>',
+						{ title: '共享密钥', indent: 2, name: 'wl'+u+'_radius_key', type: 'password', maxlen: 64, size: 32, peekaboo: 1,
+							suffix: ' <button class="btn" type="button" id="_f_wl'+u+'_psk_random2" value="Random" onclick="random_psk(\'_wl'+u+'_radius_key\')">随机</button>',
 							value: eval('nvram.wl'+u+'_radius_key') },
-						{ title: 'Group Key Renewal', indent: 2, name: 'wl'+u+'_wpa_gtk_rekey', type: 'text', maxlen: 4, size: 6, suffix: ' <i>(seconds)</i>',
+						{ title: '组密钥更新间隔', indent: 2, name: 'wl'+u+'_wpa_gtk_rekey', type: 'text', maxlen: 4, size: 6, suffix: ' <i>(秒)</i>',
 							value: eval('nvram.wl'+u+'_wpa_gtk_rekey') },
-						{ title: 'Radius Server', indent: 2, multi: [
+						{ title: 'Radius服务器', indent: 2, multi: [
 							{ name: 'wl'+u+'_radius_ipaddr', type: 'text', maxlen: 15, size: 17, value: eval('nvram.wl'+u+'_radius_ipaddr') },
 							{ name: 'wl'+u+'_radius_port', type: 'text', maxlen: 5, size: 7, prefix: ' : ', value: eval('nvram.wl'+u+'_radius_port') } ] },
-						{ title: 'Encryption', indent: 2, name: 'wl'+u+'_wep_bit', type: 'select', options: [['128','128-bits'],['64','64-bits']],
+						{ title: '加密类型', indent: 2, name: 'wl'+u+'_wep_bit', type: 'select', options: [['128','128-bits'],['64','64-bits']],
 							value: eval('nvram.wl'+u+'_wep_bit') },
-						{ title: 'Passphrase', indent: 2, name: 'wl'+u+'_passphrase', type: 'text', maxlen: 16, size: 20,
-							suffix: ' <button class="btn" type="button" id="_f_wl'+u+'_wep_gen" value="Generate" onclick="generate_wep('+u+')">Generate</button> <button class="btn" type="button" id="_f_wl'+u+'_wep_random" value="Random" onclick="random_wep('+u+')">Random</button>',
+						{ title: '密码', indent: 2, name: 'wl'+u+'_passphrase', type: 'text', maxlen: 16, size: 20,
+							suffix: ' <button class="btn" type="button" id="_f_wl'+u+'_wep_gen" value="Generate" onclick="generate_wep('+u+')">生成</button> <button class="btn" type="button" id="_f_wl'+u+'_wep_random" value="Random" onclick="random_wep('+u+')">随机</button>',
 							value: eval('nvram.wl'+u+'_passphrase') }
 					];
 
@@ -2214,10 +2214,10 @@ No part of this file may be used without permission.
 
 					f.push(null,
 						{ title: 'WDS', name: 'f_wl'+u+'_lazywds', type: 'select',
-							options: [['0','Link With...'],['1','Automatic']], value: nvram['wl'+u+'_lazywds'] } );
+							options: [['0','链接...'],['1','自动']], value: nvram['wl'+u+'_lazywds'] } );
 					wds = eval('nvram.wl'+u+'_wds').split(/\s+/);
 					for (i = 0; i < 10; i += 2)	{
-						f.push({ title: (i ? '' : 'MAC Address'), indent: 2, multi: [
+						f.push({ title: (i ? '' : 'MAC地址'), indent: 2, multi: [
 							{ name: 'f_wl'+u+'_wds_' + i, type: 'text', maxlen: 17, size: 20, value: wds[i] || '00:00:00:00:00:00' },
 							{ name: 'f_wl'+u+'_wds_' + (i + 1), type: 'text', maxlen: 17, size: 20, value: wds[i + 1] || '00:00:00:00:00:00' } ] } );
 					}
@@ -2232,8 +2232,8 @@ No part of this file may be used without permission.
 			$('#wifi-interfaces').append(htmlOut);
 		</script>
 
-		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">Save <i class="icon-check"></i></button>
-		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">Cancel <i class="icon-cancel"></i></button>
+		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">保存 <i class="icon-check"></i></button>
+		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">取消 <i class="icon-cancel"></i></button>
 		<span id="footer-msg" class="alert alert-warning" style="visibility: hidden;"></span>
 
 	</form>

@@ -4,10 +4,10 @@ Samba Server - !!TB
 
 For use with Tomato Firmware only.
 No part of this file may be used without permission.
---><title>File Sharing</title>
+--><title>文件共享</title>
 <content>
 	<script type="text/javascript">
-		//	<% nvram("smbd_enable,smbd_user,smbd_passwd,smbd_wgroup,smbd_cpage,smbd_ifnames,smbd_custom,smbd_master,smbd_wins,smbd_shares,smbd_autoshare,wan_wins"); %>
+		//	<% nvram("at_update,tomatoanon_answer,smbd_enable,smbd_user,smbd_passwd,smbd_wgroup,smbd_cpage,smbd_ifnames,smbd_custom,smbd_master,smbd_wins,smbd_shares,smbd_autoshare,wan_wins"); %>
 
 		var ssg = new TomatoGrid();
 
@@ -34,7 +34,7 @@ No part of this file may be used without permission.
 		}
 
 		ssg.dataToView = function(data) {
-			return [data[0], data[1], data[2], ['Read Only', 'Read / Write'][data[3]], ['No', 'Yes'][data[4]]];
+			return [data[0], data[1], data[2], ['只读', '读 / 写'][data[3]], ['否', '是'][data[4]]];
 		}
 
 		ssg.fieldValuesToData = function(row) {
@@ -51,22 +51,22 @@ No part of this file may be used without permission.
 			s = f[0].value.trim().replace(/\s+/g, ' ');
 			if (s.length > 0) {
 				if (s.search(/^[ a-zA-Z0-9_\-\$]+$/) == -1) {
-					ferror.set(f[0], 'Invalid share name. Only characters "$ A-Z 0-9 - _" and spaces are allowed.', quiet);
+					ferror.set(f[0], '共享名称无效。 只允许使用字符“$ A-Z 0-9 - _”和空格。', quiet);
 					return 0;
 				}
 				if (this.existName(s)) {
-					ferror.set(f[0], 'Duplicate share name.', quiet);
+					ferror.set(f[0], '重复的共享名称。', quiet);
 					return 0;
 				}
 				f[0].value = s;
 			}
 			else {
-				ferror.set(f[0], 'Empty share name is not allowed.', quiet);
+				ferror.set(f[0], '不允许使用空的共享名称。', quiet);
 				return 0;
 			}
 
-			if (!v_nodelim(f[1], quiet, 'Directory', 1) || !v_path(f[1], quiet, 1)) return 0;
-			if (!v_nodelim(f[2], quiet, 'Description', 1)) return 0;
+			if (!v_nodelim(f[1], quiet, '目录', 1) || !v_path(f[1], quiet, 1)) return 0;
+			if (!v_nodelim(f[2], quiet, '描述', 1)) return 0;
 
 			return 1;
 		}
@@ -91,10 +91,10 @@ No part of this file may be used without permission.
 				{ type: 'text', maxlen: 32 },
 				{ type: 'text', maxlen: 256 },
 				{ type: 'text', maxlen: 64 },
-				{ type: 'select', options: [[0, 'Read Only'],[1, 'Read / Write']] },
-				{ type: 'select', options: [[0, 'No'],[1, 'Yes']] }
+				{ type: 'select', options: [[0, '只读'],[1, '读 / 写']] },
+				{ type: 'select', options: [[0, '否'],[1, '是']] }
 			]);
-			this.headerSet(['Share Name', 'Directory', 'Description', 'Access Level', 'Hidden']);
+			this.headerSet(['共享名称', '目录', '描述', '权限', '隐藏']);
 
 			var s = nvram.smbd_shares.split('>');
 			for (var i = 0; i < s.length; ++i) {
@@ -134,7 +134,7 @@ No part of this file may be used without permission.
 
 				b = E('_smbd_user');
 				if (b.value == 'root') {
-					ferror.set(b, 'User Name \"root\" is not allowed.', quiet);
+					ferror.set(b, '不允许使用\“root \”账号。', quiet);
 					return 0;
 				}
 				ferror.clear(b);
@@ -193,66 +193,66 @@ No part of this file may be used without permission.
 		<input type="hidden" name="smbd_shares">
 
 		<div class="box">
-			<div class="heading">Samba File Sharing</div>
+			<div class="heading">Samba文件共享</div>
 			<div class="content fileshare"></div>
 			<script type="text/javascript">
 				$('.content.fileshare').forms([
-					{ title: 'Enable File Sharing', name: 'smbd_enable', type: 'select',
-						options: [['0', 'No'],['1', 'Yes, no Authentication'],['2', 'Yes, Authentication required']],
+					{ title: '启用文件共享', name: 'smbd_enable', type: 'select',
+						options: [['0', '否'],['1', '是, 无需验证'],['2', '是, 需要验证']],
 						value: nvram.smbd_enable },
-					{ title: 'User Name', indent: 2, name: 'smbd_user', type: 'text', maxlen: 50, size: 32,
+					{ title: '用户名', indent: 2, name: 'smbd_user', type: 'text', maxlen: 50, size: 32,
 						value: nvram.smbd_user },
-					{ title: 'Password', indent: 2, name: 'smbd_passwd', type: 'password', maxlen: 50, size: 32, peekaboo: 1,
+					{ title: '密码', indent: 2, name: 'smbd_passwd', type: 'password', maxlen: 50, size: 32, peekaboo: 1,
 						value: nvram.smbd_passwd },
-					{ title: 'Workgroup Name', name: 'smbd_wgroup', type: 'text', maxlen: 20, size: 32,
+					{ title: '工作组', name: 'smbd_wgroup', type: 'text', maxlen: 20, size: 32,
 						value: nvram.smbd_wgroup },
-					{ title: 'Client Codepage', name: 'smbd_cpage', type: 'select',
-						options: [['', 'Unspecified'],['437', '437 (United States, Canada)'],['850', '850 (Western Europe)'],['852', '852 (Central / Eastern Europe)'],['866', '866 (Cyrillic / Russian)']
+					{ title: '客户端代码页', name: 'smbd_cpage', type: 'select',
+						options: [['', '未指定'],['437', '437 (美国，加拿大)'],['850', '850 (西欧)'],['852', '852 (中欧/东欧)'],['866', '866 (西里尔文/俄文)']
 							/* LINUX26-BEGIN */
-							,['932', '932 (Japanese)'],['936', '936 (Simplified Chinese)'],['949', '949 (Korean)'],['950', '950 (Traditional Chinese / Big5)']
+							,['932', '932 (日语)'],['936', '936 (简体中文)'],['949', '949 (韩文)'],['950', '950 (繁体中文 / Big5)']
 							/* LINUX26-END */
 						],
-						suffix: ' <small> (start cmd.exe and type chcp to see the current code page)</small>',
+						suffix: ' <small> (启动cmd.exe并键入chcp以查看当前代码页)</small>',
 						value: nvram.smbd_cpage },
-					{ title: 'Network Interfaces', name: 'smbd_ifnames', type: 'text', maxlen: 50, size: 32,
-						suffix: ' <small> (space-delimited)</small>',
+					{ title: '网络接口', name: 'smbd_ifnames', type: 'text', maxlen: 50, size: 32,
+						suffix: ' <small> (空格分隔)</small>',
 						value: nvram.smbd_ifnames },
-					{ title: 'Samba Custom Configuration', name: 'smbd_custom', type: 'textarea', value: nvram.smbd_custom, style: 'width: 100%; height: 80px;' },
-					{ title: 'Auto-share all USB Partitions', name: 'smbd_autoshare', type: 'select',
-						options: [['0', 'Disabled'],['1', 'Read Only'],['2', 'Read / Write'],['3', 'Hidden Read / Write']],
+					{ title: 'Samba自定义配置', name: 'smbd_custom', type: 'textarea', value: nvram.smbd_custom, style: 'width: 100%; height: 80px;' },
+					{ title: '自动共享所有USB分区', name: 'smbd_autoshare', type: 'select',
+						options: [['0', '禁用'],['1', '只读'],['2', '读 / 写'],['3', '隐藏, 读 / 写']],
 						value: nvram.smbd_autoshare },
-					{ title: 'Options', multi: [
-						{ suffix: '&nbsp; Master Browser &nbsp;&nbsp;&nbsp;', name: 'f_smbd_master', type: 'checkbox', value: nvram.smbd_master == 1 },
-						{ suffix: '&nbsp; WINS Server (if not defined on Basic/Network page) &nbsp;',	name: 'f_smbd_wins', type: 'checkbox', value: (nvram.smbd_wins == 1) && (nvram.wan_wins == '' || nvram.wan_wins == '0.0.0.0') }
+					{ title: '选项', multi: [
+						{ suffix: '&nbsp; 主浏览器 &nbsp;&nbsp;&nbsp;', name: 'f_smbd_master', type: 'checkbox', value: nvram.smbd_master == 1 },
+						{ suffix: '&nbsp; WINS服务器 (如果未在基本/网络页面上定义) (if not defined on Basic/Network page) &nbsp;',	name: 'f_smbd_wins', type: 'checkbox', value: (nvram.smbd_wins == 1) && (nvram.wan_wins == '' || nvram.wan_wins == '0.0.0.0') }
 					] }
 				]);
 			</script>
 		</div>
 
 		<div class="box">
-			<div class="heading">Additional Shares List</div>
+			<div class="heading">添加额外的共享列表</div>
 			<div class="content">
 				<table class="line-table" id="ss-grid"></table><br />
-				<small>When no shares are specified and auto-sharing is disabled, <i>/mnt</i> directory is shared in Read Only mode.</small>
+				<small>当没有指定共享并且自动共享被禁用时, <i>/mnt</i> 目录在只读模式下共享。</small>
 			</div>
 		</div>
 
 		<div class="box">
-			<div class="heading">Notes <a class="pull-right" data-toggle="tooltip" title="Hide/Show Notes" href="javascript:toggleVisibility('notes');"><span id="sesdivnotesshowhide"><i class="icon-chevron-up"></i></span></a></div>
+			<div class="heading">说明 <a class="pull-right" data-toggle="tooltip" title="隐藏/显示" href="javascript:toggleVisibility('notes');"><span id="sesdivnotesshowhide"><i class="icon-chevron-up"></i></span></a></div>
 			<div class="section" id="sesdivnotes" style="display:none">
 				<ul>
-				<li><b>Network Interfaces</b> - Space-delimited list of router interface names Samba will bind to.
+				<li><b>网络接口</b> - Samba绑定到的路由器接口，空格分隔。
 				<ul>
-					<li>If empty, <i>interfaces = <% nv("lan_ifname"); %></i> will be used instead.</li>
-					<li>The <i>bind interfaces only = yes</i> directive is always set.</li>
-					<li>Refer to the <a href="https://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html">Samba documentation</a> for details.</li>
+					<li>如果为空 <i>接口 = <% nv("lan_ifname"); %></i> 将被使用</li>
+					<li> <i>仅绑定接口 = 是</i> 默认设置且不可更改</li>
+					<li>参考 <a href="https://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html">Samba文档</a> 以了解更多。</li>
 				</ul></li>
 				</ul>
 			</div>
 		</div>
 
-		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">Save <i class="icon-check"></i></button>
-		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">Cancel <i class="icon-cancel"></i></button>
+		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">保存 <i class="icon-check"></i></button>
+		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">取消 <i class="icon-cancel"></i></button>
 		<span id="footer-msg" class="alert alert-warning" style="visibility: hidden;"></span>
 
 	</form>

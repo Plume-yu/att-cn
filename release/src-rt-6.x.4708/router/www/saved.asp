@@ -125,8 +125,8 @@
 
 		<div id="loader">
 			<script type="text/javascript">
-				if (wait <= 0) s = 'Changes Saved!<br /><br /> <button onclick="go()" class="btn">Continue</button>';
-				else s = '<div class="spinner"></div> Working, please wait... <b>(<span id="xclock" style="visibility:hidden">&nbsp;</span>)</b>';
+				if (wait <= 0) s = '已保存!<br /><br /> <button onclick="go()" class="btn">继续</button>';
+				else s = '<div class="spinner"></div> 正在保存，请稍候... <b>(<span id="xclock" style="visibility:hidden">&nbsp;</span>)</b>';
 				document.write(s);
 			</script>
 		</div>

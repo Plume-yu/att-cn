@@ -23,7 +23,7 @@
 
 	For use with Tomato Firmware only.
 	No part of this file may be used without permission.
---><title>VLAN</title>
+--><title>VLAN设置</title>
 <content>
 	<style type="text/css">
 		#vlan-grid .co1,
@@ -287,7 +287,7 @@
 			 var e = E( 'footer-msg' );
 
 			if ( vlg.countWan() != 1 ) {
-				e.innerHTML        = 'Cannot proceed: one VID must be assigned to WAN.';
+				e.innerHTML        = '无法继续：一个VID必须分配到WAN。';
 				e.style.visibility = 'visible';
 				setTimeout(
 						function() {
@@ -298,7 +298,7 @@
 			}
 
 			if ( vlg.countLan( 0 ) != 1 ) {
-				e.innerHTML        = 'Cannot proceed: one and only one VID must be assigned to the primary LAN (br0).';
+				e.innerHTML        = '无法继续：必须为主LAN分配一个且仅一个VID（br0）。';
 				e.style.visibility = 'visible';
 				setTimeout(
 						function() {
@@ -309,7 +309,7 @@
 			}
 
 			if ( v.length < 1 ) {
-				e.innerHTML        = 'Cannot proceed without setting a default VID';
+				e.innerHTML        = '在不设置默认VID的情况下无法继续。';
 				e.style.visibility = 'visible';
 				setTimeout(
 						function() {
@@ -319,7 +319,7 @@
 				return;
 			}
 
-			if ( confirm( "Router must be rebooted to proceed. Commit changes to NVRAM and reboot now?" ) )
+			if ( confirm( "必须重新启动路由器才能继续。 提交对NVRAM的更改并立即重新启动？" ) )
 				form.submit( fom, 0 );
 		}
 
@@ -349,14 +349,14 @@
 					{ type: 'checkbox', prefix: '<div class="centered">', suffix: '</div>' },
 					{ type: 'checkbox', prefix: '<div class="centered">', suffix: '</div>' },
 					{
-						type : 'select', options: [ [ 1, 'none' ], [ 2, 'WAN' ], [ 3, 'LAN (br0)' ], [ 4, 'LAN1 (br1)' ], [ 5, 'LAN2 (br2)' ], [ 6, 'LAN3 (br3)' ], [ 7, 'WAN2' ],
+						type : 'select', options: [ [ 1, '无' ], [ 2, 'WAN' ], [ 3, 'LAN (br0)' ], [ 4, 'LAN1 (br1)' ], [ 5, 'LAN2 (br2)' ], [ 6, 'LAN3 (br3)' ], [ 7, 'WAN2' ],
 						/* MULTIWAN-BEGIN */
 						                            [ 8, 'WAN3' ], [ 9, 'WAN4' ]
 						/* MULTIWAN-END */
 					], prefix: '<div class="centered">', suffix: '</div>'
 					} ] );
 
-				this.headerSet( [ 'VLAN', 'VID', 'Port 1', 'Tagged', 'Port 2', 'Tagged', 'Port 3', 'Tagged', 'Port 4', 'Tagged', 'WAN Port', 'Tagged', 'Default', 'Bridge' ] );
+				this.headerSet( [ 'VLAN', 'VID', 'Port 1', '标记', 'Port 2', '标记', 'Port 3', '标记', 'Port 4', '标记', 'WAN Port', '标记', '默认', '桥接' ] );
 
 				vlg.populate();
 				vlg.canDelete = false;
@@ -535,7 +535,7 @@
 // Modifications to enable Native VLAN support(allow one untagged vlan per port) by default
 				if ( (f[ COL_P0 ].checked == 1) && (this.countElem( COL_P0, 1 ) > 0) ) {
 					if ( ((this.countElem( COL_P0, 1 ) - 1) >= this.countElem( COL_P0T, 1 )) && (f[ COL_P0T ].checked == 0) ) {
-						ferror.set( f[ COL_P0T ], 'Only one untagged VLAN per port is allowed(Native VLAN)', quiet );
+						ferror.set( f[ COL_P0T ], '请选择一个未标记的VLAN端口', quiet );
 						valid = 0;
 					} else {
 						ferror.clear( f[ COL_P0T ] );
@@ -543,7 +543,7 @@
 				}
 				if ( (f[ COL_P1 ].checked == 1) && (this.countElem( COL_P1, 1 ) > 0) ) {
 					if ( ((this.countElem( COL_P1, 1 ) - 1) >= this.countElem( COL_P1T, 1 )) && (f[ COL_P1T ].checked == 0) ) {
-						ferror.set( f[ COL_P1T ], 'Only one untagged VLAN per port is allowed(Native VLAN)', quiet );
+						ferror.set( f[ COL_P1T ], '请选择一个未标记的VLAN端口', quiet );
 						valid = 0;
 					} else {
 						ferror.clear( f[ COL_P1T ] );
@@ -551,7 +551,7 @@
 				}
 				if ( (f[ COL_P2 ].checked == 1) && (this.countElem( COL_P2, 1 ) > 0) ) {
 					if ( ((this.countElem( COL_P2, 1 ) - 1) >= this.countElem( COL_P2T, 1 )) && (f[ COL_P2T ].checked == 0) ) {
-						ferror.set( f[ COL_P2T ], 'Only one untagged VLAN per port is allowed(Native VLAN)', quiet );
+						ferror.set( f[ COL_P2T ], '请选择一个未标记的VLAN端口', quiet );
 						valid = 0;
 					} else {
 						ferror.clear( f[ COL_P2T ] );
@@ -559,7 +559,7 @@
 				}
 				if ( (f[ COL_P3 ].checked == 1) && (this.countElem( COL_P3, 1 ) > 0) ) {
 					if ( ((this.countElem( COL_P3, 1 ) - 1) >= this.countElem( COL_P3T, 1 )) && (f[ COL_P3T ].checked == 0) ) {
-						ferror.set( f[ COL_P3T ], 'Only one untagged VLAN per port is allowed(Native VLAN)', quiet );
+						ferror.set( f[ COL_P3T ], '请选择一个未标记的VLAN端口', quiet );
 						valid = 0;
 					} else {
 						ferror.clear( f[ COL_P3T ] );
@@ -567,7 +567,7 @@
 				}
 				if ( (f[ COL_P4 ].checked == 1) && (this.countElem( COL_P4, 1 ) > 0) ) {
 					if ( ((this.countElem( COL_P4, 1 ) - 1) >= this.countElem( COL_P4T, 1 )) && (f[ COL_P4T ].checked == 0) ) {
-						ferror.set( f[ COL_P4T ], 'Only one untagged VLAN per port is allowed(Native VLAN)', quiet );
+						ferror.set( f[ COL_P4T ], '请选择一个未标记的VLAN端口', quiet );
 						valid = 0;
 					} else {
 						ferror.clear( f[ COL_P4T ] );
@@ -580,28 +580,28 @@
 				}
 
 				if ( (this.countDefaultVID() > 0) && (f[ COL_VID_DEF ].checked == 1) ) {
-					ferror.set( f[ COL_VID_DEF ], 'Only one VID can be selected as the default VID', quiet );
+					ferror.set( f[ COL_VID_DEF ], '只有一个VID可以选择作为默认的VID', quiet );
 					valid = 0;
 				} else {
 					ferror.clear( f[ COL_VID_DEF ] );
 				}
 
 				if ( this.countVID( f[ COL_VID ].selectedIndex ) > 0 ) {
-					ferror.set( f[ COL_VID ], 'Cannot add more than one entry with VID ' + f[ 0 ].selectedIndex, quiet );
+					ferror.set( f[ COL_VID ], '无法使用一个VID添加多个条目' + f[ 0 ].selectedIndex, quiet );
 					valid = 0;
 				} else {
 					ferror.clear( f[ COL_VID ] );
 				}
 
 				if ( (this.countWan() > 0) && (f[ COL_BRI ].selectedIndex == 1) ) {
-					ferror.set( f[ COL_BRI ], 'Only one VID can be used as WAN at any time', quiet );
+					ferror.set( f[ COL_BRI ], 'WAN只能有一个VID', quiet );
 					valid = 0;
 				} else {
 					ferror.clear( f[ COL_BRI ] );
 				}
 
 				if ( (this.countWan2() > 0) && (f[ COL_BRI ].selectedIndex == 6) ) {
-					ferror.set( f[ COL_BRI ], 'Only one VID can be used as WAN2 at any time', quiet );
+					ferror.set( f[ COL_BRI ], 'WAN2只能有一个VIDe', quiet );
 					valid = 0;
 				} else {
 					ferror.clear( f[ COL_BRI ] );
@@ -609,14 +609,14 @@
 
 				/* MULTIWAN-BEGIN */
 				if ( (this.countWan3() > 0) && (f[ COL_BRI ].selectedIndex == 7) ) {
-					ferror.set( f[ COL_BRI ], 'Only one VID can be used as WAN3 at any time', quiet );
+					ferror.set( f[ COL_BRI ], 'WAN3只能有一个VID', quiet );
 					valid = 0;
 				} else {
 					ferror.clear( f[ COL_BRI ] );
 				}
 
 				if ( (this.countWan4() > 0) && (f[ COL_BRI ].selectedIndex == 8) ) {
-					ferror.set( f[ COL_BRI ], 'Only one VID can be used as WAN4 at any time', quiet );
+					ferror.set( f[ COL_BRI ], 'WAN4只能有一个VID', quiet );
 					valid = 0;
 				} else {
 					ferror.clear( f[ COL_BRI ] );
@@ -625,7 +625,7 @@
 
 				for ( var i = 0; i < 4; i++ ) {
 					if ( (this.countLan( i ) > 0) && (f[ COL_BRI ].selectedIndex == (i + 2)) ) {
-						ferror.set( f[ COL_BRI ], 'One and only one VID can be used for LAN' + ((i == 0) ? '' : i ) + ' (br' + i + ') at any time', quiet );
+						ferror.set( f[ COL_BRI ], '只能有一个VID' + ((i == 0) ? '' : i ) + ' (br' + i + ') at any time', quiet );
 						valid = 0;
 					} else {
 						ferror.clear( f[ COL_BRI ] );
@@ -900,36 +900,36 @@
 		<input type="hidden" name="vlan15vid">
 
 		<div style="display: none;" class="alert alert-warning" id='unknown_router'>
-			<h5>Unknown Port Mapping!</h5>
-			<a href='http://www.linksysinfo.org/index.php?threads/can-vlan-gui-port-order-be-corrected.70160/#post-247634/'>Please Follow this Link for Instructions to get it corrected.</a>
-			Include Router Brand/Model (<% nv('t_model_name'); %>), Results from "nvram show | grep vlan1ports"&amp; Port Numbers on BACK of Router Case (Left -> Right viewed from Front).
+			<h5>未知的端口映射!</h5>
+			<a href='http://www.linksysinfo.org/index.php?threads/can-vlan-gui-port-order-be-corrected.70160/#post-247634/'>请按照下列指示进行更正。</a>
+			包括路由器品牌/型号 (<% nv('t_model_name'); %>), 结果从 "nvram show | grep vlan1ports" - VLAN的部分和路由器端口号（左->右从前面看）。
 		</div>
 
 		<div id="sesdiv" class="box" style="display:none">
-			<div class="heading">VLAN Settings</div>
+			<div class="heading">VLAN设置</div>
 			<div class="content">
 				<table class="line-table" id="vlan-grid"></table><br />
 
 
-				<h4><a href="javascript:toggleVisibility('vidmap');">VID Offset <span id="sesdiv_vidmap_showhide"><i class="icon-chevron-up"></i></span></a></h4>
+				<h4><a href="javascript:toggleVisibility('vidmap');">VID 偏移 <span id="sesdiv_vidmap_showhide"><i class="icon-chevron-up"></i></span></a></h4>
 				<div class="section vidoffset" id="sesdiv_vidmap" style="display:none"></div><hr>
 				<script type="text/javascript">
 					$('.section.vidoffset').forms([
-	                      { title: 'First 802.1Q VLAN tag', name: 'vlan0tag', type: 'text', maxlen:4, size:6,
+	                      { title: '第一个802.1Q VLAN标签', name: 'vlan0tag', type: 'text', maxlen:4, size:6,
 	                          value: fixInt(nvram.vlan0tag, 0, 4080, 0),
-	                          suffix: ' <small><i>(range: 0 - 4080; must be a multiple of 16; set to 0 to disable)</i></small>' }
+	                          suffix: ' <small><i>(范围: 0 - 4080; 必须是16的倍数; 设置为0可禁用)</i></small>' }
 	                  ]);
 				</script>
 
 
-				<h4><a href="javascript:toggleVisibility('wireless');">Wireless <span id="sesdiv_wireless_showhide"><i class="icon-chevron-up"></i></span></a></h4>
+				<h4><a href="javascript:toggleVisibility('wireless');">无线 <span id="sesdiv_wireless_showhide"><i class="icon-chevron-up"></i></span></a></h4>
 				<div class="section wifi" id="sesdiv_wireless" style="display:none"></div><hr>
 				<script type="text/javascript">
 					var f = [];
 					for (var uidx = 0; uidx < wl_ifaces.length; ++uidx) {
 						var u = wl_fface(uidx);
 						f.push(
-								{ title: ('Bridge ' + wl_ifaces[uidx][0] + ' to'), name: ('f_bridge_wlan'+u+'_to'), type: 'select',
+								{ title: ('桥接 ' + wl_ifaces[uidx][0] + ' 到'), name: ('f_bridge_wlan'+u+'_to'), type: 'select',
 									options: [[0,'LAN (br0)'],[1,'LAN1  (br1)'],[2,'LAN2 (br2)'],[3,'LAN3 (br3)'],[4,'none']], value: 4 }
 						);
 					}
@@ -939,49 +939,49 @@
 				</script>
 
 
-				<h4><a href="javascript:toggleVisibility('notes');">Notes <span id='sesdiv_notes_showhide'><i class="icon-chevron-up"></i></span></a></h4>
+				<h4><a href="javascript:toggleVisibility('notes');">说明 <span id='sesdiv_notes_showhide'><i class="icon-chevron-up"></i></span></a></h4>
 				<div class="section" id="sesdiv_notes" style="display:none">
 					<ul>
-						<li>If you notice that the order of the Lan Ports are incorrectly mapped, <a href='http://www.linksysinfo.org/index.php?threads/can-vlan-gui-port-order-be-corrected.70160/#post-247634/'> <b>Please Follow these Instructions to get it corrected.</b></a></li>
-						<li><b>VLAN</b> - Unique identifier of a VLAN.</li>
-						<li><b>VID</b> - <i>EXPERIMENTAL</i> - Allows overriding "traditional" VLAN/VID mapping with arbitrary VIDs for each VLAN (set to "0" to use "regular" VLAN/VID mappings instead). Warning: this hasn"t been verified/tested on anything but a Cisco/Linksys E3000 and may not be supported by your particular device/model (<small><b><i>see notes on "VID Offset" below</i></b></small>).</li>
-						<li><b>Ports 1-4 &amp; WAN</b> - Which ethernet ports on the router should be members of this VLAN.</li>
-						<li><b>Tagged</b> - Enable 802.1Q tagging of ethernet frames on a particular port/VLAN <span id="trunk_vlan_supported_message"></span>
+						<li>如果您注意到Lan端口的顺序不正确,<a href='http://www.linksysinfo.org/index.php?threads/can-vlan-gui-port-order-be-corrected.70160/#post-247634/'> <b>请按照此链接更正。</b></a></li>
+						<li><b>VLAN</b> - VLAN的唯一标识符。</li>
+						<li><b>VID</b> - <i>试验性</i> - 允许为每个VLAN覆盖具有任意VID的“传统”VLAN / VID映射（设置为“0”以代替使用“常规”VLAN / VID映射）。 警告：这没有在Cisco / Linksys E3000之外的任何东西验证/测试，并且可能不被您的特定设备/模型支持(<small><b><i>请参阅下面有关“VID偏移”的注意事项</i></b></small>)。</li>
+						<li><b>端口 1-4  &amp; WAN</b> - 路由器上的哪些以太网端口应该是此VLAN的成员。</li>
+						<li><b>标记</b> - 在特定端口/ VLAN上启用802.1Q标记以太网帧 <span id="trunk_vlan_supported_message"></span>
 							<script type="text/javascript">
 								if(!trunk_vlan_supported)
-									$('#trunk_vlan_supported_message').html(' <i><b>(unknown support for this model...contact the developper (Victek))</i></b>');
+									$('#trunk_vlan_supported_message').html(' <i><b>(不支持这个型号...联系开发商（Victek）)</i></b>');
 							</script>
 						</li>
-						<li><b>Default</b> - VLAN ID assigned to untagged frames received by the router.</li>
-						<li><b>Bridge</b> - Determines if this VLAN ID should be treated as WAN, part of a LAN bridge or just left alone (i.e. member of a 802.1Q trunk, being managed manually via scripts, etc...).</li>
+						<li><b>默认</b> - VLAN ID分配给路由器接收的未标记帧。</li>
+						<li><b>桥接</b> - 确定此VLAN ID是否应被视为WAN，LAN桥接器的一部分或仅单独使用（即802.1Q中继的成员，通过脚本手动管理等）。</li>
 					</ul>
 
 					<ul>
-						<li><b>VID Offset</b> - <i>EXPERIMENTAL</i> - First 802.1Q VLAN tag to be used as <i>base/initial tag/VID</i> for VLAN and VID assignments. This allows using VIDs larger than 15 on (older) devices such as the Linksys WRT54GL v1.1 (in contiguous blocks/ranges with up to 16 VLANs/VIDs). Set to '0' (zero) to disable this feature and VLANs will have the very same/identical value for its VID, as usual (from 0 to 15).</li>
+						<li><b>VID偏移</b> - <i>试验性</i> - 用作VLAN和VID分配的 <i>base/initial 标签/VID</i> 的第一个802.1Q VLAN标记。 这允许在（较旧的）设备上使用大于15的VID，例如Linksys WRT54GL v1.1（在具有多达16个VLAN / VID的连续块/范围中）。 设置为“0”（零）以禁用此功能，VLAN将具有与其通常（从0到15）的VID非常相同/相同的值.</li>
 					</ul>
 
 					<ul>
-						<li><b>Wireless</b> - Assignments of wireless interfaces to different LAN briges. You should probably be using and/or check things on <a href=advanced-wlanvifs.asp>Advanced/Virtual Wireless</a> and <a href=basic-network.asp>Basic/Network</a>.</li>
+						<li><b>无线</b> - 将无线接口分配给不同的LAN briges。 您应该可以在<a href=#advanced-wlanvifs.asp>高级/虚拟无线</a>和<a href=#basic-network.asp>基本/网络</a>上使用和/或检查内容。</li>
 					</ul>
 
 					<ul>
-						<li><b>Other relevant notes/hints:</b>
+						<li><b>其他相关注意事项/提示:</b>
 							<ul id="noteshints">
-								<li>One VID <i>must</i> be assigned to WAN.</li>
-								<li>One VID <i>must</i> be selected as the default.</li>
+								<li>必须将一个VID 分配给WAN。</li>
+								<li>必须选择一个VID 作为默认值。</li>
 
 							</ul>
 							<ul>
-								<li>This is an <b>experimental</b> feature and hasn't been tested in anything but a Linksys WRT54GL v1.1 running a Teaman-ND K24 build and a Cisco/Linksys E3000 running a Teaman-RT K26 build.</li>
-								<li>There's lots of things that could go wrong, please do think about what you're doing and take a backup before hitting the 'Save' button on this page!</li>
+								<li>这是一个<b>实验</b>功能，除了运行Teaman-ND K24构建的Linksys WRT54GL v1.1和运行Teaman-RT K26构建的Cisco / Linksys E3000之外，没有任何测试。
+								<li>有很多事情可能会出问题，请在点击此页面上的“保存”按钮之前，考虑一下您正在做的事情并备份！</li>
 							</ul>
 					</ul>
 
 					<script type="text/javascript">
 
 						if((trunk_vlan_supported) || (nvram.trunk_vlan_so == '1')) {
-							$('#noteshints').append('<li>To prevent 802.1Q compatibility issues, avoid using VID "0" as 802.1Q specifies that frames with a tag of "0" do not belong to any VLAN (the tag contains only user priority information).</li>');
-							$('#noteshints').append('<li>It may be also recommended to avoid using VID "1" as some vendors consider it special/reserved (for management purposes).</li>');
+							$('#noteshints').append('<li>为了防止802.1Q兼容性问题，请避免使用VID“0”作为802.1Q，指定标记为“0”的帧不属于任何VLAN（标记仅包含用户优先级信息）。</li>');
+							$('#noteshints').append('<li>建议避免使用VID“1”，因为一些供应商认为它是特殊的/保留的（用于管理目的）。</li>');
 						}
 
 					</script>
@@ -991,7 +991,7 @@
 						<div class="section trunkvlan">
 							<script type='text/javascript'>
 								createFieldTable('', [
-									{ title: 'Enable', name: 'f_trunk_vlan_so', type: 'checkbox', value: nvram.trunk_vlan_so == '1' },
+									{ title: '启用', name: 'f_trunk_vlan_so', type: 'checkbox', value: nvram.trunk_vlan_so == '1' },
 								], '.section.trunkvlan', 'fields-table');
 							</script>
 						</div>
@@ -1003,7 +1003,7 @@
 
 		<script type="text/javascript">
 			if(!port_vlan_supported)
-				$('#sesdiv').after('<i>This feature is not supported on this router.</i>');
+				$('#sesdiv').after('<i>此路由器不支持此功能。</i>');
 			else {
 				E('sesdiv').style.display = '';
 				if(!trunk_vlan_supported)
@@ -1011,8 +1011,8 @@
 			}
 		</script>
 
-		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">Save <i class="icon-check"></i></button>
-		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">Cancel <i class="icon-cancel"></i></button>
+		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">保存 <i class="icon-check"></i></button>
+		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">取消 <i class="icon-cancel"></i></button>
 		<span id="footer-msg" class="alert alert-warning" style="visibility: hidden;"></span>
 
 	</form>

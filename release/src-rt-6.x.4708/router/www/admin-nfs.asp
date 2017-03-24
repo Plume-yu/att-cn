@@ -4,14 +4,14 @@ Copyright (C) 2007-2011 Shibby
 http://openlinksys.info
 For use with Tomato Firmware only.
 No part of this file may be used without permission.
---><title>NFS Server</title>
+--><title>NFS 服务器</title>
 <content>
 	<script type="text/javascript">
-		//	<% nvram("nfs_enable,nfs_exports"); %>
+		//	<% nvram("at_update,tomatoanon_answer,nfs_enable,nfs_exports"); %>
 
-		var access = [['rw', 'Read/Write'], ['ro', 'Read only']];
-		var sync = [['sync', 'Yes'], ['async', 'No']];
-		var subtree = [['subtree_check', 'Yes'], ['no_subtree_check', 'No']];
+		var access = [['rw', '读/写'], ['ro', '只读']];
+		var sync = [['sync', '是'], ['async', '否']];
+		var subtree = [['subtree_check', '是'], ['no_subtree_check', '否']];
 		var nfsg = new TomatoGrid();
 		nfsg.exist = function(f, v)
 		{
@@ -50,7 +50,7 @@ No part of this file may be used without permission.
 				{ type: 'select', options: subtree },
 				{ type: 'text', maxlen: 50 }
 			]);
-			this.headerSet(['Directory', 'IP Address/Subnet', 'Access', 'Sync', 'Subtree Check', 'Other Options']);
+			this.headerSet(['目录', 'IP 地址/子网', '安全', '同步', '目录检查', '其它选项']);
 			var s = nvram.nfs_exports.split('>');
 			for (var i = 0; i < s.length; ++i) {
 				var t = s[i].split('<');
@@ -86,28 +86,28 @@ No part of this file may be used without permission.
 		<input type="hidden" name="nfs_exports">
 
 		<div class="box">
-			<div class="heading">NFS Server</div>
+			<div class="heading">NFS 服务器</div>
 			<div class="content">
 				<div id="nfs-server"></div><hr><br />
 				<script type="text/javascript">
 					$('#nfs-server').forms([
-						{ title: 'Enable NFS Server', name: 'f_nfs_enable', type: 'checkbox', value: nvram.nfs_enable != '0' }
+						{ title: '启用 NFS服务器', name: 'f_nfs_enable', type: 'checkbox', value: nvram.nfs_enable != '0' }
 					]);
 				</script>
 
 				<h4>Exports</h4>
 				<table class="line-table" id="nfsg-grid"></table><br><hr>
 
-				<h4>Notes</h4>
+				<h4>说明</h4>
 				<ul>
-					<li>You can find more information on proper NFS configuration at the following website: <a href="http://nfs.sourceforge.net/nfs-howto/" target="_blanc"><b>http://nfs.sourceforge.net</b></a>.
-					<li>If you want to mount an NFS share from other NFS Server, you can use the mount.nfs tool via telnet/ssh.
+					<li>您可以在以下网站找到有关正确NFS配置的更多信息: <a href="http://nfs.sourceforge.net/nfs-howto/" target="_blanc"><b>http://nfs.sourceforge.net</b></a>.
+					<li>如果要从其他NFS服务器装载NFS共享，可以通过telnet / ssh使用mount.nfs工具。
 				</ul>
 			</div>
 		</div>
 
-		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">Save <i class="icon-check"></i></button>
-		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">Cancel <i class="icon-cancel"></i></button>
+		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">保存 <i class="icon-check"></i></button>
+		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">取消 <i class="icon-cancel"></i></button>
 		<span id="footer-msg" class="alert alert-warning" style="visibility: hidden;"></span>
 
 	</form>

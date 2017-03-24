@@ -6,7 +6,7 @@ http://www.polarcloud.com/tomato/
 For use with Tomato Firmware only.
 No part of this file may be used without permission.
 -->
-<title>MAC Address</title>
+<title>MAC地址</title>
 <content>
 	<style>
 		.line-table tr:last-child { border: 0; }
@@ -120,7 +120,7 @@ No part of this file may be used without permission.
 			var u, uidx, v;
 
 			if (!verifyFields(null, false)) return;
-			if (!confirm("Warning: Changing the MAC address may require that you reboot all devices, computers or modem connected to this router. Continue anyway?")) return;
+			if (!confirm("警告：更改MAC地址可能需要重新启动连接到此路由器的所有设备，计算机或调制解调器。 仍然继续?")) return;
 
 			var fom = E('_fom');
 			for (uidx = 1; uidx <= nvram.mwan_num; ++uidx){
@@ -161,7 +161,7 @@ No part of this file may be used without permission.
 		</script>
 
 		<div class="box">
-			<div class="heading">MAC Address</div>
+			<div class="heading">MAC 地址</div>
 			<div class="content">
 				<div class="macaddr"></div>
 				<hr>
@@ -171,10 +171,10 @@ No part of this file may be used without permission.
 					for (var uidx = 1; uidx <= nvram.mwan_num; ++uidx){
 						var u = (uidx>1) ? uidx : '';
 						f.push(
-								{ title: 'WAN'+u+' Port', indent: 1, name: 'f_wan'+u+'_hwaddr', type: 'text', maxlen: 17, size: 20,
-									suffix: ' <button class="btn btn-primary" type="button" onclick="bdefault(\'wan'+u+'\')">Default</button> ' +
-									        '<button class="btn btn-default" type="button" onclick="brand(\'wan'+u+'\')">Random</button> ' +
-									        '<button class="btn btn-default" type="button" onclick="bclone(\'wan'+u+'\')">Clone PC</button>',
+								{ title: 'WAN'+u+' 端口', indent: 1, name: 'f_wan'+u+'_hwaddr', type: 'text', maxlen: 17, size: 20,
+									suffix: ' <button class="btn btn-primary" type="button" onclick="bdefault(\'wan'+u+'\')">默认</button> ' +
+									        '<button class="btn btn-default" type="button" onclick="brand(\'wan'+u+'\')">随机</button> ' +
+									        '<button class="btn btn-default" type="button" onclick="bclone(\'wan'+u+'\')">克隆 PC</button>',
 									value: nvram['wan'+u+'_mac'] || defmac('wan'+u) }
 						);
 					}
@@ -182,10 +182,10 @@ No part of this file may be used without permission.
 					for (var uidx = 0; uidx < wl_ifaces.length; ++uidx) {
 						var u = wl_fface(uidx);
 						f.push(
-								{ title: 'Wireless Interface ' + ((wl_ifaces.length > 1) ? wl_ifaces[uidx][0] : ''), indent: 1, name: 'f_wl'+u+'_hwaddr', type: 'text', maxlen: 17, size: 20,
-									suffix:'<button class="btn btn-primary" type="button" onclick="bdefault(\'wl'+u+'\')">Default</button> ' +
-									       '<button class="btn btn-default" type="button" onclick="brand(\'wl'+u+'\')"> Random</button> ' +
-									       '<button class="btn btn-default" type="button" onclick="bclone(\'wl'+u+'\')"> Clone PC</button>',
+								{ title: '无线接口 ' + ((wl_ifaces.length > 1) ? wl_ifaces[uidx][0] : ''), indent: 1, name: 'f_wl'+u+'_hwaddr', type: 'text', maxlen: 17, size: 20,
+									suffix:'<button class="btn btn-primary" type="button" onclick="bdefault(\'wl'+u+'\')">默认</button> ' +
+									       '<button class="btn btn-default" type="button" onclick="brand(\'wl'+u+'\')"> 随机</button> ' +
+									       '<button class="btn btn-default" type="button" onclick="bclone(\'wl'+u+'\')"> 克隆 PC</button>',
 									value: nvram['wl'+u+'_hwaddr'] || defmac('wl' + u) }
 						);
 					}
@@ -196,11 +196,11 @@ No part of this file may be used without permission.
 
 				<table class="line-table static">
 					<tr>
-						<td class="span2">Router's LAN MAC Address:</td>
+						<td class="span2">路由器的LAN MAC地址：</td>
 						<td id="routermac"><b></b></td>
 					</tr>
 					<tr>
-						<td>Computer's MAC Address:</td>
+						<td>计算机的MAC地址：</td>
 						<td id="compmac"><b></b></td>
 					</tr>
 				</table>
@@ -209,8 +209,8 @@ No part of this file may be used without permission.
 			</div>
 		</div>
 
-		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">Save <i class="icon-check"></i></button>
-		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">Cancel <i class="icon-cancel"></i></button>
+		<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">保存 <i class="icon-check"></i></button>
+		<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">取消 <i class="icon-cancel"></i></button>
 		<span id="footer-msg" class="alert alert-warning" style="visibility: hidden;"></span>
 	</form>
 

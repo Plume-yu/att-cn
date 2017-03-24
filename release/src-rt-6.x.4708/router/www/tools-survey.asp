@@ -6,7 +6,7 @@ http://www.polarcloud.com/tomato/
 
 For use with Tomato Firmware only.
 No part of this file may be used without permission.
---><title>Wireless Survey</title>
+--><title>无线测量</title>
 <content>
 	<style type="text/css">
 		#survey-grid .brate {
@@ -37,7 +37,7 @@ No part of this file may be used without permission.
 	<script type="text/javascript">
 		var wlscandata = [];
 		var entries = [];
-		var dayOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+		var dayOfWeek = ['星期日 ', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
 
 		Date.prototype.toWHMS = function() {
 			return dayOfWeek[this.getDay()] + ' ' + this.getHours() + ':' + this.getMinutes().pad(2)+ ':' + this.getSeconds().pad(2);
@@ -225,7 +225,7 @@ No part of this file may be used without permission.
 				seen = e.lastSeen.toWHMS();
 				if (useAjax()) {
 					m = Math.floor(((new Date()).getTime() - e.firstSeen.getTime()) / 60000);
-					if (m <= 10) seen += '<br> <small>NEW (' + -m + 'm)</small>';
+					if (m <= 10) seen += '<br> <small>新 (' + -m + 'm)</small>';
 				}
 
 				mac = e.bssid;
@@ -245,10 +245,10 @@ No part of this file may be used without permission.
 			}
 
 			s = '';
-			if (useAjax()) s = added + ' added, ' + removed + ' removed, ';
-			s += entries.length + ' total.';
+			if (useAjax()) s = '新增: '+added + '个 , 移除: ' + removed + '个 , 总计: ';
+			s += entries.length + ' 个。';
 
-			s += '<br><small>Last updated: ' + (new Date()).toWHMS() + '</small>';
+			s += '<br><small>最后更新: ' + (new Date()).toWHMS() + '</small>';
 			setMsg(s);
 
 			wlscandata = [];
@@ -256,7 +256,7 @@ No part of this file may be used without permission.
 
 		sg.setup = function() {
 			this.init('survey-grid', 'sort');
-			this.headerSet(['Last Seen', 'SSID', 'BSSID', 'RSSI &nbsp; &nbsp; ', 'Noise &nbsp; &nbsp; ', 'Quality', 'Ch', 'Capabilities', 'Rates']);
+			this.headerSet(['最后在线', 'SSID', 'BSSID', 'RSSI &nbsp; &nbsp; ', '信号强度 &nbsp; &nbsp; ', '质量', '信道', '参数', '速率']);
 			this.populate();
 			this.sort(0);
 		}
@@ -286,7 +286,7 @@ No part of this file may be used without permission.
 			if (!useAjax()) E('expire-time').style.visibility = 'hidden';
 			sg.setup();
 			sg.recolor();
-			$('#survey-controls .spinner').after('&nbsp; ' + genStdTimeList('expire-time', 'Auto Expire', 1) + genStdTimeList('refresh-time', 'Auto Refresh', 1));
+			$('#survey-controls .spinner').after('&nbsp; ' + genStdTimeList('expire-time', '自动过期', 1) + genStdTimeList('refresh-time', '自动刷新', 1));
 			ref.initPage();
 
 			// After every thing, first time refresh data
@@ -298,13 +298,13 @@ No part of this file may be used without permission.
 	<ul class="nav-tabs">
 		<li><a class="ajaxload" href="tools-ping.asp"><i class="icon-ping"></i> Ping</a></li>
 		<li><a class="ajaxload" href="tools-trace.asp"><i class="icon-gauge"></i> Trace</a></li>
-		<li><a class="ajaxload" href="tools-shell.asp"><i class="icon-cmd"></i> System Commands</a></li>
-		<li><a class="active"><i class="icon-signal"></i> Wireless Survey</a></li>
-		<li><a class="ajaxload" href="tools-wol.asp"><i class="icon-wake"></i> WOL</a></li>
+		<li><a class="ajaxload" href="tools-shell.asp"><i class="icon-cmd"></i> 系统命令</a></li>
+		<li><a class="active"><i class="icon-signal"></i> 无线测量</a></li>
+		<li><a class="ajaxload" href="tools-wol.asp"><i class="icon-wake"></i> WOL网络唤醒</a></li>
 	</ul>
 
 	<div class="box">
-		<div class="heading">Wireless Survey</div>
+		<div class="heading">无线测量</div>
 		<div class="content">
 
 			<br /><table id="survey-grid" class="line-table"></table><br />
@@ -316,14 +316,14 @@ No part of this file may be used without permission.
 
 	<div id="survey-controls">
 		<div class="spinner"></div>
-		<button type="button" value="Refresh" onclick="ref.toggle();" id="refresh-button" class="btn">Refresh <i class="icon-refresh"></i></button>
+		<button type="button" value="Refresh" onclick="ref.toggle();" id="refresh-button" class="btn">刷新 <i class="icon-refresh"></i></button>
 	</div>
 
 	<div class="clearfix"></div><br />
 
 	<script type="text/javascript">
 		if ('<% wlclient(); %>' == '0') {
-			$('#tabs').after('<div class="alert alert-warning icon"><h5>Warning!</h5> Wireless connections to this router may be disrupted while using this tool. <a class="close"><i class="icon-cancel"></i></a></div>');
+			$('#tabs').after('<div class="alert alert-warning icon"><h5>警告!</h5> 在使用此工具时，与此路由器的无线连接可能会中断。 <a class="close"><i class="icon-cancel"></i></a></div>');
 		}
 
 		earlyInit();

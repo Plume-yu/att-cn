@@ -5,7 +5,7 @@ http://www.polarcloud.com/tomato/
 
 For use with Tomato Firmware only.
 No part of this file may be used without permission.
---><title>Router Scripts</title>
+--><title>脚本设置</title>
 <content>
 	<style type="text/css">
 		.as-script {
@@ -18,9 +18,9 @@ No part of this file may be used without permission.
 		}
 	</style>
 	<script type="text/javascript">
-		//	<% nvram("script_init,script_shut,script_fire,script_wanup"); %>
+		//	<% nvram("at_update,tomatoanon_answer,script_init,script_shut,script_fire,script_wanup"); %>
 
-		tabs = [['as-init', 'Init'],['as-shut', 'Shutdown'],['as-fire','Firewall'],['as-wanup', 'WAN Up']];
+		tabs = [['as-init', '初始化'],['as-shut', '关机'],['as-fire','防火墙'],['as-wanup', '当WAN联机']];
 
 		function tabSelect(name)
 		{
@@ -57,7 +57,7 @@ No part of this file may be used without permission.
 				x = (t[0] == 'as-fire') ? 8192 : 4096;
 				if (n > x) {
 					tabSelect(t[0]);
-					alert(t[1] + ' script is too long. Maximum allowed is ' + x + ' bytes.');
+					alert(t[1] + ' 脚本太长。 允许的最大值为 ' + x + ' bytes.');
 					return;
 				}
 			}
@@ -88,16 +88,16 @@ No part of this file may be used without permission.
 			$('.scriptsetc').append('<textarea class="as-script" name="script_' + t.replace('as-', '') + '" id="' + t + '-text" wrap=' + (wrap ? 'virtual' : 'off') + ' style="max-width:100%; min-width: 100%; margin: 0; ' + s + '"></textarea>');
 		}
 		$('.scriptsetc').append('<br /><br /><div class="checkbox c-checkbox"><label><input type="checkbox" id="as-wordwrap" onclick="wordWrap()" onchange="wordWrap()" ' +
-			(wrap ? 'checked' : '') + '><span class="icon-check"></span> &nbsp; Word Wrap</label></div> ');
+			(wrap ? 'checked' : '') + '><span class="icon-check"></span> &nbsp; 自动换行</label></div> ');
 	</script>
 
 	<div class="box">
-		<div class="heading">Event Scripts</div>
+		<div class="heading">事件脚本</div>
 		<div class="content scriptsetc" style="display: block;"></div>
 	</div>
 
-	<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">Save <i class="icon-check"></i></button>
-	<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">Cancel <i class="icon-cancel"></i></button>
+	<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">保存 <i class="icon-check"></i></button>
+	<button type="button" value="Cancel" id="cancel-button" onclick="javascript:reloadPage();" class="btn">取消 <i class="icon-cancel"></i></button>
 	<span id="footer-msg" class="alert alert-warning" style="visibility: hidden;"></span>
 
 	<script type="text/javascript">earlyInit();</script>
