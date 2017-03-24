@@ -159,13 +159,13 @@ do {
 
 		a = i = wlstats[uidx].channel * 1;
 		if (i < 0) i = -i;
-		stats.channel.push('<a href="#tools-survey.asp">' + ((i) ? i + '' : 'Auto') +
+		stats.channel.push('<a href="#tools-survey.asp">' + ((i) ? i + '' : '自动') +
 			((wlstats[uidx].mhz) ? ' - ' + (wlstats[uidx].mhz / 1000.0).toFixed(3) + ' <small>GHz</small>' : '') + '</a>' +
-			((a < 0) ? ' <small>(scanning...)</small>' : ''));
-		stats.interference.push((wlstats[uidx].intf >= 0) ? ((wlstats[uidx].intf) ? 'Severe' : 'Acceptable') : '');
+			((a < 0) ? ' <small>(扫描中...)</small>' : ''));
+		stats.interference.push((wlstats[uidx].intf >= 0) ? ((wlstats[uidx].intf) ? '严峻的' : '可接受的') : '');
 
 		a = wlstats[uidx].nbw * 1;
-		wlstats[uidx].nbw = (a > 0) ? (a + ' <small>MHz</small>') : 'Auto';
+		wlstats[uidx].nbw = (a > 0) ? (a + ' <small>MHz</small>') : '自动';
 
 		if (wlstats[uidx].radio) {
 			a = wlstats[uidx].rate * 1;
@@ -193,9 +193,9 @@ do {
 		}
 
 		if (wl_ifaces[uidx][6] != 1) {
-			wlstats[uidx].ifstatus = '<b>Down</b>';
+			wlstats[uidx].ifstatus = '<b>关闭</b>';
 		} else {
-			wlstats[uidx].ifstatus = 'Up';
+			wlstats[uidx].ifstatus = '打开';
 			for (i = 0; i < xifs.length ; ++i) {
 				if ((nvram[xifs[i] + '_ifnames']).indexOf(wl_ifaces[uidx][0]) >= 0) {
 					wlstats[uidx].ifstatus = wlstats[uidx].ifstatus + ' (' + xifs[i].toUpperCase() + ')';

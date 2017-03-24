@@ -30,10 +30,10 @@ var avgMode   = 0;
 var avgLast   = -1;
 var colorX    = 0;
 var colors    = [
-	[ 'Clean Style', '#454545', '#0089F9' ], [ 'Flat', '#1abc9c', '#3498db' ], [ 'Green &amp; Red', '#27ae60', '#e74c3c' ],
-	[ 'Blue &amp; Orange', '#003EBA', '#FF9000' ], [ 'Blue &amp; Red', '#003EDD', '#CC4040' ], [ 'Blue', '#22f', '#225' ],
-	[ 'Gray', '#000', '#999' ], [ 'Red &amp; Black', '#d00', '#000' ], [ 'Fire', '#e74c3c', '#e67e22' ],
-	[ 'Tomato Style', '#FD0000', '#494949' ], [ 'Ultra Green', '#6D9E38', '#A6FFA4' ] ];
+	[ '清新风格', '#454545', '#0089F9' ], [ '扁平', '#1abc9c', '#3498db' ], [ '绿 &amp; 红', '#27ae60', '#e74c3c' ],
+	[ '蓝 &amp; 橙', '#003EBA', '#FF9000' ], [ '蓝 &amp; 红', '#003EDD', '#CC4040' ], [ '蓝', '#22f', '#225' ],
+	[ '灰', '#000', '#999' ], [ '红 &amp; 黑', '#d00', '#000' ], [ '火焰', '#e74c3c', '#e67e22' ],
+	[ 'Tomato风格', '#FD0000', '#494949' ], [ '超绿', '#6D9E38', '#A6FFA4' ] ];
 
 function xpsb( $speed ) {
 	/* REMOVE-BEGIN

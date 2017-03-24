@@ -16,7 +16,7 @@ function refreshNetModes(uidx) {
 	if (uidx >= wl_ifaces.length) return;
 	var u = wl_unit(uidx);
 
-	var m = [['mixed','Auto']];
+	var m = [['mixed','自动']];
 	if (selectedBand(uidx) == '1') {
 		m.push(['a-only','A Only']);
 		if (nphy) {
@@ -149,7 +149,7 @@ function scan() {
 			for (i = 1; i < ghz[uidx].length; ++i) {
 				var s = ghz[uidx][i][1];
 				var u = wscan.inuse[ghz[uidx][i][0]];
-				if (u) s += ' (' + u.count + ' AP' + (u.count == 1 ? '' : 's') + ' / strongest: "' + escapeHTML(ellipsis(u.ssid, 15)) + '" ' + u.rssi + ' dBm)';
+				if (u) s += ' (' + u.count + ' AP' + (u.count == 1 ? '' : 's') + ' / 最强: "' + escapeHTML(ellipsis(u.ssid, 15)) + '" ' + u.rssi + ' dBm)';
 				e.options[i].innerHTML = s;
 			}
 			e.style.width = '400px';
@@ -167,7 +167,7 @@ function scan() {
 		spin(0, unit);
 	}
 	xob.onError = function(x) {
-		alert('error: ' + x);
+		alert('错误: ' + x);
 		spin(0, unit);
 		xob = null;
 	}
@@ -227,7 +227,7 @@ function v_wep(e, quiet) {
 	else {
 		s = s.toUpperCase().replace(/[^0-9A-F]/g, '');
 		if (s.length != e.maxLength) {
-			ferror.set(e, 'Invalid WEP key. Expecting ' + e.maxLength + ' hex or ' + (e.maxLength >> 1) + ' ASCII characters.', quiet);
+			ferror.set(e, 'WEP密钥无效。 要求 ' + e.maxLength + ' 个16进制或 ' + (e.maxLength >> 1) + ' 个ASCII字符。', quiet);
 			return 0;
 		}
 	}
