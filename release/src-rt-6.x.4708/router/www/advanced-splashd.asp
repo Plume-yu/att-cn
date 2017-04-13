@@ -160,7 +160,7 @@ No part of this file may be used without permission.
 			<h5>用户指南 </h5>
 			<div class="section" id="sesdivnotes">
 				<ul>
-					<li><b> 启用功能n</b> - T当客户端尝试访问Internet时，路由器将显示欢迎页面。<br>
+					<li><b> 启用功能</b> - 当客户端尝试访问Internet时，路由器将显示欢迎页面。<br>
 					<li><b> 接口:</b> - 选择需要网页认证的接口。<br>
 					<li><b> 网关名称</b> - 出现在欢迎页面中的网关名称<br>
 					<li><b> 网关端口</b> - 网关的端口号。 默认=5280。<br>
