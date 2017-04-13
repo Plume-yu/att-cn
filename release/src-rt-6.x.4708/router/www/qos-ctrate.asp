@@ -201,7 +201,7 @@ No part of this file may be used without permission.
 
 		grid.setup = function() {
 			this.init('grid', 'sort');
-			this.headerSet(['协议', '源', '源端口', '目标', '目标端口', '上传速率', '下载速率']);
+			this.headerSet(['协议', '源', '源端口', '目标', '目标端口', '上传速率(KB/s)', '下载速率(KB/s)']);
 		}
 
 		var ref = new TomatoRefresh('/update.cgi', '', 0, 'qos_ctrate');
