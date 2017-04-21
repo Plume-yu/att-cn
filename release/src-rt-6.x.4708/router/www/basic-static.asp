@@ -332,25 +332,25 @@ No part of this file may be used without permission.
 				<h4>说明 <a href="javascript:toggleVisibility('notes');"><span id="sesdivnotesshowhide"><i class="icon-chevron-up"></i></span></a></h4>
 				<div class="section" id="sesdivnotes" style="display:none">
 					<ul>
-						<li><b>MAC地址</b> - 与此特定设备上的网络接口相关联的唯一标识符.</li>
-						<li><b>绑定到</b> - 强制执行此特定IP / MAC地址对应的静态ARP绑定.</li>
-						<li><b>IP地址</b> - 在本地网络上分配给此设备的网络地址.</li>
-						<li><b>IP流量监控</b> - 跟踪此IP地址的带宽使用情况.</li>
-						<li><b>主机名</b> - 在网络上分配给此设备的人类可读昵称/标签.</li>
+						<li><b>MAC地址</b> - 与此特定设备上的网络接口相关联的唯一标识符。</li>
+						<li><b>绑定到</b> - 强制执行此特定IP / MAC地址对应的静态ARP绑定。</li>
+						<li><b>IP地址</b> - 在本地网络上分配给此设备的网络地址。</li>
+						<li><b>IP流量监控</b> - 跟踪此IP地址的带宽使用情况。</li>
+						<li><b>主机名</b> - 在网络上分配给此设备的人类可读昵称/标签。</li>
 					</ul>
 
 					<ul>
-						<li><b>启用静态ARP (...)</b> - 对上面列出的所有IP / MAC地址执行静态ARP绑定.</li>
-						<li><b>I忽略DHCP请求 (...)</b> - 未列出的MAC地址不能通过DHCP获取IP地址.</li>
+						<li><b>启用静态ARP (...)</b> - 对上面列出的所有IP / MAC地址执行静态ARP绑定。</li>
+						<li><b>忽略DHCP请求 (...)</b> - 未列出的MAC地址不能通过DHCP获取IP地址。</li>
 					</ul>
 
 					<ul>
 						<li><b>其他相关注意事项/提示：</b>
 						<ul>
-							<li>要为设备指定多个主机名，请使用空格分隔它们.</li>
-							<li>要为特定设备启用/实施静态ARP绑定，它必须只有一个MAC与该特定IP地址相关联（即，您不能有两个MAC地址链接到上表中的相同主机名/设备）.</li>
+							<li>要为设备指定多个主机名，请使用空格分隔它们。</li>
+							<li>要为特定设备启用/实施静态ARP绑定，它必须只有一个MAC与该特定IP地址相关联（即，您不能有两个MAC地址链接到上表中的相同主机名/设备）。</li>
 							<li>当为特定MAC / IP地址对启用ARP绑定时，该设备将始终在LAN唤醒表中显示为“活动”。 <a href="#tools-wol.asp">点我查看在线列表</a></li>
-							<li>参见 <a href="#advanced-dhcpdns.asp">高级DHCP/DNS</a> 设置页面以获取更多与DHCP相关的配置选项.</li>
+							<li>参见 <a href="#advanced-dhcpdns.asp">高级DHCP/DNS</a> 设置页面以获取更多与DHCP相关的配置选项。</li>
 						</ul>
 					</ul>
 				</div>
