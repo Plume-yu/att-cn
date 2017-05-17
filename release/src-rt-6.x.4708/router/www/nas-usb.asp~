@@ -381,11 +381,17 @@ No part of this file may be used without permission.
 		                  { title: 'SD/MMC支持', indent: 2, name: 'f_mmc', type: 'checkbox', value: nvram.usb_mmc == 1 },
 		                  /* MICROSD-END */
 		                  /* LINUX26-END */
+<<<<<<< HEAD
 		                  { title: '自动挂载', indent: 2, name: 'f_automount', type: 'checkbox',
 		                      suffix: ' <small>自动将所有分区挂载到<i>/mnt</i>。</small>', value: nvram.usb_automount == 1 },
 		                  { title: '挂载后执行', indent: 2, name: 'script_usbmount', type: 'textarea', value: nvram.script_usbmount },
-		                  { title: '挂载后执行', indent: 2, name: 'script_usbmount', style: 'min-height: 80px;', type: 'textarea', value: nvram.script_usbmount },
-		                  { title: '卸载前执行', indent: 2, name: 'script_usbumount', style: 'min-height: 80px;', type: 'textarea', value: nvram.script_usbumount },
+		                  { title: '卸载前执行', indent: 2, name: 'script_usbumount', type: 'textarea', value: nvram.script_usbumount },
+=======
+		                  { title: 'Automount', indent: 2, name: 'f_automount', type: 'checkbox',
+		                      suffix: ' <small>Automatically mount all partitions to sub-directories in <i>/mnt</i>.</small>', value: nvram.usb_automount == 1 },
+		                  { title: 'Run after mounting', indent: 2, name: 'script_usbmount', style: 'min-height: 80px;', type: 'textarea', value: nvram.script_usbmount },
+		                  { title: 'Run before unmounting', indent: 2, name: 'script_usbumount', style: 'min-height: 80px;', type: 'textarea', value: nvram.script_usbumount },
+>>>>>>> remotes/AndreDVJ/advancedtomato-arm/master
 		                  null,
 		                  /* LINUX26-BEGIN */
 		                  { title: 'HDD 休眠', name: 'f_idle_enable', type: 'checkbox',
@@ -395,10 +401,14 @@ No part of this file may be used without permission.
 		                      suffix: ' <small>从USB端口断开3G调制解调器之前，请记住取消选中复选框。 如果调制解调器使用usbserial模块，您必须先重新启动，才能拔下调制解调器。</small>', value: nvram.usb_3g == 1 },
 		                  null,
 		                  /* LINUX26-END */
+<<<<<<< HEAD
+		                  { title: '热插拔脚本<br><small>(连接或删除任何USB设备时调用)</small>', name: 'script_usbhotplug', type: 'textarea', value: nvram.script_usbhotplug },
+=======
 		                  /* UPS-BEGIN */
-		                  { title: '运行APCUPSD Deamon', name: 'f_usb_apcupsd', type: 'checkbox', suffix: ' <small>UPS监控需要 (APC UPS)</small>', value: nvram.usb_apcupsd == 1 },
+		                  { title: 'Run APCUPSD Deamon', name: 'f_usb_apcupsd', type: 'checkbox', suffix: ' <small>Required by UPS Monitor (APC Uninterruptible Power Supply)</small>', value: nvram.usb_apcupsd == 1 },
 		                  /* UPS-END */
-		                  { title: '热插拔脚本<br><small>(连接或删除任何USB设备时调用)</small>', style: 'min-height: 80px;', name: 'script_usbhotplug', type: 'textarea', value: nvram.script_usbhotplug },
+		                  { title: 'Hotplug script<br><small>(called when any USB device is attached or removed)</small>', style: 'min-height: 80px;', name: 'script_usbhotplug', type: 'textarea', value: nvram.script_usbhotplug },
+>>>>>>> remotes/AndreDVJ/advancedtomato-arm/master
 		                  null,
 		                  { text: '<small>某些更改将在重新启动后生效。</small>' }
 		              ]);

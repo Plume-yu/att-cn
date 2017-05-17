@@ -7,7 +7,11 @@ No part of this file may be used without permission.
 --><title>媒体服务器</title>
 <content>
 	<script type="text/javascript">
-		//	<% nvram("at_update,tomatoanon_answer,ms_enable,ms_port,ms_dirs,ms_dbdir,ms_ifname,ms_tivo,ms_stdlna,ms_sas,cifs1,cifs2,jffs2_on,lan_ifname,lan1_ifname,lan2_ifname,lan3_ifname"); %>
+<<<<<<< HEAD
+		//	<% nvram("at_update,tomatoanon_answer,ms_enable,ms_port,ms_dirs,ms_dbdir,ms_tivo,ms_stdlna,ms_sas,cifs1,cifs2,jffs2_on"); %>
+=======
+		//	<% nvram("ms_enable,ms_port,ms_dirs,ms_dbdir,ms_ifname,ms_tivo,ms_stdlna,ms_sas,cifs1,cifs2,jffs2_on,lan_ifname,lan1_ifname,lan2_ifname,lan3_ifname"); %>
+>>>>>>> remotes/AndreDVJ/advancedtomato-arm/master
 
 		changed = 0;
 		mdup = parseInt('<% psup("minidlna"); %>');
@@ -258,16 +262,23 @@ No part of this file may be used without permission.
 				}
 
 				$('.content.mediadlna').forms([
+<<<<<<< HEAD
 					{ title: '启用', name: 'f_ms_enable', type: 'checkbox', value: nvram.ms_enable == '1' },
-					{ title: '监听', indent: 2, name: 'ms_ifname', type: 'select', options: [
+					{ title: '端口', name: 'ms_port', type: 'text', maxlen: 5, size: 6, value: nvram.ms_port, suffix: '<small>(范围: 0 - 65535; 默认:0 随机设置)</small>' },
+					{ title: '数据库位置', multi: [
+						{ name: 'f_loc', type: 'select', options: [['','内存 (临时)'],
+=======
+					{ title: 'Enable', name: 'f_ms_enable', type: 'checkbox', value: nvram.ms_enable == '1' },
+					{ title: 'Listen on', indent: 2, name: 'ms_ifname', type: 'select', options: [
 						['br0','LAN (br0)*'],
 						['br1','LAN1 (br1)'],
 						['br2','LAN2 (br2)'],
 						['br3','LAN3 (br3)']
 						], value: eval ( 'nvram.ms_ifname' ), suffix: ' <small>* default</small> ' },
-					{ title: '端口', indent: 2, name: 'ms_port', type: 'text', maxlen: 5, size: 6, value: nvram.ms_port, suffix: '<small>(范围: 0 - 65535; 默认:0 随机设置)</small>' },
-					{ title: '数据库位置', multi: [
-						{ name: 'f_loc', type: 'select', options: [['','内存 (临时)'],
+					{ title: 'Port', indent: 2, name: 'ms_port', type: 'text', maxlen: 5, size: 6, value: nvram.ms_port, suffix: '<small>(range: 0 - 65535; default (random) set 0)</small>' },
+					{ title: 'Database Location', multi: [
+						{ name: 'f_loc', type: 'select', options: [['','RAM (Temporary)'],
+>>>>>>> remotes/AndreDVJ/advancedtomato-arm/master
 							/* JFFS2-BEGIN */
 							['/jffs/dlna','JFFS分区'],
 							/* JFFS2-END */
