@@ -24,9 +24,9 @@ cd $SRC
 ### TYPE
 TYPE="AT-ARM"
 ### VERSION
-VER="3.4-138"
+VER="3.4-140"
 
-export BUILDNR="3.4-138"
+export BUILDNR="0140"
 EXTENDNO=`git rev-parse --verify HEAD --short`
 # 1337
 # echo "1336" > linux/linux-2.6/.version
