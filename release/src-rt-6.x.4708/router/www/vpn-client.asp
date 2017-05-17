@@ -435,7 +435,7 @@ No part of this file may be used without permission.
 					{ title: '重定向到互联网流量', multi: [
 						{ name: 'f_vpn_'+t+'_rgw', type: 'checkbox', value: eval( 'nvram.vpn_'+t+'_rgw' ) != 0 },
 						{ name: 'vpn_'+t+'_gw', type: 'text', maxlen: 15, size: 17, value: eval( 'nvram.vpn_'+t+'_gw' ), prefix: '<span id=\''+t+'_gateway\'> 网关:&nbsp', suffix: '</span>'} ] },
-					{ title: '忽略重定向网关<br>(route-nopull)', name: 'f_vpn_'+t+'_nopull', type: 'checkbox', value: eval( 'nvram.vpn_'+t+'_nopull' ) != 0 },
+					{ title: '忽略重定向网关(route-nopull)', name: 'f_vpn_'+t+'_nopull', type: 'checkbox', value: eval( 'nvram.vpn_'+t+'_nopull' ) != 0 },
 					{ title: '接受DNS配置', name: 'vpn_'+t+'_adns', type: 'select', options: [[0, '禁用'],[1, '宽松'],[2, '严格'],[3, '唯一']], value: eval( 'nvram.vpn_'+t+'_adns' ) },
 					{ title: '加密方式', name: 'vpn_'+t+'_cipher', type: 'select', options: ciphers, value: eval( 'nvram.vpn_'+t+'_cipher' ) },
 					{ title: '启用压缩', name: 'vpn_'+t+'_comp', type: 'select', options: [ ['-1', '禁用'], ['no', '无'], ['yes', '启用'], ['adaptive', '自适应'] ], value: eval( 'nvram.vpn_'+t+'_comp' ) },
@@ -443,7 +443,7 @@ No part of this file may be used without permission.
 						suffix: '&nbsp;<small>(秒, -1 默认)</small>' },
 					{ title: '连接重试', name: 'vpn_'+t+'_retry', type: 'text', maxlen: 5, size: 7, value: eval( 'nvram.vpn_'+t+'_retry' ),
 						suffix: '&nbsp;<small>(秒; -1 为无限制)</small>' },
-					{ title: '验证服务器证书 (tls-remote)', multi: [
+					{ title: '验证服务器证书 (remote-cert-tls)', multi: [
 						{ name: 'f_vpn_'+t+'_tlsremote', type: 'checkbox', value: eval( 'nvram.vpn_'+t+'_tlsremote' ) != 0 },
 						{ name: 'vpn_'+t+'_cn', type: 'text', maxlen: 64, size: 54,
 							value: eval( 'nvram.vpn_'+t+'_cn' ), prefix: '<span id=\''+t+'_cn\'> 通用名（CN）:&nbsp', suffix: '</span>'} ] },

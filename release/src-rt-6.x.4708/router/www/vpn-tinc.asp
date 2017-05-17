@@ -518,26 +518,15 @@
 				html +='<input type="hidden" name="tinc_wanup">';
 
 				html += createFormFields([
-<<<<<<< HEAD
 					{ title: '连接互联网后运行 ', name: 'f_tinc_wanup', type: 'checkbox', value: (nvram.tinc_wanup == 1) },
 					{ title: '接口类型', name: 'tinc_devicetype', type: 'select', options: [['tun','TUN'],['tap','TAP']], value: nvram.tinc_devicetype },
 					{ title: '模式', name: 'tinc_mode', type: 'select', options: [['switch','交换'],['hub','中转']], value: nvram.tinc_mode },
 					{ title: 'VPN网络掩码', name: 'tinc_vpn_netmask', type: 'text', maxlen: 15, size: 25, value: nvram.tinc_vpn_netmask,  suffix: ' <small>整个VPN网络的网络掩码。</small>' },
 					{ title: '主机名', name: 'tinc_name', type: 'text', maxlen: 30, size: 25, value: nvram.tinc_name, suffix: ' <small>也必须在 \'主机\' 中定义。</small>' },
+					{ title: '轮询间隔', name: 'tinc_poll', type: 'text', maxlen: 4, size: 5, value: nvram.tinc_poll, suffix: '&nbsp;<small>(以分钟为单位, 0 表示禁用)</small>' },	
 					{ title: 'Ed25519 私钥', name: 'tinc_private_ed25519', type: 'textarea', value: nvram.tinc_private_ed25519 },
 					{ title: 'RSA 私钥 *', name: 'tinc_private_rsa', type: 'textarea', value: nvram.tinc_private_rsa },
 					{ title: '自定义', name: 'tinc_custom', type: 'textarea', value: nvram.tinc_custom }
-=======
-					{ title: 'Start With WAN ', name: 'f_tinc_wanup', type: 'checkbox', value: (nvram.tinc_wanup == 1) },
-					{ title: 'Interface Type', name: 'tinc_devicetype', type: 'select', options: [['tun','TUN'],['tap','TAP']], value: nvram.tinc_devicetype },
-					{ title: 'Mode', name: 'tinc_mode', type: 'select', options: [['switch','Switch'],['hub','Hub']], value: nvram.tinc_mode },
-					{ title: 'VPN Netmask', name: 'tinc_vpn_netmask', type: 'text', maxlen: 15, size: 25, value: nvram.tinc_vpn_netmask,  suffix: ' <small>The netmask for the entire VPN network.</small>' },
-					{ title: 'Host Name', name: 'tinc_name', type: 'text', maxlen: 30, size: 25, value: nvram.tinc_name, suffix: ' <small>Must also be defined in the \'Hosts\' area.</small>' },
-					{ title: 'Poll Interval', name: 'tinc_poll', type: 'text', maxlen: 4, size: 5, value: nvram.tinc_poll, suffix: '&nbsp;<small>(in minutes, 0 to disable)</small>' },
-					{ title: 'Ed25519 Private Key', name: 'tinc_private_ed25519', type: 'textarea', value: nvram.tinc_private_ed25519 },
-					{ title: 'RSA Private Key *', name: 'tinc_private_rsa', type: 'textarea', value: nvram.tinc_private_rsa },
-					{ title: 'Custom', name: 'tinc_custom', type: 'textarea', value: nvram.tinc_custom }
->>>>>>> remotes/AndreDVJ/advancedtomato-arm/master
 				]);
 
 				html +='</div>';
